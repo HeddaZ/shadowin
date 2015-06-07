@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Shadowin.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="FormFont" Type="System.Drawing.Font" Scope="Application">
+      <Value Profile="(Default)">Verdana, 8pt</Value>
+    </Setting>
+    <Setting Name="FormBackColor" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">Desktop</Value>
+    </Setting>
+    <Setting Name="FormMinimumSize" Type="System.Drawing.Size" Scope="Application">
+      <Value Profile="(Default)">150, 100</Value>
+    </Setting>
+    <Setting Name="FormMaximumSize" Type="System.Drawing.Size" Scope="Application">
+      <Value Profile="(Default)">1300, 700</Value>
+    </Setting>
+    <Setting Name="FormSize" Type="System.Drawing.Size" Scope="Application">
+      <Value Profile="(Default)">780, 180</Value>
+    </Setting>
+    <Setting Name="Opacity" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">0.6</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

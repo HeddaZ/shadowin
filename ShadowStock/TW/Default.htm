@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ShadowStock 影子證券(雅虎奇摩台灣版)</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="簡潔精悍的上班族隱蔽看股工具，連結新浪財經即時資料源，支援自選股、即時價格刷新、持倉盈虧統計，更支援儲存格高亮著色；加上《Shadowin 影窗流覽器》提供的半透明表單和老闆鍵特性，更是神不知鬼不覺" />
+    <link href="Style.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="Shared.js"></script>
+    <script type="text/javascript" src="Default.js"></script>
+</head>
+<body onload="Page_Load(this);">
+    <table id="ContentContainer" class="ContentContainer" border="0" cellpadding="0"
+        cellspacing="0">
+        <caption>
+            <ul>
+                <li class="StocksString">
+                    <input id="LockButton" type="checkbox" class="CheckBox" title="鎖定/編輯" onclick="LockButton_Click(this);" />
+                    <input id="StocksString" type="text" class="TextBox" title="【選股列表格式】&#13;代號[/成本[/持倉]][,代號[/成本[/持倉]]]&#13;【例如】&#13;tw1101,tw1103/2.33,tw2305/20.5/100"
+                        onkeypress="return StocksString_KeyPress(this);" onblur="StocksString_Blur(this);" />
+                </li>
+                <li class="Title">
+                    ShadowStock 影子證券(雅虎奇摩台灣版)
+                    <script src="http://s16.cnzz.com/stat.php?id=3760060&web_id=3760060&online=2" language="JavaScript"></script>
+                </li>
+            </ul>
+        </caption>
+    </table>
+    <iframe id="StockDatasFetcherContainer" class="StockDatasFetcherContainer"></iframe>
+
+    <div style="width: 100%; text-align: right; margin-top: 15px;">
+    <script type="text/javascript"><!--
+        google_ad_client = "pub-9815729917864928";
+        google_ad_slot = "2583230930";
+        google_ad_width = 370;
+        google_ad_height = 15;
+        //-->
+    </script>
+    <script type="text/javascript"
+        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script>
+    </div>
+</body>
+</html>

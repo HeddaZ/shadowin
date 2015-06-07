@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>屁屁看大米</title>
+    <meta name="Description" content="CY - 让工作更简单" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        body
+        {
+            margin: 10px;
+            font-family: Verdana;
+            font-size: 12px;
+            color: #666666;
+        }
+        input
+        {
+            font-family: Verdana;
+            font-size: 12px;
+            color: #666666;
+        }
+        input.TextBox
+        {
+            width: 60%;
+            border: 1px solid #999999;
+        }
+        input.Button
+        {
+            width: 100px;
+        }
+        select
+        {
+            font-family: Verdana;
+            font-size: 12px;
+            color: #666666;
+            width: 100px;
+        }
+        #RiceContainer
+        {
+            width: 100%;
+            word-break: break-all;
+        }
+        #RiceContainer img
+        {
+            margin: 10px;
+            border: solid 1px #FF9900;
+        }
+        .Footer {
+            font-size: 11px;
+            color: #999999;
+            right: 0px;
+            bottom: 0px;
+            position: absolute;
+            margin: 10px;
+        }
+            .Footer a {
+                font-size: 11px;
+                color: #690;
+            }
+    </style>
+
+    <script type="text/javascript">
+    /* ******************* 常量 ******************* */
+    var imgFormat='<img alt="{0}" src="http://image.sinajs.cn/newchart/{2}/n/{0}.gif?{1}" />';
+    /* ******************* 公共 ******************* */
+    function GenerateTimeID()
+    {
+        var now=new Date();
+        return now.getFullYear().toString()
+            +(now.getMonth()+1).toString()
+            +now.getDate().toString()
+            +now.getHours().toString()
+            +now.getMinutes().toString()
+            +now.getSeconds().toString()
+            +now.getMilliseconds().toString()
+    }
+    function FormatString(string)
+    {
+        var result=string;
+        for (var i=1;i<arguments.length;i++)
+        {
+            var pattern=new RegExp("\\{"+(i-1)+"\\}", "g");
+            result=result.replace(pattern, arguments[i].toString());
+        }
+        return result;
+    }
+    
+    /* ******************* 功能 ******************* */
+    function StocksString_KeyPress(sender, e)
+    {
+        return /[shzSHZ0-9,]/.test(String.fromCharCode(event.keyCode));
+    }
+    function StocksString_Blur(sender, e)
+    {
+        //规整化
+        sender.value=sender.value.toLowerCase().replace(/\s+/g, "").replace(/,{2,}/g, ",").replace(/^,/g, ",").replace(/,$/g, ",");
+    }
+    
+    function ShowRice()
+    {
+        var riceContainer=document.getElementById("RiceContainer");
+        var index=document.getElementById("Index");
+        var stocksString=document.getElementById("StocksString");
+        if (stocksString.value=="")
+        {
+            alert("代码无效！");
+            return;
+        }
+        var stocks=stocksString.value.split(",");
+        var riceHtml="";
+        
+        for(var i=0;i<stocks.length;i++)
+        {
+            riceHtml += FormatString(imgFormat, stocks[i], GenerateTimeID(), index.options(index.selectedIndex).value);
+        }
+        
+        riceContainer.innerHTML=riceHtml;
+    }
+    </script>
+
+</head>
+<body>
+    <select id="Index" name="Index">
+        <option value="min" selected>K线</option>
+        <option value="kdj">KDJ</option>
+        <option value="macd">MACD</option>
+        <option value="rsi">RSI</option>
+    </select>
+    <input id="StocksString" type="text" class="TextBox" title="【格式】&#13;sh600026,sh600050,sz000002"
+        onkeypress="return StocksString_KeyPress(this);" onblur="StocksString_Blur(this);" /><br />
+    <input id="RefreshButton" type="button" class="Button" value="刷新" onclick="ShowRice();" />
+    <div id="RiceContainer">
+    </div>
+    <div style="width: 100%; text-align: left; margin-top: 15px;">
+    <script type="text/javascript"><!--
+        google_ad_client = "ca-pub-9815729917864928";
+        /* 内容广告(无框) */
+        google_ad_slot = "1360257905";
+        google_ad_width = 468;
+        google_ad_height = 60;
+        //-->
+    </script>
+    <script type="text/javascript"
+        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script>
+    </div>
+    <div class="Footer">
+        Powered by Hedda.
+        <script src="http://s16.cnzz.com/stat.php?id=3760060&web_id=3760060&online=2" language="JavaScript"></script>
+    </div>
+</body>
+</html>
