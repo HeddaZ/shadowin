@@ -33,6 +33,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{C9E9045C-4053-4F38-8E16-E53D55DFDB1B}"
 	ProjectSection(SolutionItems) = preProject
 		demo.gif = demo.gif
+		LICENSE = LICENSE
 		logo.jpg = logo.jpg
 		README.md = README.md
 	EndProjectSection
