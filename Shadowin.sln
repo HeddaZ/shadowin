@@ -30,6 +30,13 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShadowStock", "http://local
 		SlnRelativePath = "ShadowStock\"
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{C9E9045C-4053-4F38-8E16-E53D55DFDB1B}"
+	ProjectSection(SolutionItems) = preProject
+		demo.gif = demo.gif
+		logo.jpg = logo.jpg
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
