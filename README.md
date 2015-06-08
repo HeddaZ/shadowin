@@ -1,10 +1,12 @@
+![Shadowin 影窗浏览器](logo.jpg)  
+
 Shadowin 影窗浏览器，通用且隐蔽、配合 ShadowStock 影子证券是上班看股神器
 ========================================================================
-![](logo.jpg)  
 一个`隐蔽型`通用工具，这类玩意在白领圈里非常有市场，呵呵。也许迎合了众多人的实际需求，**Shadowin 影窗浏览器** + **ShadowStock 影子证券**是本人原创软件里用户数最多、地域分布最广的一款软件，自 2009 年发布，不断接受到客户发来的新的增强软件功能的要求，因为它实在是太方便、太 YY 了。   
   
 **[下载已编译包，解压直接使用]**（需 [Microsoft .NET Framework 2.0] 支持）  
-![](demo.gif)
+  
+![演示动画](demo.gif)  
 
 Shadowin 影窗浏览器 + ShadowStock 影子证券(新浪版)
 --------------------------------------------------
@@ -75,9 +77,13 @@ ShadowStock 影子證券(雅虎奇摩台灣版)
 > 代號[/成本[/持倉]][,代號[/成本[/持倉]]]  
 > tw1101,tw1103/2.33,tw2305/20.5/100  
 
--------------------------------
-如果您是志同道合的朋友，在使用中发现任何问题和建议，请在此留爪。  
-**Contact QQ: 9812152 `@Hedda`**
+-------------------------------------------------------------
+如果您是志同道合的朋友，在使用中发现任何问题和建议，请[在此留爪]。  
+如果此软件助您投资丰收，欢迎**捐赠**帮助项目发展！  
+> QQ: 9812152  
+> [支付宝]: heddaz(at)live.com  
+> [PayPal]: heddaz(at)live.com  
+
 
 [Keys Enumeration]: https://msdn.microsoft.com/en-us/library/system.windows.forms.keys(v=vs.110).aspx
 [ShadowStock 影子证券(新浪版)]: http://tool.iihtml.com/shadowstock/
@@ -86,3 +92,6 @@ ShadowStock 影子證券(雅虎奇摩台灣版)
 [新浪财经]: http://finance.sina.com.cn
 [雅虎奇摩]: https://tw.stock.yahoo.com
 [下载已编译包，解压直接使用]: https://github.com/HeddaZ/Shadowin/releases
+[在此留爪]: https://github.com/HeddaZ/Shadowin/issues
+[支付宝]: http://www.alipay.com
+[PayPal]: http://www.paypal.com
