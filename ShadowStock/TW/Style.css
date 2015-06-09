@@ -57,6 +57,7 @@ table.ContentContainer caption ul
 {
 	margin: 0px;
 	list-style-type: none;
+    -webkit-padding-start: 0px;
 }
 table.ContentContainer caption ul li.StocksString
 {
