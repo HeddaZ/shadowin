@@ -32,7 +32,7 @@ function Page_Load(sender, e)
     }
     else
     {
-        StocksString.value="";
+        StocksString.value="sh000001,sz000002";
         StocksString.disabled=LockButton.checked=false;
     }
     

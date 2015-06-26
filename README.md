@@ -16,10 +16,11 @@ Shadowin 影窗浏览器 + ShadowStock 影子证券(新浪版)
   
 **直接访问地址：**  
 > http://tool.iihtml.com/shadowstock/  
-
+  
 **自选股格式和范例：**  
 > 代码[/成本[/持有量]][,代码[/成本[/持有量]]]  
 > sh600026,sh600050/2.33,sz000002/20.5/100  
+> 注：[上证指数]代码 sh000001
   
 
 默认配置和操作方法
@@ -49,7 +50,7 @@ Shadowin 影窗浏览器 + ShadowStock 影子证券(新浪版)
     <add key="DecreaseOpacityHotKeyKey" value="OemMinus"/>
     
     <add key="ShowHideHotKeyModifierKey" value="Control"/>
-    <add key="ShowHideHotKeyKey" value="D1"/>
+    <add key="ShowHideHotKeyKey" value="Oemtilde"/>
     <add key="ExitHotKeyModifierKey" value="Control"/>
     <add key="ExitHotKeyKey" value="D0"/>
 </appSettings>
@@ -57,7 +58,7 @@ Shadowin 影窗浏览器 + ShadowStock 影子证券(新浪版)
 
 |热键		|效果			|
 |----		|----			|
-|`Ctrl + 1`	|显示/隐藏窗口	|
+|`Ctrl + ~`	|显示/隐藏窗口（`ESC`下方波浪线，更顺手！）	|
 |`Ctrl + ↑`	|增大窗口高		|
 |`Ctrl + ↓`	|减小窗口高		|
 |`Ctrl + ←`	|增大窗口宽		|
@@ -100,6 +101,7 @@ ShadowStock 目录下是一个 `纯静态的网站`，放到任何主机上即�
 [ShadowStock 影子證券(雅虎奇摩台灣版)]: http://tool.iihtml.com/shadowstock/tw/
 [Microsoft .NET Framework 2.0]: http://www.microsoft.com/zh-cn/download/details.aspx?id=25150
 [新浪财经]: http://finance.sina.com.cn
+[A股上证指数]: http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml
 [雅虎奇摩]: https://tw.stock.yahoo.com
 [下载已编译包，解压直接使用]: https://github.com/HeddaZ/Shadowin/releases
 [在此留爪]: https://github.com/HeddaZ/Shadowin/issues
