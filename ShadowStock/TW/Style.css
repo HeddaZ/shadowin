@@ -27,7 +27,6 @@ input.TextBox
 }
 input.CheckBox
 {
-    margin: 4px 0px;
 }
 .Title
 {
@@ -35,6 +34,7 @@ input.CheckBox
 .Clear
 {
     clear: both;
+    font-size: 0px;
 }
 .Ad
 {
@@ -77,7 +77,7 @@ table.ContentContainer caption ul
 }
 table.ContentContainer caption ul li.LockButton
 {
-	width: 20px;
+	width: 23px;
 	float: left;
 }
 table.ContentContainer caption ul li.StocksString
