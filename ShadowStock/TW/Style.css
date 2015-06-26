@@ -2,9 +2,9 @@
 body
 {
 	margin: 10px;
-	font-family: Verdana;
+	font-family: Verdana, MingLiU;
 	font-size: 12px;
-	color: #666666;
+	color: #555555;
 }
 a
 {
@@ -17,30 +17,46 @@ a:hover
 }
 input
 {
-	font-family: Verdana;
-	font-size: 11px;
+	font-family: Verdana, MingLiU;
+	font-size: 12px;
 }
 input.TextBox
 {
 	border: 1px solid #999999;
 	padding: 2px;
 }
+input.CheckBox
+{
+    margin: 4px 0px;
+}
+.Title
+{
+}
+.Clear
+{
+    clear: both;
+}
+.Ad
+{
+    margin-top: 15px;
+    width: 100%;
+    text-align: right;
+}
 
 /* ******************* 容器 ******************* */
 table.ContentContainer
 {
 	width: 100%;
+    border-collapse: collapse;
 }
 table.ContentContainer td
 {
 	padding: 3px;
-	border-bottom-style: solid;
-	border-left-style: dotted;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-bottom-color: #999999;
-	border-left-color: #999999;
+    border-style: none none solid dotted;
+	border-width: 1px;
+	border-color: #999999;
 	cursor: default;
+    text-align: left;
 }
 iframe.StockDatasFetcherContainer
 {
@@ -55,9 +71,14 @@ table.ContentContainer caption
 }
 table.ContentContainer caption ul
 {
-    margin: 0px;
-    padding: 0px;
+	margin: 0px;
+	padding: 0px;
 	list-style-type: none;
+}
+table.ContentContainer caption ul li.LockButton
+{
+	width: 20px;
+	float: left;
 }
 table.ContentContainer caption ul li.StocksString
 {

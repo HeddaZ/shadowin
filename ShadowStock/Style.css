@@ -52,11 +52,11 @@ table.ContentContainer
 table.ContentContainer td
 {
 	padding: 3px;
-    border-style: none none solid dotted;
+	border-style: none none solid dotted;
 	border-width: 1px;
 	border-color: #999999;
 	cursor: default;
-    text-align: left;
+	text-align: left;
 }
 iframe.StockDatasFetcherContainer
 {
@@ -72,7 +72,7 @@ table.ContentContainer caption
 table.ContentContainer caption ul
 {
 	margin: 0px;
-    padding: 0px;
+	padding: 0px;
 	list-style-type: none;
 }
 table.ContentContainer caption ul li.LockButton
