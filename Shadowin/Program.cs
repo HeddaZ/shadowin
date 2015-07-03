@@ -8,14 +8,11 @@ namespace Shadowin
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             bool allowStart;
-            Mutex mutex = new Mutex(true, SwGlobal.Title, out allowStart);
+            Mutex mutex = new Mutex(true, SwGlobal.Title, out allowStart); //单实例互斥
             if (allowStart)
             {
                 try

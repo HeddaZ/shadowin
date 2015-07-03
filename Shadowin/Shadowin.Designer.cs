@@ -42,16 +42,17 @@
             this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webBrowser1.Location = new System.Drawing.Point(0, 0);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(600, 150);
+            this.webBrowser1.Size = new System.Drawing.Size(960, 240);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.TabStop = false;
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.Color.White;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = global::Shadowin.Properties.Resources.Shadowin16;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(923, 219);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(16, 16);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -74,7 +75,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = global::Shadowin.Properties.Settings.Default.FormBackColor;
-            this.ClientSize = new System.Drawing.Size(600, 150);
+            this.ClientSize = new System.Drawing.Size(960, 240);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.webBrowser1);
             this.Font = global::Shadowin.Properties.Settings.Default.FormFont;

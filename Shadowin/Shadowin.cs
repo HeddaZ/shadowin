@@ -12,9 +12,6 @@ using Shadowin.Properties;
 
 namespace Shadowin
 {
-    /// <summary>
-    /// 主窗体
-    /// </summary>
     public partial class Shadowin : Form
     {
         private const int SizeDifference = 15;
@@ -24,7 +21,7 @@ namespace Shadowin
         #region 属性
 
         /// <summary>
-        /// Sw热键管理器
+        /// 热键管理器
         /// </summary>
         private HotKeyManager SwHotKeyManager
         {
@@ -33,7 +30,7 @@ namespace Shadowin
         }
 
         /// <summary>
-        /// 允许刷新
+        /// 允许自动刷新
         /// </summary>
         private bool RefreshEnabled
         {
@@ -43,20 +40,12 @@ namespace Shadowin
 
         #endregion
 
-        /// <summary>
-        /// 创建主窗体
-        /// </summary>
         public Shadowin()
         {
             InitializeComponent();
 
-            //初始化
             this.Initialize();
         }
-
-        /// <summary>
-        /// 销毁
-        /// </summary>
         ~Shadowin()
         {
             this.Close();
@@ -82,9 +71,6 @@ namespace Shadowin
 
         #region 初始化
 
-        /// <summary>
-        /// 初始化
-        /// </summary>
         private void Initialize()
         {
             #region 热键
@@ -253,11 +239,11 @@ namespace Shadowin
         {
             this.LoadUrl();
         }
-
         private void Shadowin_VisibleChanged(object sender, EventArgs e)
         {
             if (this.Visible)
             {
+                this.Shadowin_SizeChanged(sender, e);
                 this.LoadUrl();
             }
             else
@@ -265,18 +251,28 @@ namespace Shadowin
                 //后台歇息
                 webBrowser1.Url = BlankUrl;
             }
-            //刷新定时器
+            
             timer1.Enabled = this.Visible && this.RefreshEnabled;
         }
+        private void LoadUrl()
+        {
+            if (webBrowser1.Url == null || webBrowser1.Url.Equals(BlankUrl))
+            {
+                webBrowser1.Url = new Uri(SwGlobal.Url);
+            }
+            else
+            {
+                webBrowser1.Refresh(WebBrowserRefreshOption.Completely);
+            }
+        }
 
+        /// <summary>
+        /// 重新定位
+        /// </summary>
         private void Shadowin_SizeChanged(object sender, EventArgs e)
         {
-            //重新定位
             this.Left = Screen.PrimaryScreen.WorkingArea.Width - this.Width;
             this.Top = Screen.PrimaryScreen.WorkingArea.Bottom - this.Height;
-
-            this.pictureBox1.Left = this.Width - this.pictureBox1.Width - 16 - 5;
-            this.pictureBox1.Top = this.Height - this.pictureBox1.Height - 5;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -293,21 +289,6 @@ namespace Shadowin
                ) == DialogResult.OK)
             {
                 Process.Start("iexplore.exe", "https://github.com/heddaz");
-            }
-        }
-
-        /// <summary>
-        /// 加载Url
-        /// </summary>
-        private void LoadUrl()
-        {
-            if (webBrowser1.Url == null || webBrowser1.Url.Equals(BlankUrl))
-            {
-                webBrowser1.Url = new Uri(SwGlobal.Url);
-            }
-            else
-            {
-                webBrowser1.Refresh(WebBrowserRefreshOption.Completely);
             }
         }
     }

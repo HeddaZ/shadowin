@@ -5,21 +5,12 @@ using Plusal.Windows;
 
 namespace Shadowin.Implement
 {
-    /// <summary>
-    /// Shadowin全局服务类
-    /// </summary>
     public class SwGlobal : Global
     {
-        /// <summary>
-        /// 标题
-        /// </summary>
         public static string Title = "Shadowin 影窗浏览器";
 
         #region 属性
 
-        /// <summary>
-        /// Url
-        /// </summary>
         public static string Url
         {
             get
@@ -28,9 +19,6 @@ namespace Shadowin.Implement
             }
         }
 
-        /// <summary>
-        /// 刷新时间间隔
-        /// </summary>
         public static int RefreshInterval
         {
             get
@@ -215,11 +203,6 @@ namespace Shadowin.Implement
 
         #region 方法
 
-        /// <summary>
-        /// 获取配置参数的值
-        /// </summary>
-        /// <param name="name">参数名称</param>
-        /// <returns></returns>
         public static string GetConfiguration(string name)
         {
             Plusal.Shared.Configuration configuration = new Plusal.Shared.Configuration(Enumeration.ConfigurationElement.AppSettings);
