@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Shadowin")]
-[assembly: AssemblyDescription("Hedda@Plusii.com")]
+[assembly: AssemblyDescription("heddaz@live.com")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Plusii")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Shadowin")]
-[assembly: AssemblyCopyright("Copyright © Plusii 2009")]
-[assembly: AssemblyTrademark("Plusii")]
+[assembly: AssemblyCopyright("Copyright © Hedda 2009-2015")]
+[assembly: AssemblyTrademark("Shadowin")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.5.*")]
-[assembly: AssemblyFileVersion("1.5.0.0")]
+[assembly: AssemblyVersion("1.6.*")]
+[assembly: AssemblyFileVersion("1.6.0.0")]
