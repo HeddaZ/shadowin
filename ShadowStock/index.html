@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <title>ShadowStock 影子证券（新浪版）</title>
+    <meta name="description" content="简洁精悍的上班族隐蔽看股工具，链接新浪财经实时数据源，支持自选股、实时价格刷新、持仓盈亏统计，更支持单元格高亮着色；加上《Shadowin 影窗浏览器》提供的半透明窗体和老板键特性，更是神不知鬼不觉" />
+
+    <link href="content/bootstrap.css" rel="stylesheet" />
+    <link href="content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="content/site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row show-grid">
+            <div class="col-sm-8">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon" id="basic-addon1">ShadowStock 影子证券</span>
+                    <input type="text" class="form-control" placeholder="sh000001" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-warning">锁定</button>
+                    <button type="button" class="btn btn-sm btn-default">解锁</button>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                            配置
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">导出</a></li>
+                            <li><a href="#">导入</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <td>名称</td>
+                            <td>最新价</td>
+                            <td>涨跌</td>
+                            <td>涨跌率</td>
+                            <td>最高</td>
+                            <td>最低</td>
+                            <td>今开</td>
+                            <td>昨收</td>
+                            <td>成交额</td>
+                            <td>成本</td>
+                            <td>盈亏率</td>
+                            <td>持有量</td>
+                            <td>总盈亏</td>
+                            <td>时间</td>
+                            <td>快链</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>222</td>
+                            <td>3.33</td>
+                            <td>55</td>
+                            <td>.222</td>
+                            <td>333</td>
+                            <td>55</td>
+                            <td>22.2</td>
+                            <td>333</td>
+                            <td>55</td>
+                            <td>22.2</td>
+                            <td>333</td>
+                            <td>55</td>
+                            <td>2.22</td>
+                            <td>333%</td>
+                            <td>55</td>
+                        </tr>
+                        <tr>
+                            <td>22.2</td>
+                            <td>333</td>
+                            <td>5.5</td>
+                            <td>222</td>
+                            <td>3.33</td>
+                            <td>55</td>
+                            <td>222</td>
+                            <td>3.33</td>
+                            <td>55</td>
+                            <td>222</td>
+                            <td>3.33</td>
+                            <td>55</td>
+                            <td>22%</td>
+                            <td>333%</td>
+                            <td>55</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/jquery-1.10.2.js"></script>
+    <script src="scripts/bootstrap.js"></script>
+    <script src="scripts/respond.js"></script>
+    <script src="index.html.js"></script>
+</body>
+</html>

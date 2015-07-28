@@ -1,0 +1,18 @@
+﻿body {
+    font-size: 13px !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.container-fluid {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+td {
+    cursor: default;
+}
+
+.show-grid {
+    margin-bottom: 5px;
+}
