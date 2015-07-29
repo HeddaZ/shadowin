@@ -13,27 +13,23 @@
 <body>
     <div class="container-fluid">
         <div class="row show-grid">
-            <div class="col-sm-8">
+            <div class="col-sm-10">
                 <div class="input-group input-group-sm">
-                    <span class="input-group-addon" id="basic-addon1">ShadowStock 影子证券</span>
-                    <input type="text" class="form-control" placeholder="sh000001" aria-describedby="basic-addon1">
+                    <span class="input-group-addon" id="logo">ShadowStock 影子证券</span>
+                    <input type="text" class="form-control" placeholder="sh000001">
+                    <a class="input-group-addon btn btn-sm btn-warning">锁定</a>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-2 text-right">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-warning">锁定</button>
-                    <button type="button" class="btn btn-sm btn-default">解锁</button>
-
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-                            配置
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">导出</a></li>
-                            <li><a href="#">导入</a></li>
-                        </ul>
-                    </div>
+                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                        设置
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">导出</a></li>
+                        <li><a href="#">导入</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -42,21 +38,21 @@
                 <table class="table table-bordered table-condensed table-hover">
                     <thead>
                         <tr>
-                            <td>名称</td>
-                            <td>最新价</td>
-                            <td>涨跌</td>
-                            <td>涨跌率</td>
-                            <td>最高</td>
-                            <td>最低</td>
-                            <td>今开</td>
-                            <td>昨收</td>
-                            <td>成交额</td>
-                            <td>成本</td>
-                            <td>盈亏率</td>
-                            <td>持有量</td>
-                            <td>总盈亏</td>
-                            <td>时间</td>
-                            <td>快链</td>
+                            <th>名称</th>
+                            <th>最新价</th>
+                            <th>涨跌</th>
+                            <th>涨跌率</th>
+                            <th>最高</th>
+                            <th>最低</th>
+                            <th>今开</th>
+                            <th>昨收</th>
+                            <th>成交额</th>
+                            <th>成本</th>
+                            <th>盈亏率</th>
+                            <th>持有量</th>
+                            <th>总盈亏</th>
+                            <th>时间</th>
+                            <th>快链</th>
                         </tr>
                     </thead>
                     <tbody>

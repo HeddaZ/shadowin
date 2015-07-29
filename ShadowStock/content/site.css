@@ -9,10 +9,20 @@
     padding-right: 10px !important;
 }
 
+.show-grid {
+    margin-bottom: 5px;
+}
+
+#logo {
+    font-weight: bold;
+    color: #369;
+}
+
 td {
     cursor: default;
 }
 
-.show-grid {
-    margin-bottom: 5px;
+.input-group-addon.btn-warning,
+.input-group-addon.btn-danger {
+    color: #fff;
 }
