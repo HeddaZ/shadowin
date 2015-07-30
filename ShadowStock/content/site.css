@@ -1,5 +1,5 @@
 ﻿body {
-    font-size: 14px !important;
+    font-size: 13px !important;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -16,8 +16,10 @@
 #logo {
     font-weight: bold;
     color: #369;
+    cursor: default;
 }
 
+th,
 td {
     cursor: default;
 }
