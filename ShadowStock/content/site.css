@@ -1,5 +1,5 @@
 ﻿body {
-    font-size: 13px !important;
+    font-size: 14px !important;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -21,6 +21,17 @@
 td {
     cursor: default;
 }
+td span {
+    display: block;
+    padding: 0px 3px;
+}
+td.positive {
+    color: red;
+}
+td.negative {
+    color: green;
+}
+
 
 .input-group-addon.btn-warning,
 .input-group-addon.btn-danger {

@@ -23,13 +23,19 @@
 
         getValueDefault = function (data) {
             if (!this._value) {
-                this._value = data[this.id];
+                this._value = Number(data[this.id]);
             }
             return this._value;
         },
+        shortenNumberText = function (value) {
+            return value > 10000 ? Math.round(value / 10000) + '万' : value.toString();
+        },
         getTextDefault = function (data) {
             if (!this._text) {
-                this._text = '????????txt:' + this.getValue(data);
+                var value = this.getValue(data);
+                this._text = isNaN(value)
+                    ? data[this.id]
+                    : shortenNumberText(value);
             }
             return this._text;
         },
