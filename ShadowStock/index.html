@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-    <title>ShadowStock 影子证券（新浪版）</title>
+    <title>ShadowStock 影子证券 - 沪深创业板</title>
     <meta name="description" content="简洁精悍的上班族隐蔽看股工具，链接新浪财经实时数据源，支持自选股、实时价格刷新、持仓盈亏统计，更支持单元格高亮着色；加上《Shadowin 影窗浏览器》提供的半透明窗体和老板键特性，更是神不知鬼不觉" />
 
     <link href="content/bootstrap.css" rel="stylesheet" />
@@ -13,16 +13,15 @@
 <body>
     <div class="container-fluid">
         <div class="row show-grid">
-            <div class="col-sm-10">
+            <div class="col-sm-5">
                 <div class="input-group input-group-sm">
                     <span class="input-group-addon" id="logo">ShadowStock 影子证券</span>
-                    <input type="text" class="form-control" placeholder="sh000001">
-                    <a class="input-group-addon btn btn-sm btn-warning">锁定</a>
+                    <input id="suggestText" type="text" class="form-control" placeholder="sh000001">
                 </div>
             </div>
-            <div class="col-sm-2 text-right">
+            <div class="col-sm-5">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                    <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown">
                         设置
                         <span class="caret"></span>
                     </button>
@@ -33,10 +32,15 @@
                     </ul>
                 </div>
             </div>
+            <div class="col-sm-2 text-right">
+                <span>
+                    站长统计
+                </span>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-bordered table-condensed table-hover">
+                <table id="stockTable" class="table table-bordered table-condensed table-hover">
                     <thead>
                         <tr>
                             <th>名称</th>
@@ -98,8 +102,39 @@
     </div>
 
     <script src="scripts/jquery-1.10.2.js"></script>
+    <script src="scripts/jquery.cookie.js"></script>
     <script src="scripts/bootstrap.js"></script>
     <script src="scripts/respond.js"></script>
-    <script src="index.html.js"></script>
+    <script src="shadowstock.js"></script>
+    <script type="text/javascript">
+        alert(ShadowStock.renderTable());
+
+        //alert($.cookie('abc'));
+
+
+        //alert($.param({ a: "aaaa", b: "bbbb", c: 100 }));
+        //alert($.param("a=aaaa&b=bbbb&c=100").b);
+        //$.cookie('abc', new Date().toString());
+        //var hq_str_sh600036;
+
+        //$.getScript("http://suggest3.sinajs.cn/suggest/type=11,12,13,14,15&key=xtd&name=suggestdata_1438174826752", function (response, status) {
+        ////$.getScript("http://localhost/alert.js", function (response, status) {
+
+        //    //alert(response);
+        //    //alert(status);
+        //    //alert("1 -- " + hq_str_sh600036);
+
+        //    var stockDatasString;
+        //    eval("stockDatasString=suggestdata_1438174826752");
+        //    alert(stockDatasString);
+        //});
+
+
+    </script>
+
+    <!--<script src="http://hq.sinajs.cn/rn=1438174827282&list=sh600036"></script>
+    <script type="text/javascript">
+        //alert("2 -- " + hq_str_sh600036);
+    </script>-->
 </body>
 </html>
