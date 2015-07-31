@@ -15,7 +15,7 @@
         <div class="row show-grid">
             <div class="col-sm-5">
                 <div class="input-group input-group-sm">
-                    <span class="input-group-addon" id="logo">ShadowStock 影子证券</span>
+                    <a class="input-group-addon" id="logo" href="https://github.com/heddaz/shadowin" target="_blank">ShadowStock 影子证券</a>
                     <input id="suggestText" type="text" class="form-control" placeholder="代码 / 名称 / 拼音">
                 </div>
             </div>
@@ -73,8 +73,8 @@
                             <td class="positive">55</td>
                             <td class="positive">22.2</td>
                             <td class="positive">333</td>
-                            <td><span class="btn-success">-22%</span></td>
-                            <td><span class="btn-success">-2.22</span></td>
+                            <td class="positive">-22%</td>
+                            <td class="btn-success">-2.22</td>
                             <td class="positive">333%</td>
                             <td class="positive">55</td>
                         </tr>
@@ -90,8 +90,8 @@
                             <td class="negative">55</td>
                             <td class="negative">222</td>
                             <td class="negative">3.33</td>
-                            <td><span class="btn-danger">22%</span></td>
-                            <td><span class="btn-danger">2323</span></td>
+                            <td class="negative">2%</td>
+                            <td class="btn-danger">2322</td>
                             <td class="negative">333%</td>
                             <td class="negative">55</td>
                         </tr>
@@ -107,7 +107,11 @@
     <script src="scripts/respond.js"></script>
     <script src="shadowstock.js"></script>
     <script type="text/javascript">
-        //alert(ShadowStock.renderTable());
+        //var aa = [];
+        //aa[2] = 100;
+        //alert(aa.length);
+
+        document.write(ShadowStock.renderTable());
 
         //alert($.cookie('abc'));
 
