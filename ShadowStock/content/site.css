@@ -31,6 +31,9 @@ td.positive {
 td.negative {
     color: green;
 }
+td.editor {
+    cursor: pointer;
+}
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
 .table-condensed > tfoot > tr > th,
