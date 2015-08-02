@@ -1,10 +1,11 @@
-﻿(function (window, undefined) {
+﻿(function (window, document, undefined) {
     var _shadowStock = {},
         _appName = 'ShadowStock 影子证券 - 沪深创业板',
         _appVersion = '2.0',
 
         /******************** 配置 ********************/
         _options = {
+            /* {"11":"A 股","12":"B 股","13":"权证","14":"期货","15":"债券","21":"开基","22":"ETF","23":"LOF","24":"货基","25":"QDII","26":"封基","31":"港股","32":"窝轮","41":"美股","42":"外期"} */
             suggestUrl: 'http://suggest3.sinajs.cn/suggest/type=11,12,13,14,15&name=suggestdata_{0}&key={1}',
             dataUrl: 'http://hq.sinajs.cn/rn={0}&list={1}',
             detailUrl: 'http://biz.finance.sina.com.cn/suggest/lookup_n.php?q={0}',
@@ -229,8 +230,43 @@
         _getTicks = function () {
             return new Date().getTime();
         },
-        _attachSuggest = function () {
+        _attachSuggest = function (suggestText) {
+            //var availableTags = [
+            //  "ActionScript",
+            //  "AppleScript",
+            //  "Asp",
+            //  "BASIC",
+            //  "C",
+            //  "C++",
+            //  "Clojure",
+            //  "COBOL",
+            //  "ColdFusion",
+            //  "Erlang",
+            //  "Fortran",
+            //  "Groovy",
+            //  "Haskell",
+            //  "Java",
+            //  "JavaScript",
+            //  "Lisp",
+            //  "Perl",
+            //  "PHP",
+            //  "Python",
+            //  "Ruby",
+            //  "Scala",
+            //  "Scheme"
+            //];
 
+
+            
+
+            
+            //suggestText.autocomplete({
+            //    source: "http://hq.sinajs.cn/rn=0&list=sz000002",
+            //    minLength: 2,
+            //    select: function (event, ui) {
+            //        alert(ui.item ? ui.item.value : "Nothing");
+            //    }
+            //});
         },
         _renderTable = function () {
             var data = '万  科Ａ,15.60,14.62,14.71,14.75,14.35,14.60,14.61,164106499,2380501164.68,981058,14.60,510800,14.59,956193,14.58,149700,14.57,112700,14.56,83008,14.61,101510,14.62,47500,14.63,21600,14.64,166783,14.65,2015-07-29,15:05:17,00'
@@ -278,4 +314,4 @@
     _shadowStock.renderTable = _renderTable;
 
     window.ShadowStock = init();
-})(this);
+})(this, this.document);

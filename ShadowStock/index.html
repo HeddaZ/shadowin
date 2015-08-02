@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8" />
-
     <title>ShadowStock 影子证券 - 沪深创业板</title>
     <meta name="description" content="简洁精悍的上班族隐蔽看股工具，链接新浪财经实时数据源，支持自选股、实时价格刷新、持仓盈亏统计，更支持单元格高亮着色；加上《Shadowin 影窗浏览器》提供的半透明窗体和老板键特性，更是神不知鬼不觉" />
 
     <link href="content/bootstrap.css" rel="stylesheet" />
     <link href="content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="content/jquery-ui.css" rel="stylesheet" />
     <link href="content/site.css" rel="stylesheet" />
 </head>
 <body>
@@ -102,43 +102,31 @@
     </div>
 
     <script src="scripts/jquery-1.10.2.js"></script>
+    <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.cookie.js"></script>
     <script src="scripts/bootstrap.js"></script>
     <script src="scripts/respond.js"></script>
     <script src="shadowstock.js"></script>
     <script type="text/javascript">
-        //var aa = [];
-        //aa[2] = 100;
-        //alert(aa.length);
-
+        ShadowStock.attachSuggest($('#suggestText'));
         document.write(ShadowStock.renderTable());
 
-        //alert($.cookie('abc'));
 
 
-        //alert($.param({ a: "aaaa", b: "bbbb", c: 100 }));
-        //alert($.param("a=aaaa&b=bbbb&c=100").b);
-        //$.cookie('abc', new Date().toString());
-        //var hq_str_sh600036;
+        //$('<iframe/>').attr('src', 'http://hq.sinajs.cn/rn=0&list=sz000002')
+        //        .appendTo($(document.body));
 
-        //$.getScript("http://suggest3.sinajs.cn/suggest/type=11,12,13,14,15&key=xtd&name=suggestdata_1438174826752", function (response, status) {
-        ////$.getScript("http://localhost/alert.js", function (response, status) {
 
-        //    //alert(response);
-        //    //alert(status);
-        //    //alert("1 -- " + hq_str_sh600036);
+        //var eleScript = document.createElement("script");
+        //eleScript.type = "text/javascript";
+        //eleScript.src = "http://hq.sinajs.cn/rn=0&list=sz000002";
+        //document.getElementsByTagName("HEAD")[0].appendChild(eleScript);
 
-        //    var stockDatasString;
-        //    eval("stockDatasString=suggestdata_1438174826752");
-        //    alert(stockDatasString);
-        //});
+        $.getScript('http://hq.sinajs.cn/?rn=0&list=sz000002', function () {
+            alert(hq_str_sz000002);
+        });
 
 
     </script>
-
-    <!--<script src="http://hq.sinajs.cn/rn=1438174827282&list=sh600036"></script>
-    <script type="text/javascript">
-        //alert("2 -- " + hq_str_sh600036);
-    </script>-->
 </body>
 </html>
