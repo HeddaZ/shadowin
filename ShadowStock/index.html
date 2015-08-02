@@ -17,6 +17,7 @@
                 <div class="input-group input-group-sm">
                     <a class="input-group-addon" id="logo" href="https://github.com/heddaz/shadowin" target="_blank">ShadowStock 影子证券</a>
                     <input id="suggestText" type="text" class="form-control" placeholder="代码 / 名称 / 拼音">
+                    <input id="suggestText2" type="text" class="form-control" placeholder="代码 / 名称 / 拼音">
                 </div>
             </div>
             <div class="col-sm-5">
@@ -109,24 +110,17 @@
     <script src="shadowstock.js"></script>
     <script type="text/javascript">
         ShadowStock.attachSuggest($('#suggestText'));
-        document.write(ShadowStock.renderTable());
+        ShadowStock.attachSuggest($('#suggestText2'));
+        ShadowStock.attachTable($('#stockTable'));
+
+        ShadowStock.init();
 
 
+        var ss = 'sz000002,sh600036'.split(',');
+        ss2 = ss.join('__');
+        alert(ss2);
 
-        //$('<iframe/>').attr('src', 'http://hq.sinajs.cn/rn=0&list=sz000002')
-        //        .appendTo($(document.body));
-
-
-        //var eleScript = document.createElement("script");
-        //eleScript.type = "text/javascript";
-        //eleScript.src = "http://hq.sinajs.cn/rn=0&list=sz000002";
-        //document.getElementsByTagName("HEAD")[0].appendChild(eleScript);
-
-        $.getScript('http://hq.sinajs.cn/?rn=0&list=sz000002', function () {
-            alert(hq_str_sz000002);
-        });
-
-
+        //return html;
     </script>
 </body>
 </html>
