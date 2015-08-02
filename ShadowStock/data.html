@@ -8,14 +8,15 @@
     <script src="scripts/jquery-1.10.2.js"></script>
     <script src="scripts/getUrlQueryString.js"></script>
     <script type="text/javascript">
-        // http://localhost:2556/data-retriever.html?url=http%3A%2F%2Fhq.sinajs.cn%2F%3Frn%3D1438487893646%26list%3Dsz000002%2Csh600036&callback=ShadowStock.stockCallback&returns%5B%5D=hq_str_sz000002&returns%5B%5D=hq_str_sh600036
         var query = $.getUrlQueryString(window.location.href);
-        alert(query.returns);
         document.write(unescape('%3Cscript type="text/javascript" src="' + query.url + '"%3E%3C/script%3E'));
     </script>
     <script type="text/javascript">
-        // Callback
-
+        var args = {};
+        for (var i = 0; i < query.args.length; i++) {
+            args[query.args[i]] = eval(query.args[i]);
+        }
+        eval('window.parent.' + query.callback + '(args)');
     </script>
 </body>
 </html>

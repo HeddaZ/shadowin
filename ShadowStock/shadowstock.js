@@ -1,11 +1,12 @@
 ﻿(function (window, document, undefined) {
     var _shadowStock = {},
+        _appId = 'ShadowStock_SH_SZ',
         _appName = 'ShadowStock 影子证券 - 沪深创业板',
         _appVersion = '2.0',
 
         /******************** 配置 ********************/
         _options = {
-            dataRetrieverUrl: 'data-retriever.html',
+            cookieExpires: new Date(9999, 1, 1),
             /*
             {"11":"A 股","12":"B 股","13":"权证","14":"期货","15":"债券",
             "21":"开基","22":"ETF","23":"LOF","24":"货基","25":"QDII","26":"封基",
@@ -15,22 +16,10 @@
             stockUrl: 'http://hq.sinajs.cn/?rn={0}&list={1}', //http://hq.sinajs.cn/?rn=1438174827282&list=sh600036,sh600050,sh601857,sz000002
             stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间'
                 .split(','),
-
-            nameColumnId: 0,
-            openingPriceColumnId: 1,
-            priceColumnId: 3,
-
-            sinaSymbolColumnId: 40,
-            costColumnId: 41,
-            quantityColumnId: 42,
-
-            changeColumnId: 50,
-            symbolColumnId: 52,
-            totalCostColumnId: 54,
-            totalAmountColumnId: 55,
-            gainLossColumnId: 56,
         },
-        _userOptions = {
+
+        _userOptions,
+        defaultUserOptions = {
             refreshInterval: 5000,
             displayColumns: [ /////////////////////////////////////////////////
                 { id: 0, name: 'BB' },
@@ -52,25 +41,55 @@
                 { id: 58, name: 'aa' },
             ],
             watchingStocks: [ /////////////////////////////////////////////////
-                { symbol: 'sh000001', name: '【上证指数】' },
-                { symbol: 'sz000002', name: '【万科A】', cost: 11.01, quantity: 2000 },
+                { sinaSymbol: 'sh000001', name: '【上证指数】' },
+                { sinaSymbol: 'sz000002', name: '【万科A】', cost: 11.01, quantity: 2000 },
             ],
+        },
+        getUserOptions = function () {
+            var userOptions = $.cookie(_appId);
+            if (!userOptions) {
+                return defaultUserOptions;
+            }
+            else {
+                if (!(userOptions.refreshInterval >= 1000)) {
+                    userOptions.refreshInterval = defaultUserOptions.refreshInterval;
+                }
+                if (!(userOptions.displayColumns && userOptions.displayColumns > 0)) {
+                    userOptions.displayColumns = defaultUserOptions.displayColumns;
+                }
+                if (!userOptions.watchingStocks) {
+                    userOptions.watchingStocks = defaultUserOptions.watchingStocks;
+                }
+                return userOptions;
+            }
         },
 
         /******************** 初始化 ********************/
         _columnEngines = [],
         initColumnEngines = function () {
-            // 远程数据源
-            for (var i = 0; i < _options.stockColumns.length; i++) {
+            // 远程 - 数据源栏位
+            _options.nameColumnId = 0;
+            _options.openingPriceColumnId = 1;
+            _options.priceColumnId = 3;
+            var stockColumnsLength = _options.stockColumns.length;
+            for (var i = 0; i < stockColumnsLength; i++) {
                 _columnEngines[i] = { id: i, name: _options.stockColumns[i], siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
             }
-            // 本地扩展数据源
-            _columnEngines[40] = { id: 40, name: '新浪代码', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
-            _columnEngines[41] = { id: 41, name: '成本', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
-            _columnEngines[42] = { id: 42, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
-            // 本地扩展栏位
-            _columnEngines[50] = {
-                id: 50, name: '涨跌', siblings: _columnEngines,
+
+            // 本地扩展 - 数据源栏位
+            _options.sinaSymbolColumnId = 40;
+            _columnEngines[_options.sinaSymbolColumnId] = { id: _options.sinaSymbolColumnId, name: '新浪代码', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
+
+            _options.costColumnId = 41;
+            _columnEngines[_options.costColumnId] = { id: _options.costColumnId, name: '成本', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
+
+            _options.quantityColumnId = 42;
+            _columnEngines[_options.quantityColumnId] = { id: _options.quantityColumnId, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
+
+            // 本地扩展 - 非数据源栏位
+            _options.changeColumnId = 50;
+            _columnEngines[_options.changeColumnId] = {
+                id: _options.changeColumnId, name: '涨跌', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: getTextDefault,
                 getValue: function (data) {
@@ -80,8 +99,10 @@
                     return this._value;
                 }
             };
-            _columnEngines[51] = {
-                id: 51, name: '涨跌率', siblings: _columnEngines,
+
+            _options.changeRateColumnId = 51;
+            _columnEngines[_options.changeRateColumnId] = {
+                id: _options.changeRateColumnId, name: '涨跌率', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: getTextAsPercentage,
                 getValue: function (data) {
@@ -91,8 +112,10 @@
                     return this._value;
                 }
             };
-            _columnEngines[52] = {
-                id: 52, name: '代码', siblings: _columnEngines,
+
+            _options.symbolColumnId = 52;
+            _columnEngines[_options.symbolColumnId] = {
+                id: _options.symbolColumnId, name: '代码', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: function (data) {
                     if (this._text == undefined) {
@@ -102,8 +125,10 @@
                 },
                 getValue: getValueDefault
             };
-            _columnEngines[53] = {
-                id: 53, name: '名称代码', siblings: _columnEngines,
+
+            _options.fullNameColumnId = 53;
+            _columnEngines[_options.fullNameColumnId] = {
+                id: _options.fullNameColumnId, name: '名称', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: function (data) {
                     if (this._text == undefined) {
@@ -116,8 +141,10 @@
                 },
                 getValue: getValueDefault
             };
-            _columnEngines[54] = {
-                id: 54, name: '总成本', siblings: _columnEngines,
+
+            _options.totalCostColumnId = 54;
+            _columnEngines[_options.totalCostColumnId] = {
+                id: _options.totalCostColumnId, name: '总成本', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: getTextDefault,
                 getValue: function (data) {
@@ -127,8 +154,10 @@
                     return this._value;
                 }
             };
-            _columnEngines[55] = {
-                id: 55, name: '总现值', siblings: _columnEngines,
+
+            _options.totalAmountColumnId = 55;
+            _columnEngines[_options.totalAmountColumnId] = {
+                id: _options.totalAmountColumnId, name: '总现值', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: getTextDefault,
                 getValue: function (data) {
@@ -138,8 +167,10 @@
                     return this._value;
                 }
             };
-            _columnEngines[56] = {
-                id: 56, name: '盈亏', siblings: _columnEngines,
+
+            _options.gainLossColumnId = 56;
+            _columnEngines[_options.gainLossColumnId] = {
+                id: _options.gainLossColumnId, name: '盈亏', siblings: _columnEngines,
                 getClass: getClassForGainLoss,
                 getText: getTextDefault,
                 getValue: function (data) {
@@ -149,8 +180,10 @@
                     return this._value;
                 }
             };
-            _columnEngines[57] = {
-                id: 57, name: '盈亏率', siblings: _columnEngines,
+
+            _options.gainLossRateColumnId = 57;
+            _columnEngines[_options.gainLossRateColumnId] = {
+                id: _options.gainLossRateColumnId, name: '盈亏率', siblings: _columnEngines,
                 getClass: getClassForGainLoss,
                 getText: getTextAsPercentage,
                 getValue: function (data) {
@@ -160,7 +193,20 @@
                     return this._value;
                 }
             };
-            _columnEngines[58] = { id: 58, name: '工具', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
+
+            _options.toolColumnId = 58;
+            _columnEngines[_options.toolColumnId] = {
+                id: _options.toolColumnId, name: '工具', siblings: _columnEngines,
+                getClass: getClassDefault,
+                getText: function (data) {
+                    if (this._text == undefined) {
+                        this._text = _formatString('<a title=\"技术指标\" href=\"TI.htm?{0}\" target=\"_blank\">T</a>',
+                            this.siblings[_options.sinaSymbolColumnId].getText(data));
+                    }
+                    return this._text;
+                },
+                getValue: getValueDefault
+            };
         },
         dataRetriever = $('<iframe class="hidden"></iframe>'),
         _init = function () {
@@ -168,7 +214,6 @@
             initColumnEngines();
             // 远程数据容器
             $(document.body).append(dataRetriever);
-
             // 启动
             stockRequest();
         },
@@ -200,8 +245,8 @@
         _toPercentageText = function (value) {
             return _round(value * 100, 2) + '%';
         },
-        _requestData = function (options) {
-            dataRetriever.attr('src', _options.dataRetrieverUrl + '?' + $.param(options));
+        _requestData = function (args) {
+            dataRetriever.attr('src', 'data.html?' + $.param(args));
         },
 
         /******************** 内部方法 ********************/
@@ -251,42 +296,71 @@
                 stockTimer = window.clearTimeout(stockTimer);
             }
 
+            _userOptions = getUserOptions();
+
+            // 自选列表
+            var stockList = '';
+            var callbackArgs = [];
+            var watchingStocksLength = _userOptions.watchingStocks.length;
+            for (var i = 0; i < watchingStocksLength ; i++) {
+                stockList += _userOptions.watchingStocks[i].sinaSymbol + ',';
+                callbackArgs.push('hq_str_' + _userOptions.watchingStocks[i].sinaSymbol);
+            }
             _requestData({
-                url: _formatString(_options.stockUrl, _getTicks(), 'sz000002,sh600036'),
+                url: _formatString(_options.stockUrl, _getTicks(), stockList),
                 callback: 'ShadowStock.stockCallback',
-                returns: ['hq_str_sz000002', 'hq_str_sh600036']
+                args: callbackArgs
             });
         },
-        _stockCallback = function (data) {
-            //var data = '万  科Ａ,15.60,14.62,14.71,14.75,14.35,14.60,14.61,164106499,2380501164.68,981058,14.60,510800,14.59,956193,14.58,149700,14.57,112700,14.56,83008,14.61,101510,14.62,47500,14.63,21600,14.64,166783,14.65,2015-07-29,15:05:17,00'
-            //    .split(',');
-            //data[_options.sinaSymbolColumnId] = 'sz000002';
-            //data[_options.costColumnId] = '14.7';
-            //data[_options.quantityColumnId] = '2500';
+        _stockCallback = function (args) {
+            try {
+                _stockTable.empty();
+                var displayColumnsLength = _userOptions.displayColumns.length;
+                var stockTableRow;
 
-            //var html = '<table border=2 width=100%>';
-            //html += '<tr data-symbol="">';
+                // 表头
+                var stockTableHead = $('<thead>').appendTo(_stockTable);
+                stockTableRow = $('<tr>').appendTo(stockTableHead);
+                for (var i = 0; i < displayColumnsLength ; i++) {
+                    $('<th>').html(_columnEngines[_userOptions.displayColumns[i].id].name)
+                        .appendTo(stockTableRow);
+                }
 
-            //for (var i = 0; i < this.userOptions.displayColumns.length; i++) {
-            //    html += _formatString('<th>{0}</td>',
-            //        this.columnEngines[this.userOptions.displayColumns[i].id].name);
-            //}
-            //html += '</tr>';
-            //html += '<tr>';
-            //for (var i = 0; i < this.userOptions.displayColumns.length; i++) {
-            //    html += _formatString('<td class={1}>{0} - {2}</td>',
-            //        this.columnEngines[this.userOptions.displayColumns[i].id].getText(data),
-            //        this.columnEngines[this.userOptions.displayColumns[i].id].getClass(data),
-            //        this.columnEngines[_options.sinaSymbolColumnId].getText(data)
-            //        );
-            //}
+                // 表体
+                var stockTableBody = $('<tbody>').appendTo(_stockTable);
+                for (var key in args) {
+                    var sinaSymbol = key.substr(key.lastIndexOf('_') + 1);
+                    // 远程 - 数据源
+                    var data = args[key].split(',');
+                    // 本地扩展 - 数据源
+                    data[_options.sinaSymbolColumnId] = sinaSymbol;
+                    var watchingStock = findWatchingStock(sinaSymbol);
+                    if (watchingStock) {
+                        data[_options.costColumnId] = watchingStock.cost;
+                        data[_options.quantityColumnId] = watchingStock.quantity;
+                    }
 
-
-            //html += '</tr>';
-            //html += '</table>';
-
-            // 下次刷新
-            stockTimer = window.setTimeout(stockRequest, _userOptions.refreshInterval);
+                    stockTableRow = $('<tr>').appendTo(stockTableBody);
+                    for (var i = 0; i < displayColumnsLength ; i++) {
+                        $('<td>').data('sinaSymbol', _columnEngines[_options.sinaSymbolColumnId].getText(data))
+                            .addClass(_columnEngines[_userOptions.displayColumns[i].id].getClass(data))
+                            .html(_columnEngines[_userOptions.displayColumns[i].id].getText(data))
+                            .appendTo(stockTableRow);
+                    }
+                }
+            }
+            finally {
+                stockTimer = window.setTimeout(stockRequest, _userOptions.refreshInterval);
+            }
+        },
+        findWatchingStock = function (sinaSymbol) {
+            var watchingStocksLength = _userOptions.watchingStocks.length;
+            for (var i = 0; i < watchingStocksLength ; i++) {
+                if (_userOptions.watchingStocks[i].sinaSymbol == sinaSymbol) {
+                    return _userOptions.watchingStocks[i];
+                }
+            }
+            return null;
         },
 
         suggestRequest = function (keyword) {
@@ -318,6 +392,7 @@
     ;
 
     /******************** 导出 ********************/
+    _shadowStock.appId = _appId;
     _shadowStock.appName = _appName;
     _shadowStock.appVersion = _appVersion;
     _shadowStock.options = _options;
