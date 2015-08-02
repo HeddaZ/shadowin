@@ -20,7 +20,7 @@
 
         _userOptions,
         defaultUserOptions = {
-            refreshInterval: 5000,
+            refreshInterval: 10000,
             displayColumns: [ /////////////////////////////////////////////////
                 { id: 0, name: 'BB' },
                 { id: 3, name: 'aa' },
@@ -43,6 +43,7 @@
             watchingStocks: [ /////////////////////////////////////////////////
                 { sinaSymbol: 'sh000001', name: '【上证指数】' },
                 { sinaSymbol: 'sz000002', name: '【万科A】', cost: 11.01, quantity: 2000 },
+                { sinaSymbol: 'sh600036', name: '【万科A】', cost: 19.01, quantity: 3000 },
             ],
         },
         getUserOptions = function () {
@@ -81,17 +82,17 @@
             _columnEngines[_options.sinaSymbolColumnId] = { id: _options.sinaSymbolColumnId, name: '新浪代码', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
 
             _options.costColumnId = 41;
-            _columnEngines[_options.costColumnId] = { id: _options.costColumnId, name: '成本', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
+            _columnEngines[_options.costColumnId] = { id: _options.costColumnId, name: '成本', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
 
             _options.quantityColumnId = 42;
-            _columnEngines[_options.quantityColumnId] = { id: _options.quantityColumnId, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
+            _columnEngines[_options.quantityColumnId] = { id: _options.quantityColumnId, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
 
             // 本地扩展 - 非数据源栏位
             _options.changeColumnId = 50;
             _columnEngines[_options.changeColumnId] = {
                 id: _options.changeColumnId, name: '涨跌', siblings: _columnEngines,
                 getClass: getClassDefault,
-                getText: getTextDefault,
+                getText: getTextForNumber,
                 getValue: function (data) {
                     if (this._value == undefined) {
                         this._value = this.siblings[_options.priceColumnId].getValue(data) - this.siblings[_options.openingPriceColumnId].getValue(data);
@@ -146,7 +147,7 @@
             _columnEngines[_options.totalCostColumnId] = {
                 id: _options.totalCostColumnId, name: '总成本', siblings: _columnEngines,
                 getClass: getClassDefault,
-                getText: getTextDefault,
+                getText: getTextForNumber,
                 getValue: function (data) {
                     if (this._value == undefined) {
                         this._value = this.siblings[_options.costColumnId].getValue(data) * this.siblings[_options.quantityColumnId].getValue(data);
@@ -159,7 +160,7 @@
             _columnEngines[_options.totalAmountColumnId] = {
                 id: _options.totalAmountColumnId, name: '总现值', siblings: _columnEngines,
                 getClass: getClassDefault,
-                getText: getTextDefault,
+                getText: getTextForNumber,
                 getValue: function (data) {
                     if (this._value == undefined) {
                         this._value = this.siblings[_options.priceColumnId].getValue(data) * this.siblings[_options.quantityColumnId].getValue(data);
@@ -172,7 +173,7 @@
             _columnEngines[_options.gainLossColumnId] = {
                 id: _options.gainLossColumnId, name: '盈亏', siblings: _columnEngines,
                 getClass: getClassForGainLoss,
-                getText: getTextDefault,
+                getText: getTextForNumber,
                 getValue: function (data) {
                     if (this._value == undefined) {
                         this._value = this.siblings[_options.totalAmountColumnId].getValue(data) - this.siblings[_options.totalCostColumnId].getValue(data);
@@ -208,6 +209,16 @@
                 getValue: getValueDefault
             };
         },
+        clearColumnEnginesCache = function () {
+            var columnEnginesLength = _columnEngines.length;
+            for (var i = 0; i < columnEnginesLength; i++) {
+                if (_columnEngines[i]) {
+                    _columnEngines[i]._class = undefined;
+                    _columnEngines[i]._text = undefined;
+                    _columnEngines[i]._value = undefined;
+                }
+            }
+        },
         dataRetriever = $('<iframe class="hidden"></iframe>'),
         _init = function () {
             // 列数据处理引擎
@@ -227,6 +238,9 @@
             });
         },
         _round = function (value, precision) {
+            if (isNaN(value)) {
+                return NaN;
+            }
             precision = precision ? parseInt(precision) : 0;
             if (precision <= 0) {
                 return Math.round(value);
@@ -236,13 +250,19 @@
         _getTicks = function () {
             return new Date().getTime();
         },
-        _toNumberText = function (value) {
+        _toShortNumberText = function (value) {
+            if (isNaN(value)) {
+                return NaN;
+            }
             var unit8 = Math.pow(10, 8), unit4 = Math.pow(10, 4);
             return value >= unit8
                 ? _round(value / unit8) + '亿'
                 : (value >= unit4 ? _round(value / unit4) + '万' : _round(value, 2).toString());
         },
         _toPercentageText = function (value) {
+            if (isNaN(value)) {
+                return '';
+            }
             return _round(value * 100, 2) + '%';
         },
         _requestData = function (args) {
@@ -264,7 +284,7 @@
                 var value = this.getValue(data);
                 this._text = isNaN(value)
                     ? data[this.id]
-                    : _toNumberText(value);
+                    : _toShortNumberText(value);
             }
             return this._text;
         },
@@ -288,6 +308,12 @@
                     : (value < 0 ? 'btn-success' : 'btn-default');
             }
             return this._class;
+        },
+        getTextForNumber = function (data) {
+            if (this._text == undefined) {
+                this._text = _round(this.getValue(data), 2);
+            }
+            return this._text;
         },
 
         stockTimer,
@@ -329,6 +355,8 @@
                 // 表体
                 var stockTableBody = $('<tbody>').appendTo(_stockTable);
                 for (var key in args) {
+                    clearColumnEnginesCache();
+
                     var sinaSymbol = key.substr(key.lastIndexOf('_') + 1);
                     // 远程 - 数据源
                     var data = args[key].split(',');
@@ -403,7 +431,7 @@
     _shadowStock.formatString = _formatString;
     _shadowStock.round = _round;
     _shadowStock.getTicks = _getTicks;
-    _shadowStock.toNumberText = _toNumberText;
+    _shadowStock.toShortNumberText = _toShortNumberText;
     _shadowStock.toPercentageText = _toPercentageText;
     _shadowStock.requestData = _requestData;
 
