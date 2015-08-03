@@ -17,7 +17,7 @@
                 <div class="input-group input-group-sm">
                     <a class="input-group-addon" id="logo" href="https://github.com/heddaz/shadowin" target="_blank">ShadowStock 影子证券</a>
                     <input id="suggestText" type="text" class="form-control" placeholder="代码 / 名称 / 拼音">
-                    <input id="suggestText2" type="text" class="form-control" placeholder="代码 / 名称 / 拼音">
+                    <textarea id="suggestText2" rows="5" cols="50"></textarea>
                 </div>
             </div>
             <div class="col-sm-5">
@@ -51,21 +51,43 @@
     <script src="scripts/jquery.cookie.js"></script>
     <script src="scripts/bootstrap.js"></script>
     <script src="scripts/respond.js"></script>
-    <script src="shadowstock.js"></script>
+    <script src="scripts/shadowstock.js"></script>
     <script type="text/javascript">
-        ShadowStock.attachSuggest($('#suggestText'));
-        ShadowStock.attachSuggest($('#suggestText2'));
+        ShadowStock.attachSuggestion($('#suggestText'));
         ShadowStock.attachTable($('#stockTable'));
 
         ShadowStock.init();
 
-        //alert(new Date(9999, 1, 1).toGMTString());
 
-        //var ss = 'sz000002,sh600036'.split(',');
-        //ss2 = ss.join('__');
-        //alert(ss2);
+        //$("#birds").autocomplete({
+        //    source: ['22222', '333333', '4444444', '5555555', '456'],
+        //    minLength: 0
+        //});
 
-        //return html;
+        //$('#btn').click(function () {
+        //    $(".selector").autocomplete("search", "4");
+        //});
+
+        ////$(function () {
+        ////    var cache = {};
+        ////    $("#birds").autocomplete({
+        ////        source: function (request, response) {
+        ////            var term = request.term;
+        ////            if (term in cache) {
+        ////                response(cache[term]);
+        ////                return;
+        ////            }
+
+        ////            $.getJSON("search.php", request, function (data, status, xhr) {
+        ////                cache[term] = data;
+        ////                response(data);
+        ////            });
+        ////        }
+        ////    });
+        ////});
+
+
+
     </script>
 </body>
 </html>

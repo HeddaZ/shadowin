@@ -12,7 +12,7 @@
             "21":"开基","22":"ETF","23":"LOF","24":"货基","25":"QDII","26":"封基",
             "31":"港股","32":"窝轮","41":"美股","42":"外期"}
             */
-            suggestUrl: 'http://suggest3.sinajs.cn/suggest/?type=11,12,13,14,15&key={1}&name=suggestdata_{0}', //http://suggest3.sinajs.cn/suggest/?type=11,12,13,14,15&key=xtd&name=suggestdata_1438174826752
+            suggestionUrl: 'http://suggest3.sinajs.cn/suggest/?type=11,12,13,14,15&key={1}&name={0}', //http://suggest3.sinajs.cn/suggest/?type=11,12,13,14,15&key=xtd&name=suggestdata_1438174826752
             stockUrl: 'http://hq.sinajs.cn/?rn={0}&list={1}', //http://hq.sinajs.cn/?rn=1438174827282&list=sh600036,sh600050,sh601857,sz000002
             stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间'
                 .split(','),
@@ -219,12 +219,13 @@
                 }
             }
         },
-        dataRetriever = $('<iframe class="hidden"></iframe>'),
+        stockRetriever = $('<iframe class="hidden"></iframe>'),
+        suggestionRetriever = $('<iframe class="hidden"></iframe>'),
         _init = function () {
             // 列数据处理引擎
             initColumnEngines();
             // 远程数据容器
-            $(document.body).append(dataRetriever);
+            $(document.body).append(stockRetriever).append(suggestionRetriever);
             // 启动
             stockRequest();
         },
@@ -265,8 +266,8 @@
             }
             return _round(value * 100, 2) + '%';
         },
-        _requestData = function (args) {
-            dataRetriever.attr('src', 'data.html?' + $.param(args));
+        _requestData = function (retriever, args) {
+            retriever.attr('src', 'data.html?' + $.param(args));
         },
 
         /******************** 内部方法 ********************/
@@ -325,17 +326,18 @@
             _userSettings = getUserSettings();
 
             // 自选列表
+            var token = _getTicks();
+            var args = [token]; // 注意：第一个参数是 Token，将原封不动的返回
             var stockList = '';
-            var callbackArgs = [];
             var watchingStocksLength = _userSettings.watchingStocks.length;
             for (var i = 0; i < watchingStocksLength ; i++) {
                 stockList += _userSettings.watchingStocks[i].sinaSymbol + ',';
-                callbackArgs.push('hq_str_' + _userSettings.watchingStocks[i].sinaSymbol);
+                args.push('hq_str_' + _userSettings.watchingStocks[i].sinaSymbol);
             }
-            _requestData({
-                url: _formatString(_appSettings.stockUrl, _getTicks(), stockList),
+            _requestData(stockRetriever, {
+                url: _formatString(_appSettings.stockUrl, token, stockList),
                 callback: 'ShadowStock.stockCallback',
-                args: callbackArgs
+                args: args
             });
         },
         _stockCallback = function (args) {
@@ -391,16 +393,43 @@
             return null;
         },
 
-        suggestRequest = function (keyword) {
-            _requestData(_appSettings.suggestUrl, {
-                type: '11,12,13,14,15',
-                key: '600036',
-                name: 'suggestdata_' + _getTicks(),
-                callback: 'ShadowStock.suggestCallback'
+        suggestionCache = {},
+        suggestionRequest = function (term) {
+            var token = term;
+            var args = [token]; // 注意：第一个参数是 Token，将原封不动的返回
+            var suggestionName = 'suggestion_' + _getTicks();
+            args.push(suggestionName);
+            _requestData(suggestionRetriever, {
+                url: _formatString(_appSettings.suggestionUrl, suggestionName, escape(term)),
+                callback: 'ShadowStock.suggestionCallback',
+                args: args
             });
         },
-        _suggestCallback = function (data) {
+        _suggestionCallback = function (args) {
+            /*
+            xtdh,11,002125,sz002125,湘潭电化,xtdh;
+            xtdq,11,300372,sz300372,欣泰电气,xtdq;
+            qxtd,11,002408,sz002408,齐翔腾达,qxtd
+            */
+            for (var key in args) {
+                if (key == 'token') {
+                    continue;
+                }
 
+                var source = [];
+                var suggestions = args[key].split(';');
+                var suggestionsLength = suggestions.length;
+                for (var i = 0; i < suggestionsLength; i++) {
+                    var suggestionColumns = suggestions[i].split(',');
+                    source.push({
+                        label: _formatString('{0} {1} {2}', suggestionColumns[0], suggestionColumns[2], suggestionColumns[4]),
+                        value: suggestionColumns[3]
+                    });
+                }
+                suggestionCache[args.token] = source;
+                _suggestionText.autocomplete('option', 'source', source);
+                break;
+            }
         },
 
         /******************** 外部方法 ********************/
@@ -408,14 +437,23 @@
         _attachTable = function (table) {
             _stockTable = table.empty();
         },
-        _attachSuggest = function (suggest) {
-            //suggestText.autocomplete({
-            //    source: "http://hq.sinajs.cn/rn=0&list=sz000002",
-            //    minLength: 2,
-            //    select: function (event, ui) {
-            //        alert(ui.item ? ui.item.value : "Nothing");
-            //    }
-            //});
+        _suggestionText,
+        _attachSuggestion = function (suggestion) {
+            _suggestionText = suggestion;
+            _suggestionText.autocomplete({
+                minLength: 1,
+                source: [],
+                search: function (event, ui) {
+                    var term = event.target.value;
+                    if (term) {
+                        if (term in suggestionCache) {
+                            _suggestionText.autocomplete('option', 'source', suggestionCache[term]);
+                            return;
+                        }
+                        suggestionRequest(term);
+                    }
+                }
+            });
         }
     ;
 
@@ -435,10 +473,10 @@
     _shadowStock.toPercentageText = _toPercentageText;
     _shadowStock.requestData = _requestData;
 
-    _shadowStock.attachSuggest = _attachSuggest;
+    _shadowStock.attachSuggestion = _attachSuggestion;
     _shadowStock.attachTable = _attachTable;
     _shadowStock.stockCallback = _stockCallback;
-    _shadowStock.suggestCallback = _suggestCallback;
+    _shadowStock.suggestionCallback = _suggestionCallback;
     _shadowStock.init = _init;
 
     window.ShadowStock = _shadowStock;
