@@ -5,7 +5,7 @@
         _appVersion = '2.0',
 
         /******************** 配置 ********************/
-        _options = {
+        _appSettings = {
             cookieExpires: new Date(9999, 1, 1),
             /*
             {"11":"A 股","12":"B 股","13":"权证","14":"期货","15":"债券",
@@ -18,13 +18,13 @@
                 .split(','),
         },
 
-        _userOptions,
-        defaultUserOptions = {
+        _userSettings,
+        defaultUserSettings = {
             refreshInterval: 10000,
             displayColumns: [ /////////////////////////////////////////////////
                 { id: 0, name: 'BB' },
+                { id: 1, name: 'aa' },
                 { id: 3, name: 'aa' },
-                { id: 9, name: 'aa' },
 
                 { id: 40, name: 'aa' },
                 { id: 41, name: 'BB' },
@@ -46,22 +46,22 @@
                 { sinaSymbol: 'sh600036', name: '【万科A】', cost: 19.01, quantity: 3000 },
             ],
         },
-        getUserOptions = function () {
-            var userOptions = $.cookie(_appId);
-            if (!userOptions) {
-                return defaultUserOptions;
+        getUserSettings = function () {
+            var userSettings = $.cookie(_appId);
+            if (!userSettings) {
+                return defaultUserSettings;
             }
             else {
-                if (!(userOptions.refreshInterval >= 1000)) {
-                    userOptions.refreshInterval = defaultUserOptions.refreshInterval;
+                if (!(userSettings.refreshInterval >= 1000)) {
+                    userSettings.refreshInterval = defaultUserSettings.refreshInterval;
                 }
-                if (!(userOptions.displayColumns && userOptions.displayColumns > 0)) {
-                    userOptions.displayColumns = defaultUserOptions.displayColumns;
+                if (!(userSettings.displayColumns && userSettings.displayColumns > 0)) {
+                    userSettings.displayColumns = defaultUserSettings.displayColumns;
                 }
-                if (!userOptions.watchingStocks) {
-                    userOptions.watchingStocks = defaultUserOptions.watchingStocks;
+                if (!userSettings.watchingStocks) {
+                    userSettings.watchingStocks = defaultUserSettings.watchingStocks;
                 }
-                return userOptions;
+                return userSettings;
             }
         },
 
@@ -69,140 +69,140 @@
         _columnEngines = [],
         initColumnEngines = function () {
             // 远程 - 数据源栏位
-            _options.nameColumnId = 0;
-            _options.openingPriceColumnId = 1;
-            _options.priceColumnId = 3;
-            var stockColumnsLength = _options.stockColumns.length;
+            _appSettings.nameColumnId = 0;
+            _appSettings.closingPriceColumnId = 2;
+            _appSettings.priceColumnId = 3;
+            var stockColumnsLength = _appSettings.stockColumns.length;
             for (var i = 0; i < stockColumnsLength; i++) {
-                _columnEngines[i] = { id: i, name: _options.stockColumns[i], siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
+                _columnEngines[i] = { id: i, name: _appSettings.stockColumns[i], siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
             }
 
             // 本地扩展 - 数据源栏位
-            _options.sinaSymbolColumnId = 40;
-            _columnEngines[_options.sinaSymbolColumnId] = { id: _options.sinaSymbolColumnId, name: '新浪代码', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
+            _appSettings.sinaSymbolColumnId = 40;
+            _columnEngines[_appSettings.sinaSymbolColumnId] = { id: _appSettings.sinaSymbolColumnId, name: '新浪代码', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
 
-            _options.costColumnId = 41;
-            _columnEngines[_options.costColumnId] = { id: _options.costColumnId, name: '成本', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
+            _appSettings.costColumnId = 41;
+            _columnEngines[_appSettings.costColumnId] = { id: _appSettings.costColumnId, name: '成本', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
 
-            _options.quantityColumnId = 42;
-            _columnEngines[_options.quantityColumnId] = { id: _options.quantityColumnId, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
+            _appSettings.quantityColumnId = 42;
+            _columnEngines[_appSettings.quantityColumnId] = { id: _appSettings.quantityColumnId, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
 
             // 本地扩展 - 非数据源栏位
-            _options.changeColumnId = 50;
-            _columnEngines[_options.changeColumnId] = {
-                id: _options.changeColumnId, name: '涨跌', siblings: _columnEngines,
+            _appSettings.changeColumnId = 50;
+            _columnEngines[_appSettings.changeColumnId] = {
+                id: _appSettings.changeColumnId, name: '涨跌', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: getTextForNumber,
                 getValue: function (data) {
                     if (this._value == undefined) {
-                        this._value = this.siblings[_options.priceColumnId].getValue(data) - this.siblings[_options.openingPriceColumnId].getValue(data);
+                        this._value = this.siblings[_appSettings.priceColumnId].getValue(data) - this.siblings[_appSettings.closingPriceColumnId].getValue(data);
                     }
                     return this._value;
                 }
             };
 
-            _options.changeRateColumnId = 51;
-            _columnEngines[_options.changeRateColumnId] = {
-                id: _options.changeRateColumnId, name: '涨跌率', siblings: _columnEngines,
+            _appSettings.changeRateColumnId = 51;
+            _columnEngines[_appSettings.changeRateColumnId] = {
+                id: _appSettings.changeRateColumnId, name: '涨跌率', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: getTextAsPercentage,
                 getValue: function (data) {
                     if (this._value == undefined) {
-                        this._value = this.siblings[_options.changeColumnId].getValue(data) / this.siblings[_options.priceColumnId].getValue(data);
+                        this._value = this.siblings[_appSettings.changeColumnId].getValue(data) / this.siblings[_appSettings.priceColumnId].getValue(data);
                     }
                     return this._value;
                 }
             };
 
-            _options.symbolColumnId = 52;
-            _columnEngines[_options.symbolColumnId] = {
-                id: _options.symbolColumnId, name: '代码', siblings: _columnEngines,
+            _appSettings.symbolColumnId = 52;
+            _columnEngines[_appSettings.symbolColumnId] = {
+                id: _appSettings.symbolColumnId, name: '代码', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: function (data) {
                     if (this._text == undefined) {
-                        this._text = this.siblings[_options.sinaSymbolColumnId].getText(data).replace(/[^\d]/g, '');
+                        this._text = this.siblings[_appSettings.sinaSymbolColumnId].getText(data).replace(/[^\d]/g, '');
                     }
                     return this._text;
                 },
                 getValue: getValueDefault
             };
 
-            _options.fullNameColumnId = 53;
-            _columnEngines[_options.fullNameColumnId] = {
-                id: _options.fullNameColumnId, name: '名称', siblings: _columnEngines,
+            _appSettings.fullNameColumnId = 53;
+            _columnEngines[_appSettings.fullNameColumnId] = {
+                id: _appSettings.fullNameColumnId, name: '名称', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: function (data) {
                     if (this._text == undefined) {
                         this._text = _formatString('{2} <a title="新浪股票" href="http://biz.finance.sina.com.cn/suggest/lookup_n.php?q={0}" target="_blank">{1}</a>',
-                            this.siblings[_options.sinaSymbolColumnId].getText(data),
-                            this.siblings[_options.nameColumnId].getText(data),
-                            this.siblings[_options.symbolColumnId].getText(data));
+                            this.siblings[_appSettings.sinaSymbolColumnId].getText(data),
+                            this.siblings[_appSettings.nameColumnId].getText(data),
+                            this.siblings[_appSettings.symbolColumnId].getText(data));
                     }
                     return this._text;
                 },
                 getValue: getValueDefault
             };
 
-            _options.totalCostColumnId = 54;
-            _columnEngines[_options.totalCostColumnId] = {
-                id: _options.totalCostColumnId, name: '总成本', siblings: _columnEngines,
+            _appSettings.totalCostColumnId = 54;
+            _columnEngines[_appSettings.totalCostColumnId] = {
+                id: _appSettings.totalCostColumnId, name: '总成本', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: getTextForNumber,
                 getValue: function (data) {
                     if (this._value == undefined) {
-                        this._value = this.siblings[_options.costColumnId].getValue(data) * this.siblings[_options.quantityColumnId].getValue(data);
+                        this._value = this.siblings[_appSettings.costColumnId].getValue(data) * this.siblings[_appSettings.quantityColumnId].getValue(data);
                     }
                     return this._value;
                 }
             };
 
-            _options.totalAmountColumnId = 55;
-            _columnEngines[_options.totalAmountColumnId] = {
-                id: _options.totalAmountColumnId, name: '总现值', siblings: _columnEngines,
+            _appSettings.totalAmountColumnId = 55;
+            _columnEngines[_appSettings.totalAmountColumnId] = {
+                id: _appSettings.totalAmountColumnId, name: '总现值', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: getTextForNumber,
                 getValue: function (data) {
                     if (this._value == undefined) {
-                        this._value = this.siblings[_options.priceColumnId].getValue(data) * this.siblings[_options.quantityColumnId].getValue(data);
+                        this._value = this.siblings[_appSettings.priceColumnId].getValue(data) * this.siblings[_appSettings.quantityColumnId].getValue(data);
                     }
                     return this._value;
                 }
             };
 
-            _options.gainLossColumnId = 56;
-            _columnEngines[_options.gainLossColumnId] = {
-                id: _options.gainLossColumnId, name: '盈亏', siblings: _columnEngines,
+            _appSettings.gainLossColumnId = 56;
+            _columnEngines[_appSettings.gainLossColumnId] = {
+                id: _appSettings.gainLossColumnId, name: '盈亏', siblings: _columnEngines,
                 getClass: getClassForGainLoss,
                 getText: getTextForNumber,
                 getValue: function (data) {
                     if (this._value == undefined) {
-                        this._value = this.siblings[_options.totalAmountColumnId].getValue(data) - this.siblings[_options.totalCostColumnId].getValue(data);
+                        this._value = this.siblings[_appSettings.totalAmountColumnId].getValue(data) - this.siblings[_appSettings.totalCostColumnId].getValue(data);
                     }
                     return this._value;
                 }
             };
 
-            _options.gainLossRateColumnId = 57;
-            _columnEngines[_options.gainLossRateColumnId] = {
-                id: _options.gainLossRateColumnId, name: '盈亏率', siblings: _columnEngines,
+            _appSettings.gainLossRateColumnId = 57;
+            _columnEngines[_appSettings.gainLossRateColumnId] = {
+                id: _appSettings.gainLossRateColumnId, name: '盈亏率', siblings: _columnEngines,
                 getClass: getClassForGainLoss,
                 getText: getTextAsPercentage,
                 getValue: function (data) {
                     if (this._value == undefined) {
-                        this._value = this.siblings[_options.gainLossColumnId].getValue(data) / this.siblings[_options.totalCostColumnId].getValue(data);
+                        this._value = this.siblings[_appSettings.gainLossColumnId].getValue(data) / this.siblings[_appSettings.totalCostColumnId].getValue(data);
                     }
                     return this._value;
                 }
             };
 
-            _options.toolColumnId = 58;
-            _columnEngines[_options.toolColumnId] = {
-                id: _options.toolColumnId, name: '工具', siblings: _columnEngines,
+            _appSettings.toolColumnId = 58;
+            _columnEngines[_appSettings.toolColumnId] = {
+                id: _appSettings.toolColumnId, name: '工具', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: function (data) {
                     if (this._text == undefined) {
                         this._text = _formatString('<a title=\"技术指标\" href=\"TI.htm?{0}\" target=\"_blank\">T</a>',
-                            this.siblings[_options.sinaSymbolColumnId].getText(data));
+                            this.siblings[_appSettings.sinaSymbolColumnId].getText(data));
                     }
                     return this._text;
                 },
@@ -256,8 +256,8 @@
             }
             var unit8 = Math.pow(10, 8), unit4 = Math.pow(10, 4);
             return value >= unit8
-                ? _round(value / unit8) + '亿'
-                : (value >= unit4 ? _round(value / unit4) + '万' : _round(value, 2).toString());
+                ? _round(value / unit8, 2) + '亿'
+                : (value >= unit4 ? _round(value / unit4, 2) + '万' : _round(value, 2).toString());
         },
         _toPercentageText = function (value) {
             if (isNaN(value)) {
@@ -272,7 +272,7 @@
         /******************** 内部方法 ********************/
         getClassDefault = function (data) {
             if (this._class == undefined) {
-                var value = this.siblings[_options.changeColumnId].getValue(data);
+                var value = this.siblings[_appSettings.changeColumnId].getValue(data);
                 this._class = value > 0
                     ? 'positive'
                     : (value < 0 ? 'negative' : '');
@@ -302,7 +302,7 @@
         },
         getClassForGainLoss = function (data) {
             if (this._class == undefined) {
-                var value = this.siblings[_options.gainLossColumnId].getValue(data);
+                var value = this.siblings[_appSettings.gainLossColumnId].getValue(data);
                 this._class = value > 0
                     ? 'btn-danger'
                     : (value < 0 ? 'btn-success' : 'btn-default');
@@ -322,18 +322,18 @@
                 stockTimer = window.clearTimeout(stockTimer);
             }
 
-            _userOptions = getUserOptions();
+            _userSettings = getUserSettings();
 
             // 自选列表
             var stockList = '';
             var callbackArgs = [];
-            var watchingStocksLength = _userOptions.watchingStocks.length;
+            var watchingStocksLength = _userSettings.watchingStocks.length;
             for (var i = 0; i < watchingStocksLength ; i++) {
-                stockList += _userOptions.watchingStocks[i].sinaSymbol + ',';
-                callbackArgs.push('hq_str_' + _userOptions.watchingStocks[i].sinaSymbol);
+                stockList += _userSettings.watchingStocks[i].sinaSymbol + ',';
+                callbackArgs.push('hq_str_' + _userSettings.watchingStocks[i].sinaSymbol);
             }
             _requestData({
-                url: _formatString(_options.stockUrl, _getTicks(), stockList),
+                url: _formatString(_appSettings.stockUrl, _getTicks(), stockList),
                 callback: 'ShadowStock.stockCallback',
                 args: callbackArgs
             });
@@ -341,14 +341,14 @@
         _stockCallback = function (args) {
             try {
                 _stockTable.empty();
-                var displayColumnsLength = _userOptions.displayColumns.length;
+                var displayColumnsLength = _userSettings.displayColumns.length;
                 var stockTableRow;
 
                 // 表头
                 var stockTableHead = $('<thead>').appendTo(_stockTable);
                 stockTableRow = $('<tr>').appendTo(stockTableHead);
                 for (var i = 0; i < displayColumnsLength ; i++) {
-                    $('<th>').html(_columnEngines[_userOptions.displayColumns[i].id].name)
+                    $('<th>').html(_columnEngines[_userSettings.displayColumns[i].id].name)
                         .appendTo(stockTableRow);
                 }
 
@@ -361,38 +361,38 @@
                     // 远程 - 数据源
                     var data = args[key].split(',');
                     // 本地扩展 - 数据源
-                    data[_options.sinaSymbolColumnId] = sinaSymbol;
+                    data[_appSettings.sinaSymbolColumnId] = sinaSymbol;
                     var watchingStock = findWatchingStock(sinaSymbol);
                     if (watchingStock) {
-                        data[_options.costColumnId] = watchingStock.cost;
-                        data[_options.quantityColumnId] = watchingStock.quantity;
+                        data[_appSettings.costColumnId] = watchingStock.cost;
+                        data[_appSettings.quantityColumnId] = watchingStock.quantity;
                     }
 
                     stockTableRow = $('<tr>').appendTo(stockTableBody);
                     for (var i = 0; i < displayColumnsLength ; i++) {
-                        $('<td>').data('sinaSymbol', _columnEngines[_options.sinaSymbolColumnId].getText(data))
-                            .addClass(_columnEngines[_userOptions.displayColumns[i].id].getClass(data))
-                            .html(_columnEngines[_userOptions.displayColumns[i].id].getText(data))
+                        $('<td>').data('sinaSymbol', _columnEngines[_appSettings.sinaSymbolColumnId].getText(data))
+                            .addClass(_columnEngines[_userSettings.displayColumns[i].id].getClass(data))
+                            .html(_columnEngines[_userSettings.displayColumns[i].id].getText(data))
                             .appendTo(stockTableRow);
                     }
                 }
             }
             finally {
-                stockTimer = window.setTimeout(stockRequest, _userOptions.refreshInterval);
+                stockTimer = window.setTimeout(stockRequest, _userSettings.refreshInterval);
             }
         },
         findWatchingStock = function (sinaSymbol) {
-            var watchingStocksLength = _userOptions.watchingStocks.length;
+            var watchingStocksLength = _userSettings.watchingStocks.length;
             for (var i = 0; i < watchingStocksLength ; i++) {
-                if (_userOptions.watchingStocks[i].sinaSymbol == sinaSymbol) {
-                    return _userOptions.watchingStocks[i];
+                if (_userSettings.watchingStocks[i].sinaSymbol == sinaSymbol) {
+                    return _userSettings.watchingStocks[i];
                 }
             }
             return null;
         },
 
         suggestRequest = function (keyword) {
-            _requestData(_options.suggestUrl, {
+            _requestData(_appSettings.suggestUrl, {
                 type: '11,12,13,14,15',
                 key: '600036',
                 name: 'suggestdata_' + _getTicks(),
@@ -423,8 +423,8 @@
     _shadowStock.appId = _appId;
     _shadowStock.appName = _appName;
     _shadowStock.appVersion = _appVersion;
-    _shadowStock.options = _options;
-    _shadowStock.userOptions = _userOptions;
+    _shadowStock.appSettings = _appSettings;
+    _shadowStock.userSettings = _userSettings;
     _shadowStock.columnEngines = _columnEngines;
     _shadowStock.stockTable = _stockTable;
 
