@@ -45,6 +45,8 @@
         </div>
     </div>
 
+    <table class="table table-bordered table-condensed table-hover" id="stockTable2"><thead><tr><th>名称</th><th>今开</th><th>最新价</th><th>新浪代码</th><th>成本</th><th>持有量</th><th>涨跌</th><th>涨跌率</th><th>代码</th><th>名称</th><th>总成本</th><th>总现值</th><th>盈亏</th><th>盈亏率</th><th>工具</th></tr></thead><tbody><tr><td class="negative">上证指数</td><td class="negative">3614.99</td><td class="negative">3622.91</td><td class="negative">sh000001</td><td class="negative"></td><td class="negative"></td><td class="negative">-40.82</td><td class="negative">-1.13%</td><td class="negative">000001</td><td class="negative">000001 <a title="新浪股票" href="http://biz.finance.sina.com.cn/suggest/lookup_n.php?q=sh000001" target="_blank">上证指数</a></td><td class="negative"></td><td class="negative"></td><td class="btn-default"></td><td class="btn-default"></td><td class="negative"><a title="技术指标" href="TI.htm?sh000001" target="_blank">T</a></td></tr><tr><td class="positive">万  科Ａ</td><td class="positive">14.1</td><td class="positive">14.61</td><td class="positive">sz000002</td><td class="positive">11.01</td><td class="positive">2000</td><td class="positive">0.43</td><td class="positive">2.94%</td><td class="positive">000002</td><td class="positive">000002 <a title="新浪股票" href="http://biz.finance.sina.com.cn/suggest/lookup_n.php?q=sz000002" target="_blank">万  科Ａ</a></td><td class="positive">22020</td><td class="positive">29220</td><td class="btn-danger">7200</td><td class="btn-danger">32.7%</td><td class="positive"><a title="技术指标" href="TI.htm?sz000002" target="_blank">T</a></td></tr><tr><td class="positive">招商银行</td><td class="positive">17.2</td><td class="positive">18.09</td><td class="positive">sh600036</td><td class="positive">19.01</td><td class="positive">3000</td><td class="positive">0.79</td><td class="positive">4.37%</td><td class="positive">600036</td><td class="positive">600036 <a title="新浪股票" href="http://biz.finance.sina.com.cn/suggest/lookup_n.php?q=sh600036" target="_blank">招商银行</a></td><td class="positive">57030</td><td class="positive">54270</td><td class="btn-success">-2760</td><td class="btn-success">-4.84%</td><td class="positive"><a title="技术指标" href="TI.htm?sh600036" target="_blank">T</a></td></tr></tbody></table>
+
     <script src="scripts/jquery-1.10.2.js"></script>
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.cookie.js"></script>
@@ -58,6 +60,16 @@
         ShadowStock.init();
 
 
+        window.setTimeout(function () {
+            $('#stockTable2 tbody, #stockTable tbody').sortable({
+                handle: 'td',
+                forceHelperSize: true
+            });
+
+            $("table, td, th").disableSelection();
+        }, 3000);
+
+        
 
     </script>
 </body>
