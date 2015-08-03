@@ -21,7 +21,7 @@
         _userSettings,
         defaultUserSettings = {
             refreshInterval: 10000,
-            displayColumns: [ /////////////////////////////////////////////////
+            displayColumns: [ //////////////////////////???????????????????///////////////////////
                 { id: 0, name: 'BB' },
                 { id: 1, name: 'aa' },
                 { id: 3, name: 'aa' },
@@ -40,7 +40,7 @@
                 { id: 57, name: 'aa' },
                 { id: 58, name: 'aa' },
             ],
-            watchingStocks: [ /////////////////////////////////////////////////
+            watchingStocks: [ ///////////////////////////??????????????????//////////////////////
                 { sinaSymbol: 'sh000001', name: '【上证指数】' },
                 { sinaSymbol: 'sz000002', name: '【万科A】', cost: 11.01, quantity: 2000 },
                 { sinaSymbol: 'sh600036', name: '【万科A】', cost: 19.01, quantity: 3000 },
@@ -357,8 +357,11 @@
                 // 表体
                 var stockTableBody = $('<tbody>').appendTo(_stockTable);
                 for (var key in args) {
-                    clearColumnEnginesCache();
+                    if (key == 'token') {
+                        continue;
+                    }
 
+                    clearColumnEnginesCache();
                     var sinaSymbol = key.substr(key.lastIndexOf('_') + 1);
                     // 远程 - 数据源
                     var data = args[key].split(',');
@@ -395,7 +398,7 @@
 
         suggestionCache = {},
         suggestionRequest = function (term) {
-            var token = term;
+            var token = escape(term);
             var args = [token]; // 注意：第一个参数是 Token，将原封不动的返回
             var suggestionName = 'suggestion_' + _getTicks();
             args.push(suggestionName);
@@ -426,8 +429,10 @@
                         value: suggestionColumns[3]
                     });
                 }
-                suggestionCache[args.token] = source;
+                var term = unescape(args.token);
+                suggestionCache[term] = source;
                 _suggestionText.autocomplete('option', 'source', source);
+                _suggestionText.autocomplete("search", term); // 重新激活搜索以抵消异步延迟
                 break;
             }
         },
@@ -442,6 +447,7 @@
             _suggestionText = suggestion;
             _suggestionText.autocomplete({
                 minLength: 1,
+                autoFocus: true,
                 source: [],
                 search: function (event, ui) {
                     var term = event.target.value;
@@ -452,6 +458,13 @@
                         }
                         suggestionRequest(term);
                     }
+                },
+                select: function (event, ui) {
+                    // ??????????? 送入 cookie
+                    //alert(ui.item.value);
+                    
+                    $(event.target).focus().select();
+                    return false;
                 }
             });
         }
