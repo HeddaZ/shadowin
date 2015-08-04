@@ -1,5 +1,4 @@
 ﻿body {
-    font-size: 13px !important;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -21,9 +20,9 @@ th,
 td {
     cursor: default;
 }
-td span {
-    display: block;
-    padding: 0px 3px;
+
+[role="handle"] {
+    cursor: move;
 }
 td.positive {
     color: red;
@@ -43,8 +42,11 @@ td.editor {
   padding: 3px;
 }
 
-
 .input-group-addon.btn-warning,
 .input-group-addon.btn-danger {
     color: #fff;
+}
+
+.ui-sortable-helper {
+    display: table;
 }

@@ -12,15 +12,15 @@
             "21":"开基","22":"ETF","23":"LOF","24":"货基","25":"QDII","26":"封基",
             "31":"港股","32":"窝轮","41":"美股","42":"外期"}
             */
-            suggestionUrl: 'http://suggest3.sinajs.cn/suggest/?type=11,12,13,14,15&key={1}&name={0}', //http://suggest3.sinajs.cn/suggest/?type=11,12,13,14,15&key=xtd&name=suggestdata_1438174826752
-            stockUrl: 'http://hq.sinajs.cn/?rn={0}&list={1}', //http://hq.sinajs.cn/?rn=1438174827282&list=sh600036,sh600050,sh601857,sz000002
+            suggestionUrl: 'http://suggest3.sinajs.cn/suggest/?type=11,12,13,14,15&key={1}&name={0}',
+            stockUrl: 'http://hq.sinajs.cn/?rn={0}&list={1}',
             stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间'
                 .split(','),
         },
 
         _userSettings,
         defaultUserSettings = {
-            refreshInterval: 10000,
+            refreshInterval: 5000,
             displayColumns: [ //////////////////////////???????????????????///////////////////////
                 { id: 0, name: 'BB' },
                 { id: 1, name: 'aa' },
@@ -38,7 +38,7 @@
                 { id: 55, name: 'aa' },
                 { id: 56, name: 'aa' },
                 { id: 57, name: 'aa' },
-                { id: 58, name: 'aa' },
+                { id: 58, name: 'aa' },{ id: 59, name: 'aa' },
             ],
             watchingStocks: [ ///////////////////////////??????????????????//////////////////////
                 { sinaSymbol: 'sh000001', name: '【上证指数】' },
@@ -88,7 +88,19 @@
             _columnEngines[_appSettings.quantityColumnId] = { id: _appSettings.quantityColumnId, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
 
             // 本地扩展 - 非数据源栏位
-            _appSettings.changeColumnId = 50;
+            _appSettings.actionColumnId = 50;
+            _columnEngines[_appSettings.actionColumnId] = {
+                id: _appSettings.actionColumnId, name: '操作', siblings: _columnEngines,
+                getClass: function () { return ''; },
+                getText: function () {
+                    return '<span class="glyphicon glyphicon-move" role="handle" title="排序"></span>'
+                        + ' <span class="glyphicon glyphicon-edit" role="button" title="编辑" data-toggle="popover" data-content="&#60;&#97;&#32;&#104;&#114;&#101;&#102;&#61;&#35;&#62;&#115;&#100;&#102;&#115;&#100;&#102;&#60;&#47;&#97;&#62;"></span>'
+                        + ' <span class="glyphicon glyphicon-remove" role="button" title="删除"></span>';
+                },
+                getValue: getValueDefault
+            };
+
+            _appSettings.changeColumnId = 51;
             _columnEngines[_appSettings.changeColumnId] = {
                 id: _appSettings.changeColumnId, name: '涨跌', siblings: _columnEngines,
                 getClass: getClassDefault,
@@ -101,7 +113,7 @@
                 }
             };
 
-            _appSettings.changeRateColumnId = 51;
+            _appSettings.changeRateColumnId = 52;
             _columnEngines[_appSettings.changeRateColumnId] = {
                 id: _appSettings.changeRateColumnId, name: '涨跌率', siblings: _columnEngines,
                 getClass: getClassDefault,
@@ -114,7 +126,7 @@
                 }
             };
 
-            _appSettings.symbolColumnId = 52;
+            _appSettings.symbolColumnId = 53;
             _columnEngines[_appSettings.symbolColumnId] = {
                 id: _appSettings.symbolColumnId, name: '代码', siblings: _columnEngines,
                 getClass: getClassDefault,
@@ -127,7 +139,7 @@
                 getValue: getValueDefault
             };
 
-            _appSettings.fullNameColumnId = 53;
+            _appSettings.fullNameColumnId = 54;
             _columnEngines[_appSettings.fullNameColumnId] = {
                 id: _appSettings.fullNameColumnId, name: '名称', siblings: _columnEngines,
                 getClass: getClassDefault,
@@ -143,7 +155,7 @@
                 getValue: getValueDefault
             };
 
-            _appSettings.totalCostColumnId = 54;
+            _appSettings.totalCostColumnId = 55;
             _columnEngines[_appSettings.totalCostColumnId] = {
                 id: _appSettings.totalCostColumnId, name: '总成本', siblings: _columnEngines,
                 getClass: getClassDefault,
@@ -156,7 +168,7 @@
                 }
             };
 
-            _appSettings.totalAmountColumnId = 55;
+            _appSettings.totalAmountColumnId = 56;
             _columnEngines[_appSettings.totalAmountColumnId] = {
                 id: _appSettings.totalAmountColumnId, name: '总现值', siblings: _columnEngines,
                 getClass: getClassDefault,
@@ -169,7 +181,7 @@
                 }
             };
 
-            _appSettings.gainLossColumnId = 56;
+            _appSettings.gainLossColumnId = 57;
             _columnEngines[_appSettings.gainLossColumnId] = {
                 id: _appSettings.gainLossColumnId, name: '盈亏', siblings: _columnEngines,
                 getClass: getClassForGainLoss,
@@ -182,7 +194,7 @@
                 }
             };
 
-            _appSettings.gainLossRateColumnId = 57;
+            _appSettings.gainLossRateColumnId = 58;
             _columnEngines[_appSettings.gainLossRateColumnId] = {
                 id: _appSettings.gainLossRateColumnId, name: '盈亏率', siblings: _columnEngines,
                 getClass: getClassForGainLoss,
@@ -195,7 +207,7 @@
                 }
             };
 
-            _appSettings.toolColumnId = 58;
+            _appSettings.toolColumnId = 59;
             _columnEngines[_appSettings.toolColumnId] = {
                 id: _appSettings.toolColumnId, name: '工具', siblings: _columnEngines,
                 getClass: getClassDefault,
@@ -222,10 +234,10 @@
         stockRetriever = $('<iframe class="hidden"></iframe>'),
         suggestionRetriever = $('<iframe class="hidden"></iframe>'),
         _init = function () {
-            // 列数据处理引擎
-            initColumnEngines();
             // 远程数据容器
             $(document.body).append(stockRetriever).append(suggestionRetriever);
+            // 列数据处理引擎
+            initColumnEngines();
             // 启动
             stockRequest();
         },
@@ -317,12 +329,8 @@
             return this._text;
         },
 
-        stockTimer,
         stockRequest = function () {
-            if (stockTimer) {
-                stockTimer = window.clearTimeout(stockTimer);
-            }
-
+            _disableStockTimer();
             _userSettings = getUserSettings();
 
             // 自选列表
@@ -381,9 +389,37 @@
                             .appendTo(stockTableRow);
                     }
                 }
+
+                // 操作 - 移动
+                _stockTable.children('tbody').sortable({
+                    handle: '.glyphicon-move',
+                    cursor: 'move',
+                    axis: "y",
+                    opacity: 0.9,
+                    revert: true,
+                    scroll: false,
+                    start: function (event, ui) { _disableStockTimer(); },
+                    stop: function (event, ui) { _enableStockTimer(); },
+                    update: function (event, ui) {
+                        $('tr', ui.item.parent()).each(function (i) {
+                            //??????????????????
+                        });
+                    }
+                });
+                // 操作 - 编辑
+                $('[data-toggle="popover"]').popover({
+                    html: true
+                }).on('show.bs.popover', function () {
+                    _disableStockTimer();
+                }).on('hidden.bs.popover', function () {
+                    _enableStockTimer();
+                });
+                
+                // 操作 - 删除
+                //?????????????????
             }
             finally {
-                stockTimer = window.setTimeout(stockRequest, _userSettings.refreshInterval);
+                _enableStockTimer();
             }
         },
         findWatchingStock = function (sinaSymbol) {
@@ -432,7 +468,7 @@
                 var term = unescape(args.token);
                 suggestionCache[term] = source;
                 _suggestionText.autocomplete('option', 'source', source);
-                _suggestionText.autocomplete("search", term); // 重新激活搜索以抵消异步延迟
+                _suggestionText.autocomplete('search', term); // 重新激活搜索以抵消异步延迟
                 break;
             }
         },
@@ -462,11 +498,20 @@
                 select: function (event, ui) {
                     // ??????????? 送入 cookie
                     //alert(ui.item.value);
-                    
+
                     $(event.target).focus().select();
                     return false;
                 }
             });
+        },
+        stockTimer,
+        _enableStockTimer = function () {
+            stockTimer = window.setTimeout(stockRequest, _userSettings.refreshInterval);
+        },
+        _disableStockTimer = function () {
+            if (stockTimer) {
+                stockTimer = window.clearTimeout(stockTimer);
+            }
         }
     ;
 
@@ -477,7 +522,6 @@
     _shadowStock.appSettings = _appSettings;
     _shadowStock.userSettings = _userSettings;
     _shadowStock.columnEngines = _columnEngines;
-    _shadowStock.stockTable = _stockTable;
 
     _shadowStock.formatString = _formatString;
     _shadowStock.round = _round;
@@ -486,10 +530,16 @@
     _shadowStock.toPercentageText = _toPercentageText;
     _shadowStock.requestData = _requestData;
 
-    _shadowStock.attachSuggestion = _attachSuggestion;
+    _shadowStock.stockTable = _stockTable;
     _shadowStock.attachTable = _attachTable;
     _shadowStock.stockCallback = _stockCallback;
+
+    _shadowStock.suggestionText = _suggestionText;
+    _shadowStock.attachSuggestion = _attachSuggestion;
     _shadowStock.suggestionCallback = _suggestionCallback;
+
+    _shadowStock.enableStockTimer = _enableStockTimer;
+    _shadowStock.disableStockTimer = _disableStockTimer;
     _shadowStock.init = _init;
 
     window.ShadowStock = _shadowStock;
