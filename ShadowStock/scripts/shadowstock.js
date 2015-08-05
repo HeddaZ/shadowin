@@ -32,7 +32,6 @@
                 { id: 41, name: 'BB' },
                 { id: 42, name: 'aa' },
 
-
                 { id: 51, name: 'aa' },
                 { id: 52, name: 'aa' },
                 { id: 53, name: 'aa' },
@@ -261,12 +260,18 @@
         suggestionRetriever = $('<iframe class="hidden"></iframe>'),
         _init = function () {
             $.cookie.json = true;
+            $('#settingsButton').popover({
+                html: true,
+                trigger: 'manual',
+                placement: 'bottom'
+            }).click(function () {
+                $(this).popover('show');
+            });
 
             // 远程数据容器
             $(document.body).append(stockRetriever).append(suggestionRetriever);
             // 列数据处理引擎
             initColumnEngines();
-
             // 启动
             stockRequest();
         },

@@ -15,32 +15,24 @@
         <div class="row show-grid">
             <div class="col-xs-5">
                 <div class="input-group">
-                    <a class="input-group-addon" id="logo" href="https://github.com/heddaz/shadowin" target="_blank">ShadowStock 影子证券</a>
+                    <a id="logo" class="input-group-addon" href="https://github.com/heddaz/shadowin" target="_blank">ShadowStock 影子证券</a>
                     <input id="suggestText" type="text" class="form-control" placeholder="代码 / 名称 / 拼音">
                 </div>
             </div>
             <div class="col-xs-5">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                        设置
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">导出</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">导入</a></li>
-                    </ul>
+                    <button id="settingsButton" type="button" class="btn btn-info" title="sdfsdfwoerewr" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">设置</button>
                 </div>
             </div>
             <div class="col-xs-2 text-right">
                 <span>
-                    站长统计
+                    <script src="http://s9.cnzz.com/stat.php?id=3760050&web_id=3760050" type="text/javascript"></script>
                 </span>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <div class="alert alert-danger" id="alertPanel"></div>
+                <div id="alertPanel" class="alert alert-danger"></div>
             </div>
         </div>
         <div class="row">
@@ -48,21 +40,34 @@
                 <table id="stockTable" class="table table-bordered table-condensed table-hover"></table>
             </div>
         </div>
-    </div>
 
-    <script src="scripts/jquery-1.10.2.js"></script>
-    <script src="scripts/jquery-ui.js"></script>
-    <script src="scripts/jquery.cookie.js"></script>
-    <script src="scripts/bootstrap.js"></script>
-    <script src="scripts/respond.js"></script>
-    <script src="scripts/shadowstock.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            ShadowStock.attachTable($('#stockTable'));
-            ShadowStock.attachSuggestion($('#suggestText'));
-            ShadowStock.attachAlert($('#alertPanel'));
-            ShadowStock.init();
-        });
-    </script>
+        <script src="scripts/jquery-1.10.2.js"></script>
+        <script src="scripts/jquery-ui.js"></script>
+        <script src="scripts/jquery.cookie.js"></script>
+        <script src="scripts/bootstrap.js"></script>
+        <script src="scripts/respond.js"></script>
+        <script src="scripts/shadowstock.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                ShadowStock.attachTable($('#stockTable'));
+                ShadowStock.attachSuggestion($('#suggestText'));
+                ShadowStock.attachAlert($('#alertPanel'));
+                ShadowStock.init();
+            });
+        </script>
+
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:468px;height:15px"
+                     data-ad-client="ca-pub-9815729917864928"
+                     data-ad-slot="2583230930"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
