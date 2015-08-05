@@ -1,5 +1,5 @@
 $.extend({
-    getUrlQueryString: function (url) {
+    query: function (url) {
         // spliting the url and query string using question mark
         var splitUrl = url.split("?");
 

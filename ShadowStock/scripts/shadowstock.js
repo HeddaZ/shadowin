@@ -39,31 +39,37 @@
                 { id: 55, name: 'aa' },
                 { id: 56, name: 'aa' },
                 { id: 57, name: 'aa' },
-                { id: 58, name: 'aa' }, { id: 59, name: 'aa' },
+                { id: 58, name: 'aa' },
+                { id: 59, name: 'aa' },
             ],
-            watchingStocks: [ ///////////////////////////??????????????????//////////////////////
-                { sinaSymbol: 'sh000001', name: '【上证指数】' },
-                { sinaSymbol: 'sz000002', name: '【万科A】', cost: 11.01, quantity: 2000 },
-                { sinaSymbol: 'sh600036', name: '【万科A】', cost: 19.01, quantity: 3000 },
+            watchingStocks: [
+                { sinaSymbol: 'sh000001', name: '上证指数' },
+                { sinaSymbol: 'sz399006', name: '创业板指' },
+                { sinaSymbol: 'sh600036', name: '招商银行', cost: 18, quantity: 1000 },
+                { sinaSymbol: 'sz000002', name: '万 科Ａ', cost: 10.10, quantity: 2000 },
             ],
         },
         getUserSettings = function () {
             var userSettings = $.cookie(_appId);
             if (!userSettings) {
-                return defaultUserSettings;
+                _userSettings = defaultUserSettings;
+                return;
             }
-            else {
-                if (!(userSettings.refreshInterval >= 1000)) {
-                    userSettings.refreshInterval = defaultUserSettings.refreshInterval;
-                }
-                if (!(userSettings.displayColumns && userSettings.displayColumns > 0)) {
-                    userSettings.displayColumns = defaultUserSettings.displayColumns;
-                }
-                if (!userSettings.watchingStocks) {
-                    userSettings.watchingStocks = defaultUserSettings.watchingStocks;
-                }
-                return userSettings;
+
+            if (!(userSettings.refreshInterval >= 1000)) {
+                userSettings.refreshInterval = defaultUserSettings.refreshInterval;
             }
+            if (!(userSettings.displayColumns && userSettings.displayColumns > 0)) {
+                userSettings.displayColumns = defaultUserSettings.displayColumns;
+            }
+            if (!userSettings.watchingStocks) {
+                userSettings.watchingStocks = defaultUserSettings.watchingStocks;
+            }
+            _userSettings = userSettings;
+            return;
+        },
+        setUserSettings = function () {
+            $.cookie(_appId, _userSettings, { expires: _appSettings.cookieExpires });
         },
 
         /******************** 初始化 ********************/
@@ -253,10 +259,13 @@
         stockRetriever = $('<iframe class="hidden"></iframe>'),
         suggestionRetriever = $('<iframe class="hidden"></iframe>'),
         _init = function () {
+            $.cookie.json = true;
+
             // 远程数据容器
             $(document.body).append(stockRetriever).append(suggestionRetriever);
             // 列数据处理引擎
             initColumnEngines();
+
             // 启动
             stockRequest();
         },
@@ -270,7 +279,7 @@
             });
         },
         _round = function (value, precision) {
-            if (isNaN(value)) {
+            if (!$.isNumeric(value)) {
                 return NaN;
             }
             precision = precision ? parseInt(precision) : 0;
@@ -283,7 +292,7 @@
             return new Date().getTime();
         },
         _toShortNumberText = function (value) {
-            if (isNaN(value)) {
+            if (!$.isNumeric(value)) {
                 return NaN;
             }
             var unit8 = Math.pow(10, 8), unit4 = Math.pow(10, 4);
@@ -292,7 +301,7 @@
                 : (value >= unit4 ? _round(value / unit4, 2) + '万' : _round(value, 2).toString());
         },
         _toPercentageText = function (value) {
-            if (isNaN(value)) {
+            if (!$.isNumeric(value)) {
                 return '';
             }
             return _round(value * 100, 2) + '%';
@@ -314,9 +323,9 @@
         getTextDefault = function (data) {
             if (this._text == undefined) {
                 var value = this.getValue(data);
-                this._text = isNaN(value)
-                    ? data[this.id]
-                    : _toShortNumberText(value);
+                this._text = $.isNumeric(value)
+                    ? _toShortNumberText(value)
+                    : data[this.id];
             }
             return this._text;
         },
@@ -353,7 +362,7 @@
 
         stockRequest = function () {
             _disableStockTimer(true);
-            _userSettings = getUserSettings();
+            getUserSettings();
 
             // 自选列表
             var token = _getTicks();
@@ -450,10 +459,15 @@
                 start: function (event, ui) { _disableStockTimer(); },
                 stop: function (event, ui) { _enableStockTimer(); },
                 update: function (event, ui) {
+                    var watchingStocks = [];
                     $('.glyphicon-move', ui.item.parent()).each(function (i) {
-                        alert(i);
-                        //////???????????cookie
+                        var watchingStock = findWatchingStock($(this).data('id'));
+                        if (watchingStock) {
+                            watchingStocks.push(watchingStock);
+                        }
                     });
+                    _userSettings.watchingStocks = watchingStocks;
+                    setUserSettings();
                 }
             });
 
@@ -520,23 +534,27 @@
         _editorCallback = function (args) {
             switch (args.result) {
                 case 'save':
-                    var id = args.token;
-                    var cost = args.cost;
-                    var quantity = args.quantity;
-                    alert(_formatString('id:{0}, cost:{1}, qty:{2}', id, cost, quantity));
-                    //??????????????cooike
+                    var watchingStock = findWatchingStock(args.token);
+                    if (watchingStock) {
+                        watchingStock.cost = $.isNumeric(args.cost)
+                            ? Number(args.cost)
+                            : undefined;
+                        watchingStock.quantity = $.isNumeric(args.quantity)
+                            ? Number(args.quantity)
+                            : undefined;
+
+                        setUserSettings();
+                    }
 
                 case 'cancel':
-                    $('.container-action .glyphicon-edit').popover('hide');
-                    break;
-
                 default:
+                    $('.container-action .glyphicon-edit').popover('hide');
                     break;
             }
         },
         showAlert = function (message, duration) {
-            if (isNaN(duration) || duration < 0) {
-                duration = 1000;
+            if (!$.isNumeric(duration) || duration < 0) {
+                duration = 1500;
             }
             _alertPanel.html(message).slideDown(function () {
                 var _this = $(this);
@@ -569,9 +587,21 @@
                     }
                 },
                 select: function (event, ui) {
-                    // ???????????cookie
-                    showAlert(ui.item.value);
-                    //alert(ui.item.value);
+                    var watchingStock = findWatchingStock(ui.item.value);
+                    if (watchingStock) {
+                        showAlert(_formatString('{0} ({1}) 已存在', watchingStock.name, watchingStock.sinaSymbol));
+                    }
+                    else {
+                        var sinaSymbol = ui.item.value;
+                        var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') + 1);
+                        _userSettings.watchingStocks.push({
+                            sinaSymbol: sinaSymbol,
+                            name: name
+                        });
+                        setUserSettings();
+                        showAlert(_formatString('{0} ({1}) 已添加', name, sinaSymbol));
+                    }
+
                     $(event.target).focus().select();
                     return false;
                 }

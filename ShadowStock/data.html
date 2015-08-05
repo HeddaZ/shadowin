@@ -6,9 +6,9 @@
 </head>
 <body>
     <script src="scripts/jquery-1.10.2.js"></script>
-    <script src="scripts/getUrlQueryString.js"></script>
+    <script src="scripts/jquery.query.js"></script>
     <script type="text/javascript">
-        var query = $.getUrlQueryString(window.location.href);
+        var query = $.query(window.location.href);
         document.write(unescape('%3Cscript type="text/javascript" src="' + query.url + '"%3E%3C/script%3E'));
     </script>
     <script type="text/javascript">

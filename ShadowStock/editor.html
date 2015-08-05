@@ -17,23 +17,40 @@
             <span class="input-group-addon">持有量</span>
             <input type="text" class="form-control" id="quantity" placeholder="示例: 1000">
         </div>
-        <button type="button" class="btn btn-sm btn-danger" data-action="save">保存</button>
-        <button type="button" class="btn btn-sm btn-default" data-action="cancel">取消</button>
+        <input type="button" class="btn btn-sm btn-danger" data-action="save" value="保存" />
+        <input type="button" class="btn btn-sm btn-default" data-action="cancel" value="取消" />
     </div>
 
     <script src="scripts/jquery-1.10.2.js"></script>
-    <script src="scripts/getUrlQueryString.js"></script>
+    <script src="scripts/jquery.query.js"></script>
     <script type="text/javascript">
         $(function () {
-            var query = $.getUrlQueryString(window.location.href);
-            $('#cost').val(isNaN(query.cost) ? '' : query.cost)
-                .focus(function () {
-                    $(this).select();
-                });
-            $('#quantity').val(isNaN(query.quantity) ? '' : query.quantity)
-                .focus(function () {
-                    $(this).select();
-                });
+            var inputs = $('input');
+            var intelliEnter = function (event) {
+                if (event.keyCode == 13) {
+                    var next = inputs[inputs.index($(this)) + 1];
+                    if (next.type == 'button' || next.type == 'submit' || next.type == 'image') {
+                        next.click();
+                    }
+                    else {
+                        next.focus();
+                    }
+                    event.preventDefault();
+                }
+            }
+            var intelliFocus = function (){
+                $(this).select();
+            }
+
+            var query = $.query(window.location.href);
+            $('#cost').val($.isNumeric(query.cost) ? query.cost : '').bind({
+                keydown: intelliEnter,
+                focus: intelliFocus
+            }).focus();
+            $('#quantity').val($.isNumeric(query.quantity) ? query.quantity : '').bind({
+                keydown: intelliEnter,
+                focus: intelliFocus
+            });
 
             $('[data-action]').click(function () {
                 var callbackArgs = {
