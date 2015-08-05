@@ -7,6 +7,7 @@
         /******************** 配置 ********************/
         _appSettings = {
             cookieExpires: new Date(9999, 1, 1),
+            minRefreshInterval: 3000,
             /*
             {"11":"A 股","12":"B 股","13":"权证","14":"期货","15":"债券",
             "21":"开基","22":"ETF","23":"LOF","24":"货基","25":"QDII","26":"封基",
@@ -56,7 +57,7 @@
                 return;
             }
 
-            if (!(userSettings.refreshInterval >= 1000)) {
+            if (!(userSettings.refreshInterval >= _appSettings.minRefreshInterval)) {
                 userSettings.refreshInterval = defaultUserSettings.refreshInterval;
             }
             if (!(userSettings.displayColumns && userSettings.displayColumns > 0)) {
@@ -100,24 +101,24 @@
                 id: _appSettings.actionsColumnId, name: '操作', siblings: _columnEngines,
                 getClass: getClassAsNone,
                 getText: function (data) {
-                    var id = this.siblings[_appSettings.sinaSymbolColumnId].getText(data);
+                    var sinaSymbol = this.siblings[_appSettings.sinaSymbolColumnId].getText(data);
                     var actionPanel = $('<div class="container-action">');
 
                     $('<span class="glyphicon glyphicon-move" role="handle" title="排序"></span>')
-                        .attr('data-id', id)
+                        .attr('data-id', sinaSymbol)
                         .appendTo(actionPanel);
                     $('<span class="glyphicon glyphicon-edit" role="button"></span>')
-                        .attr('data-id', id)
+                        .attr('data-id', sinaSymbol)
                         .attr('title', _formatString('编辑 - {0}', this.siblings[_appSettings.nameColumnId].getText(data)))
                         .attr('data-content', _formatString('<iframe class="editor" src="editor.html?{0}"></iframe>', $.param({
-                            token: id,
+                            token: sinaSymbol,
                             callback: 'ShadowStock.editorCallback',
                             cost: this.siblings[_appSettings.costColumnId].getText(data),
                             quantity: this.siblings[_appSettings.quantityColumnId].getText(data)
                         })))
                         .appendTo(actionPanel);
                     $('<span class="glyphicon glyphicon-remove" role="button" title="删除"></span>')
-                        .attr('data-id', id)
+                        .attr('data-id', sinaSymbol)
                         .appendTo(actionPanel);
 
                     return actionPanel[0].outerHTML;
@@ -309,6 +310,15 @@
         _requestData = function (retriever, args) {
             retriever.attr('src', 'data.html?' + $.param(args));
         },
+        _findIndex = function (array, keyName, key) {
+            var arrayLength = array.length;
+            for (var i = 0; i < arrayLength ; i++) {
+                if (array[i][keyName] == key) {
+                    return i;
+                }
+            }
+            return -1;
+        },
 
         /******************** 内部方法 ********************/
         getClassDefault = function (data) {
@@ -416,8 +426,9 @@
                     var data = args[key].split(',');
                     // 本地扩展 - 数据源
                     data[_appSettings.sinaSymbolColumnId] = sinaSymbol;
-                    var watchingStock = findWatchingStock(sinaSymbol);
-                    if (watchingStock) {
+                    var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', sinaSymbol);
+                    if (i >= 0) {
+                        var watchingStock = _userSettings.watchingStocks[i];
                         data[_appSettings.costColumnId] = watchingStock.cost;
                         data[_appSettings.quantityColumnId] = watchingStock.quantity;
                     }
@@ -438,21 +449,12 @@
                 _enableStockTimer(true);
             }
         },
-        findWatchingStock = function (sinaSymbol) {
-            var watchingStocksLength = _userSettings.watchingStocks.length;
-            for (var i = 0; i < watchingStocksLength ; i++) {
-                if (_userSettings.watchingStocks[i].sinaSymbol == sinaSymbol) {
-                    return _userSettings.watchingStocks[i];
-                }
-            }
-            return null;
-        },
         assignActions = function () {
             // 移动
             _stockTable.children('tbody').sortable({
                 handle: '.container-action .glyphicon-move',
                 cursor: 'move',
-                axis: "y",
+                axis: 'y',
                 opacity: 0.9,
                 revert: true,
                 scroll: false,
@@ -461,9 +463,9 @@
                 update: function (event, ui) {
                     var watchingStocks = [];
                     $('.glyphicon-move', ui.item.parent()).each(function (i) {
-                        var watchingStock = findWatchingStock($(this).data('id'));
-                        if (watchingStock) {
-                            watchingStocks.push(watchingStock);
+                        var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', $(this).data('id'));
+                        if (i >= 0) {
+                            watchingStocks.push(_userSettings.watchingStocks[i]);
                         }
                     });
                     _userSettings.watchingStocks = watchingStocks;
@@ -485,8 +487,18 @@
 
             // 删除
             $('.container-action .glyphicon-remove').click(function () {
-                alert($(this).data('id'));
-                // ?????????????????????cooike
+                var sinaSymbol = $(this).data('id');
+                if (confirm(_formatString('确定删除 {0} 吗？', sinaSymbol))) {
+                    var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', sinaSymbol);
+                    if (i >= 0) {
+                        var watchingStock = _userSettings.watchingStocks.splice(i, 1)[0];
+                        setUserSettings();
+                        showAlert(_formatString('{0} ({1}) 已删除', watchingStock.name, watchingStock.sinaSymbol));
+                    }
+                    else {
+                        showAlert(_formatString('{0} 不存在', sinaSymbol));
+                    }
+                }
             });
         },
 
@@ -534,8 +546,9 @@
         _editorCallback = function (args) {
             switch (args.result) {
                 case 'save':
-                    var watchingStock = findWatchingStock(args.token);
-                    if (watchingStock) {
+                    var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', args.token);
+                    if (i >= 0) {
+                        var watchingStock = _userSettings.watchingStocks[i];
                         watchingStock.cost = $.isNumeric(args.cost)
                             ? Number(args.cost)
                             : undefined;
@@ -544,6 +557,7 @@
                             : undefined;
 
                         setUserSettings();
+                        showAlert(_formatString('{0} ({1}) 已更新, 成本: {2} 持有量: {3}', watchingStock.name, watchingStock.sinaSymbol, watchingStock.cost, watchingStock.quantity));
                     }
 
                 case 'cancel':
@@ -554,7 +568,7 @@
         },
         showAlert = function (message, duration) {
             if (!$.isNumeric(duration) || duration < 0) {
-                duration = 1500;
+                duration = 2000;
             }
             _alertPanel.html(message).slideDown(function () {
                 var _this = $(this);
@@ -587,8 +601,9 @@
                     }
                 },
                 select: function (event, ui) {
-                    var watchingStock = findWatchingStock(ui.item.value);
-                    if (watchingStock) {
+                    var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', ui.item.value);
+                    if (i >= 0) {
+                        var watchingStock = _userSettings.watchingStocks[i];
                         showAlert(_formatString('{0} ({1}) 已存在', watchingStock.name, watchingStock.sinaSymbol));
                     }
                     else {
@@ -640,6 +655,7 @@
     _shadowStock.toShortNumberText = _toShortNumberText;
     _shadowStock.toPercentageText = _toPercentageText;
     _shadowStock.requestData = _requestData;
+    _shadowStock.findIndex = _findIndex;
 
     _shadowStock.stockTable = _stockTable;
     _shadowStock.attachTable = _attachTable;
