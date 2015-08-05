@@ -40,6 +40,11 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
+                <div class="alert alert-danger" id="alertPanel"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
                 <table id="stockTable" class="table table-bordered table-condensed table-hover"></table>
             </div>
         </div>
@@ -53,8 +58,9 @@
     <script src="scripts/shadowstock.js"></script>
     <script type="text/javascript">
         $(function () {
-            ShadowStock.attachSuggestion($('#suggestText'));
             ShadowStock.attachTable($('#stockTable'));
+            ShadowStock.attachSuggestion($('#suggestText'));
+            ShadowStock.attachAlert($('#alertPanel'));
             ShadowStock.init();
         });
     </script>

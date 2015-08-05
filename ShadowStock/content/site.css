@@ -59,3 +59,8 @@ td.negative {
 .container-action .glyphicon {
     margin: 0px 3px;
 }
+
+.alert {
+    padding: 5px 15px;
+    margin-bottom: 5px;
+}

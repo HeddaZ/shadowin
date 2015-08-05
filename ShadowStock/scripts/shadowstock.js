@@ -534,6 +534,17 @@
                     break;
             }
         },
+        showAlert = function (message, duration) {
+            if (isNaN(duration) || duration < 0) {
+                duration = 1000;
+            }
+            _alertPanel.html(message).slideDown(function () {
+                var _this = $(this);
+                window.setTimeout(function () {
+                    _this.slideUp();
+                }, duration);
+            });
+        },
 
         /******************** 外部方法 ********************/
         _stockTable,
@@ -543,11 +554,7 @@
         _suggestionText,
         _attachSuggestion = function (suggestion) {
             _suggestionText = suggestion;
-            _suggestionText.tooltip({
-                //trigger: 'manual'
-            }).on('shown.bs.tooltip', function () {
-                alert(1); //?????????????
-            }).autocomplete({
+            _suggestionText.autocomplete({
                 minLength: 1,
                 autoFocus: true,
                 source: [],
@@ -563,13 +570,18 @@
                 },
                 select: function (event, ui) {
                     // ???????????cookie
+                    showAlert(ui.item.value);
                     //alert(ui.item.value);
-                    $(event.target).attr('title','sdfsdfdsfsfwefwefwefwef').tooltip('show');
                     $(event.target).focus().select();
                     return false;
                 }
             });
         },
+        _alertPanel,
+        _attachAlert = function (alert) {
+            _alertPanel = alert.empty().hide();
+        },
+
         stockTimer,
         duringStockRefresh,
         _enableStockTimer = function (forStockRefresh) {
@@ -608,6 +620,7 @@
     _shadowStock.suggestionCallback = _suggestionCallback;
 
     _shadowStock.editorCallback = _editorCallback;
+    _shadowStock.attachAlert = _attachAlert;
 
     _shadowStock.enableStockTimer = _enableStockTimer;
     _shadowStock.disableStockTimer = _disableStockTimer;
