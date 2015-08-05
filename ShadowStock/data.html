@@ -15,7 +15,9 @@
         var callbackArgs = { token: query.args[0] }; // 注意：第一个参数是 Token，将原封不动的返回
         var argsLength = query.args.length;
         for (var i = 1; i < argsLength; i++) {
-            callbackArgs[query.args[i]] = eval(query.args[i]);
+            try {
+                callbackArgs[query.args[i]] = eval(query.args[i]);
+            } catch (e) { }
         }
         eval('window.parent.' + query.callback + '(callbackArgs)');
     </script>

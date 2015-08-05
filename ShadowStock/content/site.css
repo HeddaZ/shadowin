@@ -2,10 +2,17 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
 .container-fluid {
     padding-left: 10px !important;
     padding-right: 10px !important;
+}
+.table-condensed > thead > tr > th,
+.table-condensed > tbody > tr > th,
+.table-condensed > tfoot > tr > th,
+.table-condensed > thead > tr > td,
+.table-condensed > tbody > tr > td,
+.table-condensed > tfoot > tr > td {
+  padding: 3px;
 }
 
 .show-grid {
@@ -30,17 +37,6 @@ td.positive {
 td.negative {
     color: green;
 }
-td.editor {
-    cursor: pointer;
-}
-.table-condensed > thead > tr > th,
-.table-condensed > tbody > tr > th,
-.table-condensed > tfoot > tr > th,
-.table-condensed > thead > tr > td,
-.table-condensed > tbody > tr > td,
-.table-condensed > tfoot > tr > td {
-  padding: 3px;
-}
 
 .input-group-addon.btn-warning,
 .input-group-addon.btn-danger {
@@ -49,4 +45,17 @@ td.editor {
 
 .ui-sortable-helper {
     display: table;
+}
+
+.editor {
+    border: 0;
+    width: 205px;
+    height: 120px;
+}
+.container-editor {
+    width: 200px;
+}
+
+.container-action .glyphicon {
+    margin: 0px 3px;
 }

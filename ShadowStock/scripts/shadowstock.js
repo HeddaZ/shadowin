@@ -22,6 +22,7 @@
         defaultUserSettings = {
             refreshInterval: 5000,
             displayColumns: [ //////////////////////////???????????????????///////////////////////
+                { id: 50, name: 'aa' },
                 { id: 0, name: 'BB' },
                 { id: 1, name: 'aa' },
                 { id: 3, name: 'aa' },
@@ -30,7 +31,7 @@
                 { id: 41, name: 'BB' },
                 { id: 42, name: 'aa' },
 
-                { id: 50, name: 'aa' },
+
                 { id: 51, name: 'aa' },
                 { id: 52, name: 'aa' },
                 { id: 53, name: 'aa' },
@@ -38,7 +39,7 @@
                 { id: 55, name: 'aa' },
                 { id: 56, name: 'aa' },
                 { id: 57, name: 'aa' },
-                { id: 58, name: 'aa' },{ id: 59, name: 'aa' },
+                { id: 58, name: 'aa' }, { id: 59, name: 'aa' },
             ],
             watchingStocks: [ ///////////////////////////??????????????????//////////////////////
                 { sinaSymbol: 'sh000001', name: '【上证指数】' },
@@ -88,14 +89,32 @@
             _columnEngines[_appSettings.quantityColumnId] = { id: _appSettings.quantityColumnId, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
 
             // 本地扩展 - 非数据源栏位
-            _appSettings.actionColumnId = 50;
-            _columnEngines[_appSettings.actionColumnId] = {
-                id: _appSettings.actionColumnId, name: '操作', siblings: _columnEngines,
-                getClass: function () { return ''; },
-                getText: function () {
-                    return '<span class="glyphicon glyphicon-move" role="handle" title="排序"></span>'
-                        + ' <span class="glyphicon glyphicon-edit" role="button" title="编辑" data-toggle="popover" data-content="&#60;&#97;&#32;&#104;&#114;&#101;&#102;&#61;&#35;&#62;&#115;&#100;&#102;&#115;&#100;&#102;&#60;&#47;&#97;&#62;"></span>'
-                        + ' <span class="glyphicon glyphicon-remove" role="button" title="删除"></span>';
+            _appSettings.actionsColumnId = 50;
+            _columnEngines[_appSettings.actionsColumnId] = {
+                id: _appSettings.actionsColumnId, name: '操作', siblings: _columnEngines,
+                getClass: getClassAsNone,
+                getText: function (data) {
+                    var id = this.siblings[_appSettings.sinaSymbolColumnId].getText(data);
+                    var actionPanel = $('<div class="container-action">');
+
+                    $('<span class="glyphicon glyphicon-move" role="handle" title="排序"></span>')
+                        .attr('data-id', id)
+                        .appendTo(actionPanel);
+                    $('<span class="glyphicon glyphicon-edit" role="button"></span>')
+                        .attr('data-id', id)
+                        .attr('title', _formatString('编辑 - {0}', this.siblings[_appSettings.nameColumnId].getText(data)))
+                        .attr('data-content', _formatString('<iframe class="editor" src="editor.html?{0}"></iframe>', $.param({
+                            token: id,
+                            callback: 'ShadowStock.editorCallback',
+                            cost: this.siblings[_appSettings.costColumnId].getText(data),
+                            quantity: this.siblings[_appSettings.quantityColumnId].getText(data)
+                        })))
+                        .appendTo(actionPanel);
+                    $('<span class="glyphicon glyphicon-remove" role="button" title="删除"></span>')
+                        .attr('data-id', id)
+                        .appendTo(actionPanel);
+
+                    return actionPanel[0].outerHTML;
                 },
                 getValue: getValueDefault
             };
@@ -210,7 +229,7 @@
             _appSettings.toolColumnId = 59;
             _columnEngines[_appSettings.toolColumnId] = {
                 id: _appSettings.toolColumnId, name: '工具', siblings: _columnEngines,
-                getClass: getClassDefault,
+                getClass: getClassAsNone,
                 getText: function (data) {
                     if (this._text == undefined) {
                         this._text = _formatString('<a title=\"技术指标\" href=\"TI.htm?{0}\" target=\"_blank\">T</a>',
@@ -313,6 +332,12 @@
             }
             return this._text;
         },
+        getTextForNumber = function (data) {
+            if (this._text == undefined) {
+                this._text = _round(this.getValue(data), 2);
+            }
+            return this._text;
+        },
         getClassForGainLoss = function (data) {
             if (this._class == undefined) {
                 var value = this.siblings[_appSettings.gainLossColumnId].getValue(data);
@@ -322,15 +347,12 @@
             }
             return this._class;
         },
-        getTextForNumber = function (data) {
-            if (this._text == undefined) {
-                this._text = _round(this.getValue(data), 2);
-            }
-            return this._text;
+        getClassAsNone = function (data) {
+            return '';
         },
 
         stockRequest = function () {
-            _disableStockTimer();
+            _disableStockTimer(true);
             _userSettings = getUserSettings();
 
             // 自选列表
@@ -349,17 +371,27 @@
             });
         },
         _stockCallback = function (args) {
+            if (!duringStockRefresh) {
+                return;
+            }
+
             try {
                 _stockTable.empty();
                 var displayColumnsLength = _userSettings.displayColumns.length;
                 var stockTableRow;
 
                 // 表头
+                var showActions = false;
                 var stockTableHead = $('<thead>').appendTo(_stockTable);
                 stockTableRow = $('<tr>').appendTo(stockTableHead);
                 for (var i = 0; i < displayColumnsLength ; i++) {
-                    $('<th>').html(_columnEngines[_userSettings.displayColumns[i].id].name)
+                    var id = _userSettings.displayColumns[i].id;
+                    $('<th>').html(_columnEngines[id].name)
                         .appendTo(stockTableRow);
+
+                    if (!showActions && id == _appSettings.actionsColumnId) {
+                        showActions = true;
+                    }
                 }
 
                 // 表体
@@ -383,43 +415,18 @@
 
                     stockTableRow = $('<tr>').appendTo(stockTableBody);
                     for (var i = 0; i < displayColumnsLength ; i++) {
-                        $('<td>').data('sinaSymbol', _columnEngines[_appSettings.sinaSymbolColumnId].getText(data))
-                            .addClass(_columnEngines[_userSettings.displayColumns[i].id].getClass(data))
+                        $('<td>').addClass(_columnEngines[_userSettings.displayColumns[i].id].getClass(data))
                             .html(_columnEngines[_userSettings.displayColumns[i].id].getText(data))
                             .appendTo(stockTableRow);
                     }
                 }
 
-                // 操作 - 移动
-                _stockTable.children('tbody').sortable({
-                    handle: '.glyphicon-move',
-                    cursor: 'move',
-                    axis: "y",
-                    opacity: 0.9,
-                    revert: true,
-                    scroll: false,
-                    start: function (event, ui) { _disableStockTimer(); },
-                    stop: function (event, ui) { _enableStockTimer(); },
-                    update: function (event, ui) {
-                        $('tr', ui.item.parent()).each(function (i) {
-                            //??????????????????
-                        });
-                    }
-                });
-                // 操作 - 编辑
-                $('[data-toggle="popover"]').popover({
-                    html: true
-                }).on('show.bs.popover', function () {
-                    _disableStockTimer();
-                }).on('hidden.bs.popover', function () {
-                    _enableStockTimer();
-                });
-                
-                // 操作 - 删除
-                //?????????????????
+                if (showActions) {
+                    assignActions();
+                }
             }
             finally {
-                _enableStockTimer();
+                _enableStockTimer(true);
             }
         },
         findWatchingStock = function (sinaSymbol) {
@@ -430,6 +437,43 @@
                 }
             }
             return null;
+        },
+        assignActions = function () {
+            // 移动
+            _stockTable.children('tbody').sortable({
+                handle: '.container-action .glyphicon-move',
+                cursor: 'move',
+                axis: "y",
+                opacity: 0.9,
+                revert: true,
+                scroll: false,
+                start: function (event, ui) { _disableStockTimer(); },
+                stop: function (event, ui) { _enableStockTimer(); },
+                update: function (event, ui) {
+                    $('.glyphicon-move', ui.item.parent()).each(function (i) {
+                        alert(i);
+                        //////???????????cookie
+                    });
+                }
+            });
+
+            // 编辑
+            $('.container-action .glyphicon-edit').popover({
+                html: true,
+                trigger: 'manual'
+            }).click(function () {
+                $(this).popover('show');
+            }).on('show.bs.popover', function () {
+                _disableStockTimer();
+            }).on('hidden.bs.popover', function () {
+                _enableStockTimer();
+            });
+
+            // 删除
+            $('.container-action .glyphicon-remove').click(function () {
+                alert($(this).data('id'));
+                // ?????????????????????cooike
+            });
         },
 
         suggestionCache = {},
@@ -473,6 +517,24 @@
             }
         },
 
+        _editorCallback = function (args) {
+            switch (args.result) {
+                case 'save':
+                    var id = args.token;
+                    var cost = args.cost;
+                    var quantity = args.quantity;
+                    alert(_formatString('id:{0}, cost:{1}, qty:{2}', id, cost, quantity));
+                    //??????????????cooike
+
+                case 'cancel':
+                    $('.container-action .glyphicon-edit').popover('hide');
+                    break;
+
+                default:
+                    break;
+            }
+        },
+
         /******************** 外部方法 ********************/
         _stockTable,
         _attachTable = function (table) {
@@ -496,7 +558,7 @@
                     }
                 },
                 select: function (event, ui) {
-                    // ??????????? 送入 cookie
+                    // ???????????cookie
                     //alert(ui.item.value);
 
                     $(event.target).focus().select();
@@ -505,10 +567,13 @@
             });
         },
         stockTimer,
-        _enableStockTimer = function () {
+        duringStockRefresh,
+        _enableStockTimer = function (forStockRefresh) {
             stockTimer = window.setTimeout(stockRequest, _userSettings.refreshInterval);
+            duringStockRefresh = false;
         },
-        _disableStockTimer = function () {
+        _disableStockTimer = function (forStockRefresh) {
+            duringStockRefresh = forStockRefresh;
             if (stockTimer) {
                 stockTimer = window.clearTimeout(stockTimer);
             }
@@ -537,6 +602,8 @@
     _shadowStock.suggestionText = _suggestionText;
     _shadowStock.attachSuggestion = _attachSuggestion;
     _shadowStock.suggestionCallback = _suggestionCallback;
+
+    _shadowStock.editorCallback = _editorCallback;
 
     _shadowStock.enableStockTimer = _enableStockTimer;
     _shadowStock.disableStockTimer = _disableStockTimer;
