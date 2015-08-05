@@ -543,7 +543,11 @@
         _suggestionText,
         _attachSuggestion = function (suggestion) {
             _suggestionText = suggestion;
-            _suggestionText.autocomplete({
+            _suggestionText.tooltip({
+                //trigger: 'manual'
+            }).on('shown.bs.tooltip', function () {
+                alert(1); //?????????????
+            }).autocomplete({
                 minLength: 1,
                 autoFocus: true,
                 source: [],
@@ -560,7 +564,7 @@
                 select: function (event, ui) {
                     // ???????????cookie
                     //alert(ui.item.value);
-
+                    $(event.target).attr('title','sdfsdfdsfsfwefwefwefwef').tooltip('show');
                     $(event.target).focus().select();
                     return false;
                 }
