@@ -24,31 +24,29 @@
         defaultUserSettings = {
             refreshInterval: 5000,
             displayColumns: [
-                { id: 50, name: 'aa' },
-                { id: 0, name: 'BB' },
-                { id: 1, name: 'aa' },
-                { id: 3, name: 'aa' },
-
-                { id: 40, name: 'aa' },
-                { id: 41, name: 'BB' },
-                { id: 42, name: 'aa' },
-
-                { id: 51, name: 'aa' },
-                { id: 52, name: 'aa' },
-                { id: 53, name: 'aa' },
-                { id: 54, name: 'aa' },
-                { id: 55, name: 'aa' },
-                { id: 56, name: 'aa' },
-                { id: 57, name: 'aa' },
-                { id: 58, name: 'aa' },
-                { id: 59, name: 'aa' },
+                { id: 50, name: '操作' },
+                { id: 54, name: '名称代码' },
+                { id: 3, name: '最新价' },
+                { id: 51, name: '涨跌' },
+                { id: 52, name: '涨跌率' },
+                { id: 4, name: '最高' },
+                { id: 5, name: '最低' },
+                { id: 1, name: '今开' },
+                { id: 2, name: '昨收' },
+                { id: 9, name: '成交额' },
+                { id: 41, name: '成本' },
+                { id: 42, name: '持有量' },
+                { id: 58, name: '盈亏率' },
+                { id: 57, name: '盈亏' },
+                { id: 31, name: '时间' },
+                { id: 59, name: '工具' }
             ],
             watchingStocks: [
                 { sinaSymbol: 'sh000001', name: '上证指数' },
                 { sinaSymbol: 'sz399006', name: '创业板指' },
-                { sinaSymbol: 'sh600036', name: '招商银行', cost: 18, quantity: 1000 },
-                { sinaSymbol: 'sz000002', name: '万 科Ａ', cost: 10.10, quantity: 2000 },
-            ],
+                { sinaSymbol: 'sh600036', name: '招商银行' },
+                { sinaSymbol: 'sz000002', name: '万科A' }
+            ]
         },
         getUserSettings = function () {
             var userSettings = $.cookie(_appId);
@@ -167,7 +165,7 @@
 
             _appSettings.fullNameColumnId = 54;
             _columnEngines[_appSettings.fullNameColumnId] = {
-                id: _appSettings.fullNameColumnId, name: '名称', siblings: _columnEngines,
+                id: _appSettings.fullNameColumnId, name: '名称代码', siblings: _columnEngines,
                 getClass: getClassDefault,
                 getText: function (data) {
                     if (this._text == undefined) {
