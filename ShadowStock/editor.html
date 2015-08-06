@@ -8,17 +8,31 @@
     <link href="content/site.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container-editor">
-        <div class="input-group input-group-sm show-grid">
-            <span class="input-group-addon">成本价</span>
-            <input type="text" class="form-control" id="cost" placeholder="示例: 12.34">
+    <div class="container-fluid container-editor">
+        <div class="row show-grid">
+            <div class="col-xs-12">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">成本价</span>
+                    <input type="text" class="form-control text-right" id="cost" placeholder="示例: 12.34">
+                    <span class="input-group-addon">元</span>
+                </div>
+            </div>
         </div>
-        <div class="input-group input-group-sm show-grid">
-            <span class="input-group-addon">持有量</span>
-            <input type="text" class="form-control" id="quantity" placeholder="示例: 1000">
+        <div class="row show-grid">
+            <div class="col-xs-12">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">持有量</span>
+                    <input type="text" class="form-control text-right" id="quantity" placeholder="示例: 1000">
+                    <span class="input-group-addon">股</span>
+                </div>
+            </div>
         </div>
-        <input type="button" class="btn btn-sm btn-danger" data-action="save" value="保存" />
-        <input type="button" class="btn btn-sm btn-default" data-action="cancel" value="取消" />
+        <div class="row">
+            <div class="col-xs-12">
+                <input type="button" class="btn btn-sm btn-danger" data-action="save" value="保存" />
+                <input type="button" class="btn btn-sm btn-default" data-action="cancel" value="取消" />
+            </div>
+        </div>
     </div>
 
     <script src="scripts/jquery-1.10.2.js"></script>
@@ -37,7 +51,7 @@
                     event.preventDefault();
                 }
             }
-            var intelliFocus = function (){
+            var intelliFocus = function () {
                 $(this).select();
             }
 

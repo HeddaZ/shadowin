@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ShadowStock 影子证券 - 设置</title>
+    <link href="content/bootstrap.css" rel="stylesheet" />
+    <link href="content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="content/site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid container-settings">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="refreshInterval">刷新间隔（毫秒）</label>
+                    <select id="refreshInterval" class="form-control input-sm">
+                        <option value="3000">3000</option>
+                        <option value="5000">5000</option>
+                        <option value="8000">8000</option>
+                        <option value="10000">10000</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="form-group">
+                    <label for="selectedColumns" class="text-danger">已选栏位</label>
+                    <select id="selectedColumns" class="form-control input-sm" multiple>
+                        <option>名称</option>
+                        <option>今开</option>
+                        <option>昨收</option>
+                        <option>最新价</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-2 col-toolbar-vertical">
+                <div class="btn-group-vertical show-grid">
+                    <input type="button" class="btn btn-sm btn-success" data-action="save" value="＜ 添加" />
+                    <input type="button" class="btn btn-sm btn-success" data-action="save" value="删除 ＞" />
+                </div>
+                <div class="clearfix"></div>
+                <div class="btn-group-vertical">
+                    <input type="button" class="btn btn-sm btn-default" data-action="save" value="∧ 上移" />
+                    <input type="button" class="btn btn-sm btn-default" data-action="save" value="∨ 下移" />
+                </div>
+            </div>
+            <div class="col-xs-5">
+                <div class="form-group">
+                    <label for="availableColumns">可用栏位</label>
+                    <select id="availableColumns" class="form-control input-sm" multiple>
+                        <option>名称</option>
+                        <option>今开</option>
+                        <option>昨收</option>
+                        <option>最新价</option>
+                        <option>名称</option>
+                        <option>今开</option>
+                        <option>昨收</option>
+                        <option>最新价</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <input type="button" class="btn btn-sm btn-danger" data-action="save" value="保存" />
+                <input type="button" class="btn btn-sm btn-default" data-action="cancel" value="取消" />
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        //$(function () {
+        //    var args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+
+        //    $('[data-action]').click(function () {
+        //        var callbackArgs = {
+        //            token: args.token,
+        //            result: $(this).data('action')
+        //        };
+
+        //        $('.form-control').each(function () {
+        //            var control = $(this);
+        //            callbackArgs[control.attr('id')] = control.val();
+        //        });
+
+        //        eval('window.parent.' + args.callback + '(callbackArgs)');
+        //    });
+        //});
+    </script>
+</body>
+</html>
