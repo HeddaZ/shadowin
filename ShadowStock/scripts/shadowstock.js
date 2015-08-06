@@ -491,12 +491,12 @@
                 html: true,
                 trigger: 'manual',
                 placement: 'right'
-            }).click(function () {
-                $(this).popover('show');
             }).on('show.bs.popover', function () {
                 _disableStockTimer();
             }).on('hidden.bs.popover', function () {
                 _enableStockTimer();
+            }).click(function () {
+                $(this).popover('show');
             });
 
             // 删除
@@ -669,34 +669,34 @@
                 _elements.alertPanel.empty().hide();
             }
             if (_elements.settingsButton) {
-                _elements.settingsButton.attr('data-content', _formatString('<iframe class="settings" src="settings.html?{0}"></iframe>', escape(JSON.stringify({
-                    token: _appId,
-                    callback: 'ShadowStock.settingsCallback',
-                    refreshInterval: _userSettings.refreshInterval,
-                    displayColumns: _userSettings.displayColumns,
-                    availableColumns: _appSettings.availableColumns,
-                    actionsColumnId: _appSettings.actionsColumnId
-                })))).popover({
+                _elements.settingsButton.popover({
                     container: 'body',
                     html: true,
                     trigger: 'manual',
                     placement: 'bottom'
                 }).click(function () {
-                    $(this).popover('show');
+                    $(this).attr('data-content', _formatString('<iframe class="settings" src="settings.html?{0}"></iframe>', escape(JSON.stringify({
+                        token: _appId,
+                        callback: 'ShadowStock.settingsCallback',
+                        refreshInterval: _userSettings.refreshInterval,
+                        displayColumns: _userSettings.displayColumns,
+                        availableColumns: _appSettings.availableColumns,
+                        actionsColumnId: _appSettings.actionsColumnId
+                    })))).popover('show');
                 });
             }
             if (_elements.impexpButton) {
-                _elements.impexpButton.attr('data-content', _formatString('<iframe class="impexp" src="impexp.html?{0}"></iframe>', escape(JSON.stringify({
-                    token: _appId,
-                    callback: 'ShadowStock.impexpCallback',
-                    userSettings: _userSettings
-                })))).popover({
+                _elements.impexpButton.popover({
                     container: 'body',
                     html: true,
                     trigger: 'manual',
                     placement: 'bottom'
                 }).click(function () {
-                    $(this).popover('show');
+                    $(this).attr('data-content', _formatString('<iframe class="impexp" src="impexp.html?{0}"></iframe>', escape(JSON.stringify({
+                        token: _appId,
+                        callback: 'ShadowStock.impexpCallback',
+                        userSettings: _userSettings
+                    })))).popover('show');
                     return false;
                 });
             }
