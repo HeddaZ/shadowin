@@ -27,13 +27,8 @@
         <div class="row">
             <div class="col-xs-5">
                 <div class="form-group">
-                    <label for="displayColumns" class="text-danger">已选栏位</label>
-                    <select id="displayColumns" class="form-control input-sm" multiple>
-                        <option>名称</option>
-                        <option>今开</option>
-                        <option>昨收</option>
-                        <option>最新价</option>
-                    </select>
+                    <label for="displayColumns" class="text-danger">显示栏位</label>
+                    <select id="displayColumns" class="form-control input-sm" multiple></select>
                 </div>
             </div>
             <div class="col-xs-2 col-toolbar-vertical">
@@ -50,23 +45,14 @@
             <div class="col-xs-5">
                 <div class="form-group">
                     <label for="availableColumns">可用栏位</label>
-                    <select id="availableColumns" class="form-control input-sm" multiple>
-                        <option>名称</option>
-                        <option>今开</option>
-                        <option>昨收</option>
-                        <option>最新价</option>
-                        <option>名称</option>
-                        <option>今开</option>
-                        <option>昨收</option>
-                        <option>最新价</option>
-                    </select>
+                    <select id="availableColumns" class="form-control input-sm" multiple></select>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <button type="button" class="btn btn-sm btn-danger" data-action="save">保存</button>
-                <button type="button" class="btn btn-sm btn-default" data-action="cancel">取消</button>
+                <button type="button" class="btn btn-sm btn-danger" data-result="save">保存</button>
+                <button type="button" class="btn btn-sm btn-default" data-result="cancel">取消</button>
             </div>
         </div>
     </div>
@@ -75,65 +61,82 @@
     <script type="text/javascript">
         $(function () {
             // 初始化
-            //var args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
-            var args = {
-                refreshInterval: 8000,
-                displayColumns: [
-                    { id: 50, name: '操作' },
-                    { id: 40, name: 'aa' },
-                    { id: 41, name: 'BB' },
-                    { id: 42, name: 'ccc' },
-                ],
-                availableColumns: [
-                    { id: 40, name: 'aa' },
-                    { id: 41, name: 'BB' },
-                    { id: 42, name: 'ccc' },
-                    { id: 53, name: 'aa' },
-                    { id: 54, name: 'aa' },
-                    { id: 55, name: 'aa' },
-                ]
-            };
+            var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
 
-            var refreshInterval = $('#refreshInterval').val(args.refreshInterval);
-            var displayColumns = $('#displayColumns').empty();
-            var displayColumnsLength = args.displayColumns.length;
-            for (var i = 0; i < displayColumnsLength; i++) {
-                $('<option>').val(args.displayColumns[i].id).text(args.displayColumns[i].name)
-                    .appendTo(displayColumns);
-            }
-            var availableColumns = $('#availableColumns').empty();
-            var availableColumnsLength = args.availableColumns.length;
+            var _refreshInterval = $('#refreshInterval').val(_args.refreshInterval);
+
+            var _availableColumns = $('#availableColumns').empty().dblclick(function () {
+                $('[data-action="addColumn"]').click();
+            });
+            var availableColumnsLength = _args.availableColumns.length;
             for (var i = 0; i < availableColumnsLength; i++) {
-                $('<option>').val(args.availableColumns[i].id).text(args.availableColumns[i].name)
-                    .appendTo(availableColumns);
+                $('<option>').val(_args.availableColumns[i].id).text(_args.availableColumns[i].name)
+                    .appendTo(_availableColumns);
+            }
+
+            var _displayColumns = $('#displayColumns').empty().dblclick(function () {
+                $('[data-action="removeColumn"]').click();
+            });
+            var displayColumnsLength = _args.displayColumns.length;
+            for (var i = 0; i < displayColumnsLength; i++) {
+                _availableColumns.children('option[value="' + _args.displayColumns[i].id + '"]')
+                    .appendTo(_displayColumns);
             }
 
             $('[data-action]').click(function () {
-                var action = $(this).data('action');
-                switch (action) {
+                switch ($(this).data('action')) {
                     case 'addColumn':
-                        availableColumns.children(':selected').appendTo(displayColumns);
+                        _availableColumns.children('option:selected').appendTo(_displayColumns);
+                        _displayColumns.focus();
+                        break;
                     case 'removeColumn':
-                    case 'moveColumnUp':
-                    case 'moveColumnDown':
+                        _displayColumns.children('option:selected').appendTo(_availableColumns);
+                        _availableColumns.focus();
                         break;
 
-                    case 'save':
-                    case 'cancel':
-                    default:
-                        //var callbackArgs = {
-                        //    token: args.token,
-                        //    result: $(this).data('action')
-                        //};
-
-                        //$('.form-control').each(function () {
-                        //    var control = $(this);
-                        //    callbackArgs[control.attr('id')] = control.val();
-                        //});
-
-                        //eval('window.parent.' + args.callback + '(callbackArgs)');
+                    case 'moveColumnUp':
+                        var selectedItems = _displayColumns.children('option:selected');
+                        var reference = selectedItems.prev('option:not(:selected)').first();
+                        if (reference) {
+                            selectedItems.insertBefore(reference);
+                            _displayColumns.focus();
+                        }
+                        break;
+                    case 'moveColumnDown':
+                        var selectedItems = _displayColumns.children('option:selected');
+                        var reference = selectedItems.next('option:not(:selected)').last();
+                        if (reference) {
+                            selectedItems.insertAfter(reference);
+                            _displayColumns.focus();
+                        }
                         break;
                 }
+            });
+            $('[data-result]').click(function () {
+                var displayColumns = [];
+                var hasActionsColumn = false;
+                _displayColumns.children('option').each(function (i) {
+                    var item = $(this);
+                    var id = item.val();
+                    displayColumns[i] = { id: id, name: item.text() };
+                    if (id == _args.actionsColumnId) {
+                        hasActionsColumn = true;
+                    }
+                });
+
+                if (!hasActionsColumn) {
+                    if (!confirm('不显示【操作】栏位则无法进行排序、编辑和删除操作，确定继续吗？')) {
+                        return;
+                    }
+                }
+
+                var args = {
+                    token: _args.token,
+                    result: $(this).data('result'),
+                    refreshInterval: _refreshInterval.val(),
+                    displayColumns: displayColumns
+                };
+                eval('window.parent.' + _args.callback + '(args)');
             });
         });
     </script>

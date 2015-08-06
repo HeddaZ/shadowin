@@ -7,18 +7,18 @@
 <body>
     <script src="scripts/jquery-1.10.2.js"></script>
     <script type="text/javascript">
-        var args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
-        document.write(unescape('%3Cscript type="text/javascript" src="' + args.url + '"%3E%3C/script%3E'));
+        var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+        document.write(unescape('%3Cscript type="text/javascript" src="' + _args.url + '"%3E%3C/script%3E'));
     </script>
     <script type="text/javascript">
-        var callbackArgs = { token: args.token };
-        var varsLength = args.vars.length;
+        var args = { token: _args.token };
+        var varsLength = _args.vars.length;
         for (var i = 0; i < varsLength; i++) {
             try {
-                callbackArgs[args.vars[i]] = eval(args.vars[i]);
+                args[_args.vars[i]] = eval(_args.vars[i]);
             } catch (e) { }
         }
-        eval('window.parent.' + args.callback + '(callbackArgs)');
+        eval('window.parent.' + _args.callback + '(args)');
     </script>
 </body>
 </html>

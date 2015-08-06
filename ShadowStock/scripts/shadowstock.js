@@ -22,7 +22,7 @@
         _userSettings,
         defaultUserSettings = {
             refreshInterval: 5000,
-            displayColumns: [ //////////////////////////???????????????????///////////////////////
+            displayColumns: [
                 { id: 50, name: 'aa' },
                 { id: 0, name: 'BB' },
                 { id: 1, name: 'aa' },
@@ -406,7 +406,7 @@
                 var stockTableRow;
 
                 // 表头
-                var showActions = false;
+                var hasActionsColumn = false;
                 var stockTableHead = $('<thead>').appendTo(_stockTable);
                 stockTableRow = $('<tr>').appendTo(stockTableHead);
                 for (var i = 0; i < displayColumnsLength ; i++) {
@@ -414,8 +414,8 @@
                     $('<th>').html(_columnEngines[id].name)
                         .appendTo(stockTableRow);
 
-                    if (!showActions && id == _appSettings.actionsColumnId) {
-                        showActions = true;
+                    if (!hasActionsColumn && id == _appSettings.actionsColumnId) {
+                        hasActionsColumn = true;
                     }
                 }
 
@@ -447,7 +447,7 @@
                     }
                 }
 
-                if (showActions) {
+                if (hasActionsColumn) {
                     assignActions();
                 }
             }
@@ -458,7 +458,7 @@
         assignActions = function () {
             // 移动
             _stockTable.children('tbody').sortable({
-                handle: '.container-action .glyphicon-move',
+                handle: '.container-action>.glyphicon-move',
                 cursor: 'move',
                 axis: 'y',
                 opacity: 0.9,
@@ -468,7 +468,7 @@
                 stop: function (event, ui) { _enableStockTimer(); },
                 update: function (event, ui) {
                     var watchingStocks = [];
-                    $('.glyphicon-move', ui.item.parent()).each(function (i) {
+                    $('.container-action>.glyphicon-move', ui.item.parent()).each(function (i) {
                         var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', $(this).data('id'));
                         if (i >= 0) {
                             watchingStocks.push(_userSettings.watchingStocks[i]);
@@ -480,7 +480,7 @@
             });
 
             // 编辑
-            $('.container-action .glyphicon-edit').popover({
+            $('.container-action>.glyphicon-edit').popover({
                 html: true,
                 trigger: 'manual'
             }).click(function () {
@@ -492,7 +492,7 @@
             });
 
             // 删除
-            $('.container-action .glyphicon-remove').click(function () {
+            $('.container-action>.glyphicon-remove').click(function () {
                 var sinaSymbol = $(this).data('id');
                 if (confirm(_formatString('确定删除 {0} 吗？', sinaSymbol))) {
                     var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', sinaSymbol);
@@ -569,7 +569,7 @@
 
                 case 'cancel':
                 default:
-                    $('.container-action .glyphicon-edit').popover('hide');
+                    $('.container-action>.glyphicon-edit').popover('hide');
                     break;
             }
         },

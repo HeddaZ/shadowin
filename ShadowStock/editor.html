@@ -29,8 +29,8 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <button type="button" class="btn btn-sm btn-danger" data-action="save">保存</button>
-                <button type="button" class="btn btn-sm btn-default" data-action="cancel">取消</button>
+                <button type="button" class="btn btn-sm btn-danger" data-result="save">保存</button>
+                <button type="button" class="btn btn-sm btn-default" data-result="cancel">取消</button>
             </div>
         </div>
     </div>
@@ -38,11 +38,11 @@
     <script src="scripts/jquery-1.10.2.js"></script>
     <script type="text/javascript">
         $(function () {
-            var elements = $('input, button');
-            var intelliEnter = function (event) {
+            var _elements = $('input, button');
+            var _intelliEnter = function (event) {
                 if (event.keyCode == 13) {
-                    var next = elements[elements.index($(this)) + 1];
-                    if (next.tagName == 'button') {
+                    var next = _elements[_elements.index($(this)) + 1];
+                    if (next.tagName == 'BUTTON') {
                         next.click();
                     }
                     else {
@@ -51,33 +51,33 @@
                     event.preventDefault();
                 }
             }
-            var intelliFocus = function () {
+            var _intelliFocus = function () {
                 $(this).select();
             }
 
             // 初始化
-            var args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
-            $('#cost').val($.isNumeric(args.cost) ? args.cost : '').bind({
-                keydown: intelliEnter,
-                focus: intelliFocus
+            var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+            $('#cost').val($.isNumeric(_args.cost) ? _args.cost : '').bind({
+                keydown: _intelliEnter,
+                focus: _intelliFocus
             }).focus();
-            $('#quantity').val($.isNumeric(args.quantity) ? args.quantity : '').bind({
-                keydown: intelliEnter,
-                focus: intelliFocus
+            $('#quantity').val($.isNumeric(_args.quantity) ? _args.quantity : '').bind({
+                keydown: _intelliEnter,
+                focus: _intelliFocus
             });
 
-            $('[data-action]').click(function () {
-                var callbackArgs = {
-                    token: args.token,
-                    result: $(this).data('action')
+            $('[data-result]').click(function () {
+                var args = {
+                    token: _args.token,
+                    result: $(this).data('result')
                 };
 
                 $('.form-control').each(function () {
                     var control = $(this);
-                    callbackArgs[control.attr('id')] = control.val();
+                    args[control.attr('id')] = control.val();
                 });
 
-                eval('window.parent.' + args.callback + '(callbackArgs)');
+                eval('window.parent.' + _args.callback + '(args)');
             });
         });
     </script>
