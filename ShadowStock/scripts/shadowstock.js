@@ -260,14 +260,6 @@
         suggestionRetriever = $('<iframe class="hidden"></iframe>'),
         _init = function () {
             $.cookie.json = true;
-            $('#settingsButton').popover({
-                html: true,
-                trigger: 'manual',
-                placement: 'bottom'
-            }).click(function () {
-                $(this).popover('show');
-            });
-
             // 远程数据容器
             $(document.body).append(stockRetriever).append(suggestionRetriever);
             // 列数据处理引擎
@@ -401,13 +393,13 @@
             }
 
             try {
-                _stockTable.empty();
+                _elements.stockTable.empty();
                 var displayColumnsLength = _userSettings.displayColumns.length;
                 var stockTableRow;
 
                 // 表头
                 var hasActionsColumn = false;
-                var stockTableHead = $('<thead>').appendTo(_stockTable);
+                var stockTableHead = $('<thead>').appendTo(_elements.stockTable);
                 stockTableRow = $('<tr>').appendTo(stockTableHead);
                 for (var i = 0; i < displayColumnsLength ; i++) {
                     var id = _userSettings.displayColumns[i].id;
@@ -420,7 +412,7 @@
                 }
 
                 // 表体
-                var stockTableBody = $('<tbody>').appendTo(_stockTable);
+                var stockTableBody = $('<tbody>').appendTo(_elements.stockTable);
                 for (var key in args) {
                     if (key == 'token') {
                         continue;
@@ -457,7 +449,7 @@
         },
         assignActions = function () {
             // 移动
-            _stockTable.children('tbody').sortable({
+            _elements.stockTable.children('tbody').sortable({
                 handle: '.container-action>.glyphicon-move',
                 cursor: 'move',
                 axis: 'y',
@@ -544,8 +536,8 @@
                 }
                 var term = unescape(args.token);
                 suggestionCache[term] = source;
-                _suggestionText.autocomplete('option', 'source', source);
-                _suggestionText.autocomplete('search', term); // 重新激活搜索以抵消异步延迟
+                _elements.suggestionText.autocomplete('option', 'source', source);
+                _elements.suggestionText.autocomplete('search', term); // 重新激活搜索以抵消异步延迟
                 break;
             }
         },
@@ -577,7 +569,7 @@
             if (!$.isNumeric(duration) || duration < 0) {
                 duration = 2000;
             }
-            _alertPanel.html(message).slideDown(function () {
+            _elements.alertPanel.html(message).slideDown(function () {
                 var _this = $(this);
                 window.setTimeout(function () {
                     _this.slideUp();
@@ -586,52 +578,61 @@
         },
 
         /******************** 外部方法 ********************/
-        _stockTable,
-        _attachTable = function (table) {
-            _stockTable = table.empty();
-        },
-        _suggestionText,
-        _attachSuggestion = function (suggestion) {
-            _suggestionText = suggestion;
-            _suggestionText.autocomplete({
-                minLength: 1,
-                autoFocus: true,
-                source: [],
-                search: function (event, ui) {
-                    var term = event.target.value;
-                    if (term) {
-                        if (term in suggestionCache) {
-                            _suggestionText.autocomplete('option', 'source', suggestionCache[term]);
-                            return;
+        _elements,
+        _attachElements = function (elements) {
+            _elements = elements;
+            if (_elements.stockTable) {
+                _elements.stockTable.empty();
+            }
+            if (_elements.suggestionText) {
+                _elements.suggestionText.autocomplete({
+                    minLength: 1,
+                    autoFocus: true,
+                    source: [],
+                    search: function (event, ui) {
+                        var term = event.target.value;
+                        if (term) {
+                            if (term in suggestionCache) {
+                                _elements.suggestionText.autocomplete('option', 'source', suggestionCache[term]);
+                                return;
+                            }
+                            suggestionRequest(term);
                         }
-                        suggestionRequest(term);
-                    }
-                },
-                select: function (event, ui) {
-                    var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', ui.item.value);
-                    if (i >= 0) {
-                        var watchingStock = _userSettings.watchingStocks[i];
-                        showAlert(_formatString('{0} ({1}) 已存在', watchingStock.name, watchingStock.sinaSymbol));
-                    }
-                    else {
-                        var sinaSymbol = ui.item.value;
-                        var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') + 1);
-                        _userSettings.watchingStocks.push({
-                            sinaSymbol: sinaSymbol,
-                            name: name
-                        });
-                        setUserSettings();
-                        showAlert(_formatString('{0} ({1}) 已添加', name, sinaSymbol));
-                    }
+                    },
+                    select: function (event, ui) {
+                        var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', ui.item.value);
+                        if (i >= 0) {
+                            var watchingStock = _userSettings.watchingStocks[i];
+                            showAlert(_formatString('{0} ({1}) 已存在', watchingStock.name, watchingStock.sinaSymbol));
+                        }
+                        else {
+                            var sinaSymbol = ui.item.value;
+                            var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') + 1);
+                            _userSettings.watchingStocks.push({
+                                sinaSymbol: sinaSymbol,
+                                name: name
+                            });
+                            setUserSettings();
+                            showAlert(_formatString('{0} ({1}) 已添加', name, sinaSymbol));
+                        }
 
-                    $(event.target).focus().select();
-                    return false;
-                }
-            });
-        },
-        _alertPanel,
-        _attachAlert = function (alert) {
-            _alertPanel = alert.empty().hide();
+                        $(event.target).focus().select();
+                        return false;
+                    }
+                });
+            }
+            if (_elements.alertPanel) {
+                _elements.alertPanel.empty().hide();
+            }
+            if (_elements.settingsButton) {
+
+            }
+            if (_elements.importButton) {
+
+            }
+            if (_elements.aboutButton) {
+
+            }
         },
 
         stockTimer,
@@ -664,16 +665,11 @@
     _shadowStock.requestData = _requestData;
     _shadowStock.findIndex = _findIndex;
 
-    _shadowStock.stockTable = _stockTable;
-    _shadowStock.attachTable = _attachTable;
+    _shadowStock.elements = _elements;
+    _shadowStock.attachElements = _attachElements;
     _shadowStock.stockCallback = _stockCallback;
-
-    _shadowStock.suggestionText = _suggestionText;
-    _shadowStock.attachSuggestion = _attachSuggestion;
     _shadowStock.suggestionCallback = _suggestionCallback;
-
     _shadowStock.editorCallback = _editorCallback;
-    _shadowStock.attachAlert = _attachAlert;
 
     _shadowStock.enableStockTimer = _enableStockTimer;
     _shadowStock.disableStockTimer = _disableStockTimer;

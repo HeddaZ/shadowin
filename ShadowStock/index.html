@@ -16,18 +16,24 @@
             <div class="col-xs-5">
                 <div class="input-group">
                     <a id="logo" class="input-group-addon" href="https://github.com/heddaz/shadowin" target="_blank">ShadowStock 影子证券</a>
-                    <input id="suggestText" type="text" class="form-control" placeholder="代码 / 名称 / 拼音">
+                    <input id="suggestionText" type="text" class="form-control" placeholder="代码 / 名称 / 拼音">
                 </div>
             </div>
             <div class="col-xs-5">
                 <div class="btn-group">
-                    <button id="settingsButton" type="button" class="btn btn-info" title="sdfsdfwoerewr" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">设置</button>
+                    <button id="settingsButton" type="button" class="btn btn-info">设置</button>
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a id="importButton" href="#">导入设置</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a id="aboutButton" href="#">关于</a></li>
+                    </ul>
+
                 </div>
             </div>
-            <div class="col-xs-2 text-right">
-                <span>
-                    <script src="http://s9.cnzz.com/stat.php?id=3760050&web_id=3760050" type="text/javascript"></script>
-                </span>
+            <div class="col-xs-2">
             </div>
         </div>
         <div class="row">
@@ -49,15 +55,21 @@
         <script src="scripts/shadowstock.js"></script>
         <script type="text/javascript">
             $(function () {
-                ShadowStock.attachTable($('#stockTable'));
-                ShadowStock.attachSuggestion($('#suggestText'));
-                ShadowStock.attachAlert($('#alertPanel'));
+                ShadowStock.attachElements({
+                    stockTable: $('#stockTable'),
+                    suggestionText: $('#suggestionText'),
+                    alertPanel: $('#alertPanel'),
+                    settingsButton: $('#settingsButton'),
+                });
                 ShadowStock.init();
             });
         </script>
 
-        <div class="row">
-            <div class="col-xs-12 text-right">
+        <div class="row ad">
+            <div class="col-xs-1">
+                <script src="http://s9.cnzz.com/stat.php?id=3760050&web_id=3760050" type="text/javascript"></script>
+            </div>
+            <div class="col-xs-11 text-right">
                 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                 <ins class="adsbygoogle"
                      style="display:inline-block;width:468px;height:15px"

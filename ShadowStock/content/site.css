@@ -15,6 +15,11 @@
   padding: 3px;
 }
 
+.ad {
+    font-size: 12px;
+    overflow: hidden;
+}
+
 .show-grid {
     margin-bottom: 5px;
 }
