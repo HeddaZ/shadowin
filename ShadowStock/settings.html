@@ -12,12 +12,14 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="refreshInterval">刷新间隔（毫秒）</label>
+                    <label for="refreshInterval">刷新间隔（秒）</label>
                     <select id="refreshInterval" class="form-control input-sm">
-                        <option value="3000">3000</option>
-                        <option value="5000">5000</option>
-                        <option value="8000">8000</option>
-                        <option value="10000">10000</option>
+                        <option value="3000">3</option>
+                        <option value="5000">5</option>
+                        <option value="8000">8</option>
+                        <option value="10000">10</option>
+                        <option value="30000">30</option>
+                        <option value="60000">60</option>
                     </select>
                 </div>
             </div>
@@ -25,8 +27,8 @@
         <div class="row">
             <div class="col-xs-5">
                 <div class="form-group">
-                    <label for="selectedColumns" class="text-danger">已选栏位</label>
-                    <select id="selectedColumns" class="form-control input-sm" multiple>
+                    <label for="displayColumns" class="text-danger">已选栏位</label>
+                    <select id="displayColumns" class="form-control input-sm" multiple>
                         <option>名称</option>
                         <option>今开</option>
                         <option>昨收</option>
@@ -36,13 +38,13 @@
             </div>
             <div class="col-xs-2 col-toolbar-vertical">
                 <div class="btn-group-vertical show-grid">
-                    <input type="button" class="btn btn-sm btn-success" data-action="save" value="＜ 添加" />
-                    <input type="button" class="btn btn-sm btn-success" data-action="save" value="删除 ＞" />
+                    <button type="button" class="btn btn-sm btn-success" data-action="addColumn">＜ 添加</button>
+                    <button type="button" class="btn btn-sm btn-success" data-action="removeColumn">删除 ＞</button>
                 </div>
                 <div class="clearfix"></div>
                 <div class="btn-group-vertical">
-                    <input type="button" class="btn btn-sm btn-default" data-action="save" value="∧ 上移" />
-                    <input type="button" class="btn btn-sm btn-default" data-action="save" value="∨ 下移" />
+                    <button type="button" class="btn btn-sm btn-default" data-action="moveColumnUp">∧ 上移</button>
+                    <button type="button" class="btn btn-sm btn-default" data-action="moveColumnDown">∨ 下移</button>
                 </div>
             </div>
             <div class="col-xs-5">
@@ -63,31 +65,77 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <input type="button" class="btn btn-sm btn-danger" data-action="save" value="保存" />
-                <input type="button" class="btn btn-sm btn-default" data-action="cancel" value="取消" />
+                <button type="button" class="btn btn-sm btn-danger" data-action="save">保存</button>
+                <button type="button" class="btn btn-sm btn-default" data-action="cancel">取消</button>
             </div>
         </div>
     </div>
 
     <script src="scripts/jquery-1.10.2.js"></script>
     <script type="text/javascript">
-        //$(function () {
-        //    var args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+        $(function () {
+            // 初始化
+            //var args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+            var args = {
+                refreshInterval: 8000,
+                displayColumns: [
+                    { id: 50, name: '操作' },
+                    { id: 40, name: 'aa' },
+                    { id: 41, name: 'BB' },
+                    { id: 42, name: 'ccc' },
+                ],
+                availableColumns: [
+                    { id: 40, name: 'aa' },
+                    { id: 41, name: 'BB' },
+                    { id: 42, name: 'ccc' },
+                    { id: 53, name: 'aa' },
+                    { id: 54, name: 'aa' },
+                    { id: 55, name: 'aa' },
+                ]
+            };
 
-        //    $('[data-action]').click(function () {
-        //        var callbackArgs = {
-        //            token: args.token,
-        //            result: $(this).data('action')
-        //        };
+            var refreshInterval = $('#refreshInterval').val(args.refreshInterval);
+            var displayColumns = $('#displayColumns').empty();
+            var displayColumnsLength = args.displayColumns.length;
+            for (var i = 0; i < displayColumnsLength; i++) {
+                $('<option>').val(args.displayColumns[i].id).text(args.displayColumns[i].name)
+                    .appendTo(displayColumns);
+            }
+            var availableColumns = $('#availableColumns').empty();
+            var availableColumnsLength = args.availableColumns.length;
+            for (var i = 0; i < availableColumnsLength; i++) {
+                $('<option>').val(args.availableColumns[i].id).text(args.availableColumns[i].name)
+                    .appendTo(availableColumns);
+            }
 
-        //        $('.form-control').each(function () {
-        //            var control = $(this);
-        //            callbackArgs[control.attr('id')] = control.val();
-        //        });
+            $('[data-action]').click(function () {
+                var action = $(this).data('action');
+                switch (action) {
+                    case 'addColumn':
+                        availableColumns.children(':selected').appendTo(displayColumns);
+                    case 'removeColumn':
+                    case 'moveColumnUp':
+                    case 'moveColumnDown':
+                        break;
 
-        //        eval('window.parent.' + args.callback + '(callbackArgs)');
-        //    });
-        //});
+                    case 'save':
+                    case 'cancel':
+                    default:
+                        //var callbackArgs = {
+                        //    token: args.token,
+                        //    result: $(this).data('action')
+                        //};
+
+                        //$('.form-control').each(function () {
+                        //    var control = $(this);
+                        //    callbackArgs[control.attr('id')] = control.val();
+                        //});
+
+                        //eval('window.parent.' + args.callback + '(callbackArgs)');
+                        break;
+                }
+            });
+        });
     </script>
 </body>
 </html>

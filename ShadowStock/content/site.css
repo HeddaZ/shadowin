@@ -65,7 +65,7 @@ td.negative {
     margin-bottom: 5px;
 }
 
-#selectedColumns,
+#displayColumns,
 #availableColumns {
     height: 300px;
 }

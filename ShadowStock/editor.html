@@ -29,8 +29,8 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <input type="button" class="btn btn-sm btn-danger" data-action="save" value="保存" />
-                <input type="button" class="btn btn-sm btn-default" data-action="cancel" value="取消" />
+                <button type="button" class="btn btn-sm btn-danger" data-action="save">保存</button>
+                <button type="button" class="btn btn-sm btn-default" data-action="cancel">取消</button>
             </div>
         </div>
     </div>
@@ -38,11 +38,11 @@
     <script src="scripts/jquery-1.10.2.js"></script>
     <script type="text/javascript">
         $(function () {
-            var inputs = $('input');
+            var elements = $('input, button');
             var intelliEnter = function (event) {
                 if (event.keyCode == 13) {
-                    var next = inputs[inputs.index($(this)) + 1];
-                    if (next.type == 'button' || next.type == 'submit' || next.type == 'image') {
+                    var next = elements[elements.index($(this)) + 1];
+                    if (next.tagName == 'button') {
                         next.click();
                     }
                     else {
@@ -55,6 +55,7 @@
                 $(this).select();
             }
 
+            // 初始化
             var args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
             $('#cost').val($.isNumeric(args.cost) ? args.cost : '').bind({
                 keydown: intelliEnter,
