@@ -59,7 +59,7 @@
             if (!(userSettings.refreshInterval >= _appSettings.minRefreshInterval)) {
                 userSettings.refreshInterval = defaultUserSettings.refreshInterval;
             }
-            if (!(userSettings.displayColumns && userSettings.displayColumns > 0)) {
+            if (!(userSettings.displayColumns && userSettings.displayColumns.length > 0)) {
                 userSettings.displayColumns = defaultUserSettings.displayColumns;
             }
             if (!userSettings.watchingStocks) {
@@ -245,6 +245,18 @@
                 },
                 getValue: getValueDefault
             };
+
+            _appSettings.availableColumns = [];
+            var columnEnginesLength = _columnEngines.length;
+            for (var i = 0; i < columnEnginesLength; i++) {
+                var column = _columnEngines[i];
+                if (column) {
+                    _appSettings.availableColumns.push({
+                        id: column.id,
+                        name: column.name
+                    });
+                }
+            }
         },
         clearColumnEnginesCache = function () {
             var columnEnginesLength = _columnEngines.length;
@@ -264,6 +276,10 @@
             $(document.body).append(stockRetriever).append(suggestionRetriever);
             // 列数据处理引擎
             initColumnEngines();
+            // 用户设置
+            getUserSettings();
+        },
+        _start = function () {
             // 启动
             stockRequest();
         },
@@ -472,9 +488,10 @@
             });
 
             // 编辑
-            $('.container-action>.glyphicon-edit').popover({
+            $('.container-action>.glyphicon-edit', _elements.stockTable).popover({
                 html: true,
-                trigger: 'manual'
+                trigger: 'manual',
+                placement: 'right'
             }).click(function () {
                 $(this).popover('show');
             }).on('show.bs.popover', function () {
@@ -484,7 +501,7 @@
             });
 
             // 删除
-            $('.container-action>.glyphicon-remove').click(function () {
+            $('.container-action>.glyphicon-remove', _elements.stockTable).click(function () {
                 var sinaSymbol = $(this).data('id');
                 if (confirm(_formatString('确定删除 {0} 吗？', sinaSymbol))) {
                     var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', sinaSymbol);
@@ -577,6 +594,21 @@
             });
         },
 
+        _settingsCallback = function (args) {
+            switch (args.result) {
+                case 'save':
+                    _userSettings.refreshInterval = args.refreshInterval;
+                    _userSettings.displayColumns = args.displayColumns;
+                    setUserSettings();
+                    showAlert('设置已更新，立即生效');
+
+                case 'cancel':
+                default:
+                    _elements.settingsButton.popover('hide');
+                    break;
+            }
+        },
+
         /******************** 外部方法 ********************/
         _elements,
         _attachElements = function (elements) {
@@ -625,7 +657,20 @@
                 _elements.alertPanel.empty().hide();
             }
             if (_elements.settingsButton) {
-
+                _elements.settingsButton.attr('data-content', _formatString('<iframe class="settings" src="settings.html?{0}"></iframe>', escape(JSON.stringify({
+                    token: _appId,
+                    callback: 'ShadowStock.settingsCallback',
+                    refreshInterval: _userSettings.refreshInterval,
+                    displayColumns: _userSettings.displayColumns,
+                    availableColumns: _appSettings.availableColumns,
+                    actionsColumnId: _appSettings.actionsColumnId
+                })))).popover({
+                    html: true,
+                    trigger: 'manual',
+                    placement: 'bottom'
+                }).click(function () {
+                    $(this).popover('show');
+                });
             }
             if (_elements.importButton) {
 
@@ -670,10 +715,12 @@
     _shadowStock.stockCallback = _stockCallback;
     _shadowStock.suggestionCallback = _suggestionCallback;
     _shadowStock.editorCallback = _editorCallback;
+    _shadowStock.settingsCallback = _settingsCallback;
 
     _shadowStock.enableStockTimer = _enableStockTimer;
     _shadowStock.disableStockTimer = _disableStockTimer;
     _shadowStock.init = _init;
+    _shadowStock.start = _start;
 
     window.ShadowStock = _shadowStock;
 })(this, this.document);

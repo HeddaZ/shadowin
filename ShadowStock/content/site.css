@@ -24,6 +24,15 @@
     margin-bottom: 5px;
 }
 
+.container-action .glyphicon {
+    margin: 0px 3px;
+}
+
+.alert {
+    padding: 5px 15px;
+    margin-bottom: 5px;
+}
+
 #logo {
     font-weight: bold;
 }
@@ -52,7 +61,10 @@ td.negative {
     display: table;
 }
 
-.editor {
+.popover {
+    max-width: 1000px;
+}
+iframe.editor {
     border: 0;
     width: 220px;
     height: 120px;
@@ -60,22 +72,20 @@ td.negative {
 .container-editor {
     width: 210px;
 }
-
-.container-action .glyphicon {
-    margin: 0px 3px;
+iframe.settings {
+    border: 0;
+    width: 510px;
+    height: 280px;
 }
-
-.alert {
-    padding: 5px 15px;
-    margin-bottom: 5px;
+.container-settings {
+    width: 500px;
 }
-
 #displayColumns,
 #availableColumns {
-    height: 300px;
+    height: 120px;
 }
 .col-toolbar-vertical {
-    padding-top: 40px;
-    line-height: 120px;
+    padding-top: 30px;
+    line-height: 50px;
     text-align: center;
 }

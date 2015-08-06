@@ -21,7 +21,7 @@
             </div>
             <div class="col-xs-5">
                 <div class="btn-group">
-                    <button id="settingsButton" type="button" class="btn btn-info">设置</button>
+                    <button id="settingsButton" type="button" class="btn btn-info" title="设置">设置</button>
                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
                     </button>
@@ -55,13 +55,14 @@
         <script src="scripts/shadowstock.js"></script>
         <script type="text/javascript">
             $(function () {
+                ShadowStock.init();
                 ShadowStock.attachElements({
                     stockTable: $('#stockTable'),
                     suggestionText: $('#suggestionText'),
                     alertPanel: $('#alertPanel'),
                     settingsButton: $('#settingsButton'),
                 });
-                ShadowStock.init();
+                ShadowStock.start();
             });
         </script>
 
