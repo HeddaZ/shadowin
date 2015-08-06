@@ -22,7 +22,6 @@
     </div>
 
     <script src="scripts/jquery-1.10.2.js"></script>
-    <script src="scripts/jquery.query.js"></script>
     <script type="text/javascript">
         $(function () {
             var inputs = $('input');
@@ -42,19 +41,19 @@
                 $(this).select();
             }
 
-            var query = $.query(window.location.href);
-            $('#cost').val($.isNumeric(query.cost) ? query.cost : '').bind({
+            var args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+            $('#cost').val($.isNumeric(args.cost) ? args.cost : '').bind({
                 keydown: intelliEnter,
                 focus: intelliFocus
             }).focus();
-            $('#quantity').val($.isNumeric(query.quantity) ? query.quantity : '').bind({
+            $('#quantity').val($.isNumeric(args.quantity) ? args.quantity : '').bind({
                 keydown: intelliEnter,
                 focus: intelliFocus
             });
 
             $('[data-action]').click(function () {
                 var callbackArgs = {
-                    token: query.token,
+                    token: args.token,
                     result: $(this).data('action')
                 };
 
@@ -63,7 +62,7 @@
                     callbackArgs[control.attr('id')] = control.val();
                 });
 
-                eval('window.parent.' + query.callback + '(callbackArgs)');
+                eval('window.parent.' + args.callback + '(callbackArgs)');
             });
         });
     </script>

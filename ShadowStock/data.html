@@ -6,20 +6,19 @@
 </head>
 <body>
     <script src="scripts/jquery-1.10.2.js"></script>
-    <script src="scripts/jquery.query.js"></script>
     <script type="text/javascript">
-        var query = $.query(window.location.href);
-        document.write(unescape('%3Cscript type="text/javascript" src="' + query.url + '"%3E%3C/script%3E'));
+        var args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+        document.write(unescape('%3Cscript type="text/javascript" src="' + args.url + '"%3E%3C/script%3E'));
     </script>
     <script type="text/javascript">
-        var callbackArgs = { token: query.args[0] }; // 注意：第一个参数是 Token，将原封不动的返回
-        var argsLength = query.args.length;
-        for (var i = 1; i < argsLength; i++) {
+        var callbackArgs = { token: args.token };
+        var varsLength = args.vars.length;
+        for (var i = 0; i < varsLength; i++) {
             try {
-                callbackArgs[query.args[i]] = eval(query.args[i]);
+                callbackArgs[args.vars[i]] = eval(args.vars[i]);
             } catch (e) { }
         }
-        eval('window.parent.' + query.callback + '(callbackArgs)');
+        eval('window.parent.' + args.callback + '(callbackArgs)');
     </script>
 </body>
 </html>

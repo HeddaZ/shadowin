@@ -109,12 +109,12 @@
                     $('<span class="glyphicon glyphicon-edit" role="button"></span>')
                         .attr('data-id', sinaSymbol)
                         .attr('title', _formatString('编辑 - {0}', this.siblings[_appSettings.nameColumnId].getText(data)))
-                        .attr('data-content', _formatString('<iframe class="editor" src="editor.html?{0}"></iframe>', $.param({
+                        .attr('data-content', _formatString('<iframe class="editor" src="editor.html?{0}"></iframe>', escape(JSON.stringify({
                             token: sinaSymbol,
                             callback: 'ShadowStock.editorCallback',
                             cost: this.siblings[_appSettings.costColumnId].getText(data),
                             quantity: this.siblings[_appSettings.quantityColumnId].getText(data)
-                        })))
+                        }))))
                         .appendTo(actionPanel);
                     $('<span class="glyphicon glyphicon-remove" role="button" title="删除"></span>')
                         .attr('data-id', sinaSymbol)
@@ -313,7 +313,7 @@
             return _round(value * 100, 2) + '%';
         },
         _requestData = function (retriever, args) {
-            retriever.attr('src', 'data.html?' + $.param(args));
+            retriever.attr('src', _formatString('data.html?{0}', escape(JSON.stringify((args)))));
         },
         _findIndex = function (array, keyName, key) {
             var arrayLength = array.length;
@@ -381,17 +381,18 @@
 
             // 自选列表
             var token = _getTicks();
-            var args = [token]; // 注意：第一个参数是 Token，将原封不动的返回
+            var vars = [];
             var stockList = '';
             var watchingStocksLength = _userSettings.watchingStocks.length;
             for (var i = 0; i < watchingStocksLength ; i++) {
                 stockList += _userSettings.watchingStocks[i].sinaSymbol + ',';
-                args.push('hq_str_' + _userSettings.watchingStocks[i].sinaSymbol);
+                vars[i] = 'hq_str_' + _userSettings.watchingStocks[i].sinaSymbol;
             }
             _requestData(stockRetriever, {
+                token: token,
                 url: _formatString(_appSettings.stockUrl, token, stockList),
                 callback: 'ShadowStock.stockCallback',
-                args: args
+                vars: vars
             });
         },
         _stockCallback = function (args) {
@@ -510,13 +511,14 @@
         suggestionCache = {},
         suggestionRequest = function (term) {
             var token = escape(term);
-            var args = [token]; // 注意：第一个参数是 Token，将原封不动的返回
+            var vars = [];
             var suggestionName = 'suggestion_' + _getTicks();
-            args.push(suggestionName);
+            vars[0] = suggestionName;
             _requestData(suggestionRetriever, {
+                token: token,
                 url: _formatString(_appSettings.suggestionUrl, suggestionName, escape(term)),
                 callback: 'ShadowStock.suggestionCallback',
-                args: args
+                vars: vars
             });
         },
         _suggestionCallback = function (args) {
