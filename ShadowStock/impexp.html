@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ShadowStock 影子证券 - 导入/导出</title>
+    <link href="content/bootstrap.css" rel="stylesheet" />
+    <link href="content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="content/site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid container-impexp">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="userSettings">个性化设置</label>
+                    <textarea id="userSettings" class="form-control" rows="5"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row show-grid-lg">
+            <div class="col-xs-6">
+                <div class="text-success">
+                    <span class="glyphicon glyphicon-import"></span> 导入：将文本粘贴至此
+                </div>
+            </div>
+            <div class="col-xs-6 text-right">
+                <div class="text-danger">
+                    <span class="glyphicon glyphicon-export"></span> 导出：复制此文本保存
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <button type="button" class="btn btn-sm btn-danger" data-result="save">保存</button>
+                <button type="button" class="btn btn-sm btn-default" data-result="cancel">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var _intelliFocus = function () {
+                $(this).select();
+            }
+
+            // 初始化
+            var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+            var _userSettings = $('#userSettings').val(JSON.stringify(_args.userSettings)).bind({
+                focus: _intelliFocus,
+                dblclick: _intelliFocus
+            }).focus();
+
+            $('[data-result]').click(function () {
+                var args = {
+                    token: _args.token,
+                    result: $(this).data('result'),
+                    userSettings: JSON.parse(_userSettings.val())
+                };
+
+                eval('window.parent.' + _args.callback + '(args)');
+            });
+        });
+    </script>
+</body>
+</html>

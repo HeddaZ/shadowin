@@ -609,6 +609,19 @@
                     break;
             }
         },
+        _impexpCallback = function (args) {
+            switch (args.result) {
+                case 'save':
+                    _userSettings = args.userSettings;
+                    setUserSettings();
+                    showAlert('设置已更新，立即生效');
+
+                case 'cancel':
+                default:
+                    _elements.impexpButton.popover('hide');
+                    break;
+            }
+        },
 
         /******************** 外部方法 ********************/
         _elements,
@@ -666,6 +679,7 @@
                     availableColumns: _appSettings.availableColumns,
                     actionsColumnId: _appSettings.actionsColumnId
                 })))).popover({
+                    container: 'body',
                     html: true,
                     trigger: 'manual',
                     placement: 'bottom'
@@ -673,8 +687,20 @@
                     $(this).popover('show');
                 });
             }
-            if (_elements.importButton) {
-
+            if (_elements.impexpButton) {
+                _elements.impexpButton.attr('data-content', _formatString('<iframe class="impexp" src="impexp.html?{0}"></iframe>', escape(JSON.stringify({
+                    token: _appId,
+                    callback: 'ShadowStock.impexpCallback',
+                    userSettings: _userSettings
+                })))).popover({
+                    container: 'body',
+                    html: true,
+                    trigger: 'manual',
+                    placement: 'bottom'
+                }).click(function () {
+                    $(this).popover('show');
+                    return false;
+                });
             }
             if (_elements.aboutButton) {
                 _elements.aboutButton.click(function () {
@@ -722,6 +748,7 @@
     _shadowStock.suggestionCallback = _suggestionCallback;
     _shadowStock.editorCallback = _editorCallback;
     _shadowStock.settingsCallback = _settingsCallback;
+    _shadowStock.impexpCallback = _impexpCallback;
 
     _shadowStock.enableStockTimer = _enableStockTimer;
     _shadowStock.disableStockTimer = _disableStockTimer;

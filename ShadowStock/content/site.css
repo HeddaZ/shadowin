@@ -23,6 +23,9 @@
 .show-grid {
     margin-bottom: 5px;
 }
+.show-grid-lg {
+    margin-bottom: 10px;
+}
 
 .container-action .glyphicon {
     margin: 0px 3px;
@@ -88,4 +91,13 @@ iframe.settings {
     padding-top: 30px;
     line-height: 50px;
     text-align: center;
+}
+
+iframe.impexp {
+    border: 0;
+    width: 510px;
+    height: 220px;
+}
+.container-impexp {
+    width: 500px;
 }
