@@ -279,16 +279,16 @@ namespace Shadowin
         {
             if (MessageBox.Show(this, string.Format("谢谢您使用 {0} ！\n\n作者：{1}\n邮件：{2}\n网站：{3}\n\n(尊重开源、尊重分享，复制请保留以上信息，谢谢)",
                                             SwGlobal.Title,
-                                            "Hedda (大飞飞)",
-                                            "hedda(at)plusii.com",
-                                            "https://github.com/heddaz"
+                                            "Hedda",
+                                            "heddaz(at)live.com",
+                                            "https://github.com/heddaz/shadowin"
                                             ),
                                 SwGlobal.Title,
                                 MessageBoxButtons.OKCancel,
                                 MessageBoxIcon.Information
                ) == DialogResult.OK)
             {
-                Process.Start("iexplore.exe", "https://github.com/heddaz");
+                Process.Start("iexplore.exe", "https://github.com/heddaz/shadowin");
             }
         }
     }

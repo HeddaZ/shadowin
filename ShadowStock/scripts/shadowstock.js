@@ -3,6 +3,7 @@
         _appId = 'ShadowStock_SH_SZ',
         _appName = 'ShadowStock 影子证券 - 沪深创业板',
         _appVersion = '2.0',
+        _appUrl = 'https://github.com/heddaz/shadowin',
 
         /******************** 配置 ********************/
         _appSettings = {
@@ -676,7 +677,12 @@
 
             }
             if (_elements.aboutButton) {
-
+                _elements.aboutButton.click(function () {
+                    if (confirm(_formatString('谢谢您使用 {0} ！\n\n作者：{1}\n邮件：{2}\n网站：{3}\n\n(尊重开源、尊重分享，复制请保留以上信息，谢谢)',
+                        _appName, 'Hedda', 'heddaz(at)live.com', _appUrl))) {
+                        window.open(_appUrl);
+                    }
+                });
             }
         },
 
