@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ShadowStock 影子证券(新浪版)</title>
+    <meta name="description" content="简洁精悍的上班族隐蔽看股工具，链接新浪财经实时数据源，支持自选股、实时价格刷新、持仓盈亏统计，更支持单元格高亮着色；加上《Shadowin 影窗浏览器》提供的半透明窗体和老板键特性，更是神不知鬼不觉" />
+    <link href="Style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="Shared.js"></script>
+    <script type="text/javascript" src="Default.js"></script>
+</head>
+<body onload="Page_Load(this);">
+    <table id="ContentContainer" class="ContentContainer">
+        <caption>
+            <ul>
+                <li class="LockButton">
+                    <input id="LockButton" type="checkbox" class="CheckBox" title="锁定/编辑" onclick="LockButton_Click(this);" />
+                </li>
+                <li class="StocksString">
+                    <input id="StocksString" type="text" class="TextBox" title="【选股列表格式】&#13;代码[/成本[/持有量]][,代码[/成本[/持有量]]]&#13;【例如】&#13;sh600026,sh600050/2.33,sz000002/20.5/100"
+                           onkeypress="return StocksString_KeyPress(this);" onblur="StocksString_Blur(this);" />
+                </li>
+                <li class="Title">
+                    ShadowStock 影子证券(新浪版)
+                    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_3760050'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/stat.php%3Fid%3D3760050' type='text/javascript'%3E%3C/script%3E"));</script>
+                </li>
+                <li class="Clear"></li>
+            </ul>
+        </caption>
+    </table>
+    <iframe id="StockDatasFetcherContainer" class="StockDatasFetcherContainer"></iframe>
+
+    <div class="Ad">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- 页脚链接 -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:468px;height:15px"
+             data-ad-client="ca-pub-9815729917864928"
+             data-ad-slot="2583230930"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</body>
+</html>

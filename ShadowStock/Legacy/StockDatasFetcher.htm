@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StockDatasFetcher - ShadowStock 影子证券(新浪版)</title>
+
+    <script type="text/javascript" src="Shared.js"></script>
+    <script type="text/javascript">
+        //页面参数
+        var rn = ReadQueryString("rn");
+        var stockCodesString = ReadQueryString("list", true);
+
+        if (rn && stockCodesString) {
+            //获取股票数据定义
+            RegisterScriptInclude(
+                FormatString(StockDatasDeclareUrlFormat,
+                    rn,
+                    stockCodesString
+                    )
+                ); //脚本输出“脚本的引用”，下文必须新建<script/>标记
+        }
+    </script>
+
+    <script type="text/javascript">
+        //将获取到的股票数据定义封装成与StockCodes对应的数组
+        if (stockCodesString) {
+            var stockCodes = stockCodesString.split(",");
+            var stockDatasStrings = new Array();
+            for (var i = 0; i < stockCodes.length; i++) {
+                var stockDatasString;
+                try {
+                    eval("stockDatasString=hq_str_" + stockCodes[i]);
+                }
+                catch (e) {
+                    stockDatasString = DefaultStockDatasString;
+                }
+                stockDatasStrings.push(stockDatasString);
+            }
+
+            //回调
+            if (typeof (window.parent.StockDatasFetcher_Callback) == "function") {
+                window.parent.StockDatasFetcher_Callback(stockDatasStrings);
+            }
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
