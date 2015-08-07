@@ -144,7 +144,7 @@
                 getText: getTextAsPercentage,
                 getValue: function (data) {
                     if (this._value == undefined) {
-                        this._value = this.siblings[_appSettings.changeColumnId].getValue(data) / this.siblings[_appSettings.priceColumnId].getValue(data);
+                        this._value = this.siblings[_appSettings.changeColumnId].getValue(data) / this.siblings[_appSettings.closingPriceColumnId].getValue(data);
                     }
                     return this._value;
                 }
