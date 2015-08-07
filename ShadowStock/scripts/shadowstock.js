@@ -7,7 +7,7 @@
 
         /******************** 配置 ********************/
         _appSettings = {
-            cookieExpires: new Date(9999, 1, 1),
+            cookieExpires: 365,
             minRefreshInterval: 3000,
             /*
             {"11":"A 股","12":"B 股","13":"权证","14":"期货","15":"债券",
