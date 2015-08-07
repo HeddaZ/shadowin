@@ -8,17 +8,17 @@
     <Setting Name="FormBackColor" Type="System.Drawing.Color" Scope="Application">
       <Value Profile="(Default)">Desktop</Value>
     </Setting>
-    <Setting Name="FormMinimumSize" Type="System.Drawing.Size" Scope="Application">
-      <Value Profile="(Default)">150, 100</Value>
-    </Setting>
-    <Setting Name="FormMaximumSize" Type="System.Drawing.Size" Scope="Application">
-      <Value Profile="(Default)">1300, 700</Value>
-    </Setting>
-    <Setting Name="FormSize" Type="System.Drawing.Size" Scope="Application">
-      <Value Profile="(Default)">780, 180</Value>
-    </Setting>
     <Setting Name="Opacity" Type="System.Double" Scope="Application">
       <Value Profile="(Default)">0.6</Value>
+    </Setting>
+    <Setting Name="FormMinimumSize" Type="System.Drawing.Size" Scope="Application">
+      <Value Profile="(Default)">825, 150</Value>
+    </Setting>
+    <Setting Name="FormMaximumSize" Type="System.Drawing.Size" Scope="Application">
+      <Value Profile="(Default)">1350, 720</Value>
+    </Setting>
+    <Setting Name="FormSize" Type="System.Drawing.Size" Scope="Application">
+      <Value Profile="(Default)">1200, 240</Value>
     </Setting>
   </Settings>
 </SettingsFile>

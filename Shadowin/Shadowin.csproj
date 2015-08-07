@@ -103,16 +103,6 @@
     <None Include="Resources\Shadowin.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plusal.Shared\Plusal.Shared.csproj">
-      <Project>{0d436f8c-12ab-44c4-abcd-48ce6e9b6e6c}</Project>
-      <Name>Plusal.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plusal.Windows\Plusal.Windows.csproj">
-      <Project>{a472f2b0-9191-47e3-8f4f-82cbe7d8a761}</Project>
-      <Name>Plusal.Windows</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -123,6 +113,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Plusal.Shared\Plusal.Shared.csproj">
+      <Project>{0d436f8c-12ab-44c4-abcd-48ce6e9b6e6c}</Project>
+      <Name>Plusal.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plusal.Windows\Plusal.Windows.csproj">
+      <Project>{a472f2b0-9191-47e3-8f4f-82cbe7d8a761}</Project>
+      <Name>Plusal.Windows</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
