@@ -668,7 +668,7 @@
                 });
             }
             if (_elements.alertPanel) {
-                _elements.alertPanel.empty().hide();
+                _elements.alertPanel.hide();
             }
             if (_elements.settingsButton) {
                 _elements.settingsButton.popover({
