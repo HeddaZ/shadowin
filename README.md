@@ -2,6 +2,7 @@ Shadowin 影窗浏览器，支持老板键的透明浏览器外框
 ---------------------------------------------
 冲着 `老板键` 和 `透明窗体` 特性，此类工具在白领圈里非常有市场，呵呵~~  
 本软件迎合了多类人群的实际需求，将 **工作时间打酱油** 的精神发挥到顶点。  
+![Shadowin 影窗浏览器 + ShadowStock 影子证券](docs/demo-preview.png)  
 
 * Shadowin 基于 WindowsAPI 的窗体控制接口实现，可以通过老板键（系统级热键）控制窗口的尺寸、透明度、显示和隐藏。  
 * Shadowin 会创建一个基于 IE 核心的浏览器外框，通过修改 `Shadowin.exe.config` 文件可关注任意 URL 的实时内容（比如：股票、刷秒杀、刷在线、挂等级……）。  
@@ -14,8 +15,9 @@ ShadowStock 影子证券，是上班看股、个性化盯盘神器
 * ShadowStock 提供了完备的股票盯盘界面（`2015 重制版`中已实现大量激情特性），允许创建您自己的投资组合、实现盯盘、关注实时盈亏；神不知鬼不觉助您把握股牛、满钵满盏。  
 * ShadowStock 专为 Shadowin 影窗浏览器设计，站点采用 **纯静态页面 + 客户端脚本** 实现，方便二次部署，后台链接[新浪财经]实时数据源，使用模板引擎思路设计更方便扩展。  
   
-**点击 [下载已编译包，解压直接使用]**（运行需 [Microsoft .NET Framework 2.0] 支持）  
   
+**点击 [下载已编译包，解压直接使用]**（运行需 [Microsoft .NET Framework 2.0] 支持）  
+================================================================================  
 
 ShadowStock 影子证券 - 沪深创业板 功能介绍
 -----------------------------------------
@@ -24,7 +26,6 @@ ShadowStock 影子证券 - 沪深创业板 功能介绍
   
 * 主界面和透明化效果 - 你值得拥有
 ![主界面](docs/demo-main.png)  
-![透明化效果](docs/demo-alpha.png)  
   
 * 智能选股列表 - 创建激情投资组合
 ![智能选股列表](docs/demo-autocomplete.png)  
@@ -91,7 +92,8 @@ Shadowin 影窗浏览器 默认配置和操作方法
 ShadowStock 影子证券（旧版）
 ---------------------------
 **老版支持 IE7 等更老级别浏览器，地址：**  
-> http://shadowstock.iihtml.com/legacy  
+> http://shadowstock.iihtml.com/legacy/  
+  
 ![ShadowStock 旧版](docs/demo-legacy.gif)  
   
 **自选股格式和范例：**  
@@ -125,9 +127,9 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
   
 注意事项
 --------
-> `/ShadowStock` 目录下是一个 **纯静态的网站**，放到任何主机上即可使用；  
-> ShadowStock 的个性化设置是保存在本地的 Cookie 中的，`2015 重制版`可以支持设置的导入/导出以及通过 QQ 之类的工具传输，而旧版只有选股列表可以跨计算机迁移；
-> ShadowStock 影子證券(雅虎奇摩台灣版)调用的是经二次包装的雅虎奇摩数据源 "http://tool.iihtml.com/shadowstock/tw/stockdata.aspx?rn={0}&list={1}"，
+* `/ShadowStock` 目录下是一个 **纯静态的网站**，放到任何主机上即可使用；  
+* ShadowStock 的个性化设置是保存在本地的 Cookie 中的，`2015 重制版`可以支持设置的导入/导出以及通过 QQ 之类的工具传输，而旧版只有选股列表可以跨计算机迁移；
+* ShadowStock 影子證券(雅虎奇摩台灣版)调用的是经二次包装的雅虎奇摩数据源 "http://tool.iihtml.com/shadowstock/tw/stockdata.aspx?rn={0}&list={1}"，
 您可以在 `/TW/Shared.js` 中找到定义，不建议修改；  
   
 

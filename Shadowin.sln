@@ -32,7 +32,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShadowStock", "http://local
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C9E9045C-4053-4F38-8E16-E53D55DFDB1B}"
 	ProjectSection(SolutionItems) = preProject
-		docs\demo-alpha.png = docs\demo-alpha.png
 		docs\demo-autocomplete.png = docs\demo-autocomplete.png
 		docs\demo-delete.png = docs\demo-delete.png
 		docs\demo-edit.png = docs\demo-edit.png
@@ -40,6 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C9E9045C-4
 		docs\demo-legacy.gif = docs\demo-legacy.gif
 		docs\demo-main.png = docs\demo-main.png
 		docs\demo-move.png = docs\demo-move.png
+		docs\demo-preview.png = docs\demo-preview.png
 		docs\demo-settings.png = docs\demo-settings.png
 		LICENSE = LICENSE
 		docs\logo.jpg = docs\logo.jpg
