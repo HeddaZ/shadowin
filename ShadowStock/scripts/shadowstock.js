@@ -629,7 +629,9 @@
                 _elements.stockTable.empty();
             }
             if (_elements.suggestionText) {
-                _elements.suggestionText.autocomplete({
+                _elements.suggestionText.focus(function () {
+                    $(this).select();
+                }).autocomplete({
                     minLength: 1,
                     autoFocus: true,
                     source: [],
