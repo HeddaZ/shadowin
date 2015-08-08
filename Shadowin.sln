@@ -41,6 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C9E9045C-4
 		docs\demo-move.png = docs\demo-move.png
 		docs\demo-preview.png = docs\demo-preview.png
 		docs\demo-settings.png = docs\demo-settings.png
+		docs\download.png = docs\download.png
 		LICENSE = LICENSE
 		docs\logo.jpg = docs\logo.jpg
 		README.md = README.md
