@@ -1,38 +1,53 @@
-Shadowin 影窗浏览器，通用且隐蔽、配合 ShadowStock 影子证券是上班看股神器
-=====================================================================
-一个 `隐蔽型` 通用工具，这类玩意在白领圈里非常有市场，呵呵。也许迎合了众多人的实际需求，**Shadowin 影窗浏览器** + **ShadowStock 影子证券**是本人原创软件里用户数最多、地域分布最广的一款软件，自 2009 年发布，不断接受到客户发来的新的增强软件功能的要求，因为它实在是太方便、太 YY 了。   
-  
-**点击[下载已编译包，解压直接使用]**（需 [Microsoft .NET Framework 2.0] 支持）  
-  
-![演示动画](demo.gif)  
+Shadowin 影窗浏览器，支持老板键的透明浏览器外框
+---------------------------------------------
+冲着 `老板键` 和 `透明窗体` 特性，此类工具在白领圈里非常有市场，呵呵~~  
+本软件迎合了多类人群的实际需求，将 **工作时间打酱油** 的精神发挥到顶点。  
 
-Shadowin 影窗浏览器 + ShadowStock 影子证券(新浪版)
--------------------------------------------------
-* Shadowin 是基于 Windows API 的窗体控制原理延伸出来的专用的**固定 URL 浏览器**。针对上班族开小差这类特殊需求设计：他们可能要关注某个网站某个特定页面的实时内容（比如：股票、小说……），但又不希望周围的人发觉……:)
-* Shadowin 会创建一个包含浏览器界面（IE 核心）的半透明窗体隐藏在桌面角落，您可以通过老板键（系统级热键）控制它的显示和隐藏。
-* Shadowin 通过文本型 XML 提供程序运行所需的参数，修改它是相当方便的，因此便具有了一软多用的特性。为适应不同页面的浏览需求，Shadowin 亦允许您自行配置喜欢的系统热键（见：[Keys Enumeration]）来自由调整窗体尺寸和透明度。而且某些外观参数也能在 XML 配置文件里找到，改到满意为止吧！
-* 初始状态下，Shadowin 已为您设定好非常实用的《[ShadowStock 影子证券(新浪版)]》网站。该站点页面允许您根据投资组合关注自选股（深市sz、沪市sh）、实时价格显示、涨跌警示、持仓盈亏统计、快速链接新浪/谷歌股票页，还能将您想重点关注的单元格`鼠标双击`高亮着色；
-影子证券程序由纯 Javascript 客户端脚本编制而成，后台链接[新浪财经]实时数据源且比新浪页面更简洁精悍更省流量，与“Shadowin 影窗浏览器”一起使用极具隐蔽性，神不知鬼不觉助您把握股牛、满钵满盏。  
+* Shadowin 基于 WindowsAPI 的窗体控制接口实现，可以通过老板键（系统级热键）控制窗口的尺寸、透明度、显示和隐藏。  
+* Shadowin 会创建一个基于 IE 核心的浏览器外框，通过修改 `Shadowin.exe.config` 文件可关注任意 URL 的实时内容（比如：股票、刷秒杀、刷在线、挂等级……）。  
+* Shadowin 更允许您自行配置喜欢的系统热键（见：[Keys Enumeration]）和初始外观，改到满意为止吧！  
   
-**直接访问地址：**  
-> http://tool.iihtml.com/shadowstock/  
+ShadowStock 影子证券，是上班看股、个性化盯盘神器
+----------------------------------------------
+`Shadowin 影窗浏览器` 和 `ShadowStock 影子证券` 两个方案须配套使用方能发挥神器奇效！  
+
+* ShadowStock 提供了完备的股票盯盘界面（`2015 重制版`中已实现大量激情特性），允许创建您自己的投资组合、实现盯盘、关注实时盈亏；神不知鬼不觉助您把握股牛、满钵满盏。  
+* ShadowStock 专为 Shadowin 影窗浏览器设计，站点采用 **纯静态页面 + 客户端脚本** 实现，方便二次部署，后台链接[新浪财经]实时数据源，使用模板引擎思路设计更方便扩展。  
   
-**自选股格式和范例：**  
-> 代码[/成本[/持有量]][,代码[/成本[/持有量]]]  
-> sh600026,sh600050/2.33,sz000002/20.5/100  
-  
-**附注：** 
-> 填入的股票代码采用[新浪财经]的分类规则。  
-> [上证指数]的代码是 sh000001  
-> [深证成指]的代码是 sz399001  
+**点击 [下载已编译包，解压直接使用]**（运行需 [Microsoft .NET Framework 2.0] 支持）  
   
 
-默认配置和操作方法
------------------
+ShadowStock 影子证券 - 沪深创业板 功能介绍
+-----------------------------------------
+**2015 重制版支持主流浏览器，地址：**  
+> http://shadowstock.iihtml.com/  
+  
+* 主界面和透明化效果 - 你值得拥有
+![主界面](docs/demo-main.png)  
+![透明化效果](docs/demo-alpha.png)  
+  
+* 智能选股列表 - 创建激情投资组合
+![智能选股列表](docs/demo-autocomplete.png)  
+  
+* 即时拖动排序 - 把握视觉主次
+![即时拖动排序](docs/demo-move.png)  
+  
+* 成本持仓维护 - 关注实时收益
+![成本持仓维护](docs/demo-edit.png)  
+  
+* 个性化设置 - 体现你的独到见解
+![个性化设置](docs/demo-settings.png)  
+  
+* 设置导入导出 - 回避繁杂、只留方便
+![设置导入导出](docs/demo-impexp.png)  
+  
+  
+Shadowin 影窗浏览器 默认配置和操作方法
+-------------------------------------
 ```xml
 <appSettings>
     <!--Url-->
-    <add key="Url" value="http://tool.iihtml.com/shadowstock/"/>
+    <add key="Url" value="http://shadowstock.iihtml.com/"/>
 
     <!--自动刷新时间间隔（0表示不刷新）-->
     <add key="RefreshInterval" value="0"/>
@@ -59,7 +74,7 @@ Shadowin 影窗浏览器 + ShadowStock 影子证券(新浪版)
     <add key="ExitHotKeyKey" value="D0"/>
 </appSettings>
 ```
-
+  
 |热键		|效果			|
 |----		|----			|
 |`Ctrl + ~`	|显示/隐藏窗口（`ESC`下方的`波浪线`，热键更顺手！）	|
@@ -72,11 +87,30 @@ Shadowin 影窗浏览器 + ShadowStock 影子证券(新浪版)
 |`Ctrl + 0`	|退出程序		|
   
 
-ShadowStock 影子證券(雅虎奇摩台灣版)
------------------------------------
-應廣大網友要求，2011-02-18 發佈了《[ShadowStock 影子證券(雅虎奇摩台灣版)]》，後臺連接雅虎奇摩實時數據源，對臺灣股票（tw）實現同樣完美的支持——隱蔽操作、自訂股票、實時行情關注、漲跌警示、盈虧分析等，首開國內兩岸之先河！   
-**直接訪問位址：**  
-> http://tool.iihtml.com/shadowstock/tw/  
+
+ShadowStock 影子证券（旧版）
+---------------------------
+**老版支持 IE7 等更老级别浏览器，地址：**  
+> http://shadowstock.iihtml.com/legacy  
+![ShadowStock 旧版](docs/demo-legacy.gif)  
+  
+**自选股格式和范例：**  
+> 代码[/成本[/持有量]][,代码[/成本[/持有量]]]  
+> sh600026,sh600050/2.33,sz000002/20.5/100  
+  
+**附注：**  
+> 填入的股票代码采用[新浪财经]的分类规则。  
+> [上证指数]的代码是 sh000001  
+> [深证成指]的代码是 sz399001  
+
+
+ShadowStock 影子證券（雅虎奇摩台灣版）
+------------------------------------
+應網友要求，2011-02-18 發佈了《ShadowStock 影子證券(雅虎奇摩台灣版)》，後臺連接雅虎奇摩實時數據源，
+對臺灣股票（tw）實現同樣完美的支持——隱蔽操作、自訂股票、實時行情關注、漲跌警示、盈虧分析等，首開國內兩岸之先河！   
+  
+**位址：**  
+> http://shadowstock.iihtml.com/tw/  
 
 **自選股格式和範例：**  
 > 代號[/成本[/持倉]][,代號[/成本[/持倉]]]  
@@ -87,27 +121,26 @@ ShadowStock 影子證券(雅虎奇摩台灣版)
 > [台泥]的代碼是 tw1101  
 > [台積電]的代碼是 tw2330  
   
+
   
-自架 ShadowStock 注意事项
--------------------------
-ShadowStock 目录下是一个 `纯静态的网站`，放到任何主机上即可使用；  
-**影子证券(新浪版)**: 直接远程调用新浪财经数据源 "http://hq.sinajs.cn/rn={0}&list={1}" 您可以在 `/Shared.js` 中找到定义，不建议修改；  
-**影子證券(雅虎奇摩台灣版)**: 调用二次包装的雅虎奇摩数据源 "http://tool.iihtml.com/shadowstock/tw/stockdata.aspx?rn={0}&list={1}" 您可以在 `/TW/Shared.js` 中找到定义，不建议修改；  
-**自定义列表栏位**: 依照 `Shared.js` 文件中 `HeadersString` 的定义重新设定 `DisplayIndexsString` 值即可。  
+注意事项
+--------
+> `/ShadowStock` 目录下是一个 **纯静态的网站**，放到任何主机上即可使用；  
+> ShadowStock 的个性化设置是保存在本地的 Cookie 中的，`2015 重制版`可以支持设置的导入/导出以及通过 QQ 之类的工具传输，而旧版只有选股列表可以跨计算机迁移；
+> ShadowStock 影子證券(雅虎奇摩台灣版)调用的是经二次包装的雅虎奇摩数据源 "http://tool.iihtml.com/shadowstock/tw/stockdata.aspx?rn={0}&list={1}"，
+您可以在 `/TW/Shared.js` 中找到定义，不建议修改；  
   
 
 ================================================
-![Shadowin 影窗浏览器](logo.jpg)  
+![Shadowin 影窗浏览器](docs/logo.jpg)  
 使用中有任何问题和建议，欢迎[在此留爪]。  
-如果此软件助您投资丰收，亦欢迎**捐赠**帮助项目发展！  
+若此软件对您有积极作用，欢迎 **捐赠** 帮助项目发展！  
 > QQ: 9812152  
 > [支付宝]: heddaz(at)live.com  
 > [PayPal]: heddaz(at)live.com  
 
 
 [Keys Enumeration]: https://msdn.microsoft.com/en-us/library/system.windows.forms.keys(v=vs.110).aspx
-[ShadowStock 影子证券(新浪版)]: http://tool.iihtml.com/shadowstock/
-[ShadowStock 影子證券(雅虎奇摩台灣版)]: http://tool.iihtml.com/shadowstock/tw/
 [Microsoft .NET Framework 2.0]: http://www.microsoft.com/zh-cn/download/details.aspx?id=25150
 [新浪财经]: http://finance.sina.com.cn
 [上证指数]: http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml

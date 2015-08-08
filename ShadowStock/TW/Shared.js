@@ -164,7 +164,7 @@ var ColorBaseIndex = 43;
 var RefreshInterval = 8000;
 
 //股票数据定义地址格式
-var StockDatasDeclareUrlFormat = "stockdata.aspx?rn={0}&list={1}";
+var StockDatasDeclareUrlFormat = "http://tool.iihtml.com/shadowstock/tw/stockdata.aspx?rn={0}&list={1}";
 
 //股票数据取回器地址格式
 var StockDatasFetcherUrlFormat = "StockDatasFetcher.htm?rn={0}&list={1}";

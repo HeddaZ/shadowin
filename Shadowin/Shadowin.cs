@@ -227,7 +227,7 @@ namespace Shadowin
         /// </summary>
         private void OnExitHotKey()
         {
-            if (MessageBox.Show(this, "^_^ 确定要退出吗？", SwGlobal.Title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            if (MessageBox.Show(this, "欢迎捐献支持本项目发展，接受 支付宝 或 PayPal ^_^\n\n您确定要退出吗？", SwGlobal.Title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
                 this.Close();
             }
@@ -251,7 +251,7 @@ namespace Shadowin
                 //后台歇息
                 webBrowser1.Url = BlankUrl;
             }
-            
+
             timer1.Enabled = this.Visible && this.RefreshEnabled;
         }
         private void LoadUrl()
@@ -277,7 +277,7 @@ namespace Shadowin
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(this, string.Format("谢谢您使用 {0} ！\n\n作者：{1}\n邮件：{2}\n网站：{3}\n\n(尊重开源、尊重分享，复制请保留以上信息，谢谢)",
+            if (MessageBox.Show(this, string.Format("谢谢您使用 {0} ！\n\n作者：{1}\n邮件：{2}\n网站：{3}\n\n(尊重开源、尊重分享，再发布请保留以上信息，谢谢)",
                                             SwGlobal.Title,
                                             "Hedda",
                                             "heddaz(at)live.com",

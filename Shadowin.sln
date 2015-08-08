@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shadowin", "Shadowin\Shadowin.csproj", "{9F3C911F-6A05-41C2-9E99-9F845D7048FA}"
 EndProject
@@ -30,11 +30,19 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShadowStock", "http://local
 		SlnRelativePath = "ShadowStock\"
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{C9E9045C-4053-4F38-8E16-E53D55DFDB1B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C9E9045C-4053-4F38-8E16-E53D55DFDB1B}"
 	ProjectSection(SolutionItems) = preProject
-		demo.gif = demo.gif
+		docs\demo-alpha.png = docs\demo-alpha.png
+		docs\demo-autocomplete.png = docs\demo-autocomplete.png
+		docs\demo-delete.png = docs\demo-delete.png
+		docs\demo-edit.png = docs\demo-edit.png
+		docs\demo-impexp.png = docs\demo-impexp.png
+		docs\demo-legacy.gif = docs\demo-legacy.gif
+		docs\demo-main.png = docs\demo-main.png
+		docs\demo-move.png = docs\demo-move.png
+		docs\demo-settings.png = docs\demo-settings.png
 		LICENSE = LICENSE
-		logo.jpg = logo.jpg
+		docs\logo.jpg = docs\logo.jpg
 		README.md = README.md
 	EndProjectSection
 EndProject
