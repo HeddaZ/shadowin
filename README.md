@@ -16,7 +16,8 @@ ShadowStock 影子证券，是上班看股、个性化盯盘神器
 * ShadowStock 专为 Shadowin 影窗浏览器设计，站点采用 **纯静态页面 + 客户端脚本** 实现，方便二次部署，后台链接[新浪财经]实时数据源，使用模板引擎思路设计更方便扩展。  
   
   
-<font color="red">**点击 [下载已编译包，解压直接使用]**（运行需 [Microsoft .NET Framework 2.0] 支持）</font>  
+-----------------------------------
+<font color="red">点击此处：</font> [下载已编译包，解压直接使用]（运行需 [Microsoft .NET Framework 2.0] 支持）  
   
   
 ShadowStock 影子证券 - 沪深创业板 功能介绍
