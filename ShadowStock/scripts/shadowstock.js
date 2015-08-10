@@ -559,26 +559,43 @@
         },
 
         _editorCallback = function (args) {
-            switch (args.result) {
-                case 'save':
-                    var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', args.token);
-                    if (i >= 0) {
-                        var watchingStock = _userSettings.watchingStocks[i];
-                        watchingStock.cost = $.isNumeric(args.cost)
-                            ? Number(args.cost)
-                            : undefined;
-                        watchingStock.quantity = $.isNumeric(args.quantity)
-                            ? Number(args.quantity)
-                            : undefined;
+            try {
+                switch (args.result) {
+                    case 'save':
+                        var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', args.token);
+                        if (i >= 0) {
+                            var watchingStock = _userSettings.watchingStocks[i];
+                            watchingStock.cost = $.isNumeric(args.cost)
+                                ? Number(args.cost)
+                                : undefined;
+                            watchingStock.quantity = $.isNumeric(args.quantity)
+                                ? Number(args.quantity)
+                                : undefined;
 
-                        setUserSettings();
-                        showAlert(_formatString('{0} ({1}) 已更新, 成本: {2} 持有量: {3}', watchingStock.name, watchingStock.sinaSymbol, watchingStock.cost, watchingStock.quantity));
-                    }
+                            setUserSettings();
+                            showAlert(_formatString('{0} ({1}) 已更新, 成本: {2} 持有量: {3}', watchingStock.name, watchingStock.sinaSymbol, watchingStock.cost, watchingStock.quantity));
+                        }
+                        break;
 
-                case 'cancel':
-                default:
-                    $('.container-action>.glyphicon-edit').popover('hide');
-                    break;
+                    case 'clear':
+                        var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', args.token);
+                        if (i >= 0) {
+                            var watchingStock = _userSettings.watchingStocks[i];
+                            watchingStock.cost = undefined;
+                            watchingStock.quantity = undefined;
+
+                            setUserSettings();
+                            showAlert(_formatString('{0} ({1}) 已更新, 成本: {2} 持有量: {3}', watchingStock.name, watchingStock.sinaSymbol, watchingStock.cost, watchingStock.quantity));
+                        }
+                        break;
+
+                    case 'cancel':
+                    default:
+                        break;
+                }
+            }
+            finally {
+                $('.container-action>.glyphicon-edit').popover('hide');
             }
         },
         showAlert = function (message, duration) {
@@ -594,30 +611,40 @@
         },
 
         _settingsCallback = function (args) {
-            switch (args.result) {
-                case 'save':
-                    _userSettings.refreshInterval = args.refreshInterval;
-                    _userSettings.displayColumns = args.displayColumns;
-                    setUserSettings();
-                    showAlert('设置已更新，立即生效');
+            try {
+                switch (args.result) {
+                    case 'save':
+                        _userSettings.refreshInterval = args.refreshInterval;
+                        _userSettings.displayColumns = args.displayColumns;
+                        setUserSettings();
+                        showAlert('设置已更新，立即生效');
+                        break;
 
-                case 'cancel':
-                default:
-                    _elements.settingsButton.popover('hide');
-                    break;
+                    case 'cancel':
+                    default:
+                        break;
+                }
+            }
+            finally {
+                _elements.settingsButton.popover('hide');
             }
         },
         _impexpCallback = function (args) {
-            switch (args.result) {
-                case 'save':
-                    _userSettings = args.userSettings;
-                    setUserSettings();
-                    showAlert('设置已更新，立即生效');
+            try {
+                switch (args.result) {
+                    case 'save':
+                        _userSettings = args.userSettings;
+                        setUserSettings();
+                        showAlert('设置已更新，立即生效');
+                        break;
 
-                case 'cancel':
-                default:
-                    _elements.impexpButton.popover('hide');
-                    break;
+                    case 'cancel':
+                    default:
+                        break;
+                }
+            }
+            finally {
+                _elements.impexpButton.popover('hide');
             }
         },
 
