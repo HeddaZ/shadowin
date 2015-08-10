@@ -108,7 +108,7 @@
                     $('<span class="glyphicon glyphicon-edit" role="button"></span>')
                         .attr('data-id', sinaSymbol)
                         .attr('title', _formatString('编辑 - {0}', this.siblings[_appSettings.nameColumnId].getText(data)))
-                        .attr('data-content', _formatString('<iframe class="editor" src="editor.html?{0}"></iframe>', escape(JSON.stringify({
+                        .attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="editor" src="editor.html?{0}"></iframe>', escape(JSON.stringify({
                             token: sinaSymbol,
                             callback: 'ShadowStock.editorCallback',
                             cost: this.siblings[_appSettings.costColumnId].getText(data),
@@ -374,7 +374,7 @@
                 var value = this.siblings[_appSettings.gainLossColumnId].getValue(data);
                 this._class = value > 0
                     ? 'btn-danger'
-                    : (value < 0 ? 'btn-success' : 'btn-default');
+                    : (value < 0 ? 'btn-success' : 'btn-default disabled');
             }
             return this._class;
         },
@@ -677,7 +677,7 @@
                     trigger: 'manual',
                     placement: 'bottom'
                 }).click(function () {
-                    $(this).attr('data-content', _formatString('<iframe class="settings" src="settings.html?{0}"></iframe>', escape(JSON.stringify({
+                    $(this).attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="settings" src="settings.html?{0}"></iframe>', escape(JSON.stringify({
                         token: _appId,
                         callback: 'ShadowStock.settingsCallback',
                         refreshInterval: _userSettings.refreshInterval,
@@ -694,7 +694,7 @@
                     trigger: 'manual',
                     placement: 'bottom'
                 }).click(function () {
-                    $(this).attr('data-content', _formatString('<iframe class="impexp" src="impexp.html?{0}"></iframe>', escape(JSON.stringify({
+                    $(this).attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="impexp" src="impexp.html?{0}"></iframe>', escape(JSON.stringify({
                         token: _appId,
                         callback: 'ShadowStock.impexpCallback',
                         userSettings: _userSettings

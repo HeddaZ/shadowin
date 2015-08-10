@@ -101,3 +101,7 @@ iframe.impexp {
 .container-impexp {
     width: 500px;
 }
+
+#stockTable td.btn-default {
+    background-color: transparent;
+}
