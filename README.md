@@ -1,6 +1,6 @@
 Shadowin 影窗浏览器，支持老板键的透明浏览器外框
 ---------------------------------------------
-冲着 `老板键` 和 `透明窗体` 特性，此类工具在白领圈里非常有市场，呵呵~~  
+冲着 `老板键` 和 `透明窗体` 特性，此类工具在白领圈里非常有市场，啦啦啦~~  
 本软件迎合了多类人群的实际需求，将 **工作时间打酱油** 的精神发挥到顶点。  
 ![Shadowin 影窗浏览器 + ShadowStock 影子证券](docs/demo-preview.png)  
 
@@ -24,10 +24,11 @@ ShadowStock 影子证券，是上班看股、个性化盯盘神器
 ShadowStock 影子证券 - 沪深创业板 功能介绍
 -----------------------------------------
 **2015 重制版支持主流浏览器，地址：**  
-> http://shadowstock.iihtml.com/  
+> http://stock.shadowin.net/  
+> （IE7 或更旧浏览器请使用下文提到的旧版）  
   
-* 主界面和透明化效果 - 你值得拥有
-![主界面](docs/demo-main.png)  
+* 微型界面和透明效果 - 你值得拥有
+![微型界面和透明效果](docs/demo-main.png)  
   
 * 智能选股列表 - 创建激情投资组合
 ![智能选股列表](docs/demo-autocomplete.png)  
@@ -38,8 +39,8 @@ ShadowStock 影子证券 - 沪深创业板 功能介绍
 * 成本持仓维护 - 关注实时收益
 ![成本持仓维护](docs/demo-edit.png)  
   
-* 个性化设置 - 体现你的独到见解
-![个性化设置](docs/demo-settings.png)  
+* 个性化界面设置 - 体现你的独到见解
+![个性化界面设置](docs/demo-settings.png)  
   
 * 设置导入导出 - 回避繁杂、只留方便
 ![设置导入导出](docs/demo-impexp.png)  
@@ -48,34 +49,36 @@ ShadowStock 影子证券 - 沪深创业板 功能介绍
 Shadowin 影窗浏览器 默认配置和操作方法
 -------------------------------------
 ```xml
-<appSettings>
-    <!--Url-->
-    <add key="Url" value="http://shadowstock.iihtml.com/"/>
+  <appSettings>
 
-    <!--自动刷新时间间隔（0表示不刷新）-->
+    <!-- URL -->
+    <add key="Url" value="http://stock.shadowin.net/"/>
+    <!-- 自动刷新时间间隔（0 表示不刷新；ShadowStock 无需设置刷新） -->
     <add key="RefreshInterval" value="0"/>
 
-    <!--热键-->
+    <!-- 热键：窗口宽度 -->
     <add key="IncreaseWidthHotKeyModifierKey" value="Control"/>
     <add key="IncreaseWidthHotKeyKey" value="Left"/>
     <add key="DecreaseWidthHotKeyModifierKey" value="Control"/>
     <add key="DecreaseWidthHotKeyKey" value="Right"/>
-    
+    <!-- 热键：窗口高度 -->
     <add key="IncreaseHeightHotKeyModifierKey" value="Control"/>
     <add key="IncreaseHeightHotKeyKey" value="Up"/>
     <add key="DecreaseHeightHotKeyModifierKey" value="Control"/>
     <add key="DecreaseHeightHotKeyKey" value="Down"/>
-
+    <!-- 热键：窗口透明度 -->
     <add key="IncreaseOpacityHotKeyModifierKey" value="Control"/>
     <add key="IncreaseOpacityHotKeyKey" value="Oemplus"/>
     <add key="DecreaseOpacityHotKeyModifierKey" value="Control"/>
     <add key="DecreaseOpacityHotKeyKey" value="OemMinus"/>
-    
+    <!-- 热键：窗口显示/隐藏 -->
     <add key="ShowHideHotKeyModifierKey" value="Control"/>
     <add key="ShowHideHotKeyKey" value="Oemtilde"/>
+    <!-- 热键：退出程序 -->
     <add key="ExitHotKeyModifierKey" value="Control"/>
     <add key="ExitHotKeyKey" value="D0"/>
-</appSettings>
+
+  </appSettings>
 ```
   
 |热键		|效果			|
@@ -93,10 +96,10 @@ Shadowin 影窗浏览器 默认配置和操作方法
 
 ShadowStock 影子证券（旧版）
 ---------------------------
-**老版支持 IE7 等更老级别浏览器，地址：**  
-> http://shadowstock.iihtml.com/legacy/  
+**旧版支持 IE7 等更老级别浏览器，地址：**  
+> http://v1.stock.shadowin.net/  
   
-![ShadowStock 旧版](docs/demo-legacy.gif)  
+![ShadowStock 旧版](docs/demo-v1.gif)  
   
 **自选股格式和范例：**  
 > 代码[/成本[/持有量]][,代码[/成本[/持有量]]]  
@@ -106,15 +109,15 @@ ShadowStock 影子证券（旧版）
 > 填入的股票代码采用[新浪财经]的分类规则。  
 > [上证指数]的代码是 sh000001  
 > [深证成指]的代码是 sz399001  
-
-
+  
+  
 ShadowStock 影子證券（雅虎奇摩台灣版）
 ------------------------------------
 應網友要求，2011-02-18 發佈了《ShadowStock 影子證券(雅虎奇摩台灣版)》，後臺連接雅虎奇摩實時數據源，
 對臺灣股票（tw）實現同樣完美的支持——隱蔽操作、自訂股票、實時行情關注、漲跌警示、盈虧分析等，首開國內兩岸之先河！   
   
 **位址：**  
-> http://shadowstock.iihtml.com/tw/  
+> http://tw.stock.shadowin.net/  
 
 **自選股格式和範例：**  
 > 代號[/成本[/持倉]][,代號[/成本[/持倉]]]  
@@ -125,14 +128,14 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
 > [台泥]的代碼是 tw1101  
 > [台積電]的代碼是 tw2330  
   
-
+  
   
 注意事项
 --------
 * `/ShadowStock` 目录下是一个 **纯静态的网站**，放到任何主机上即可使用；  
-* ShadowStock 的个性化设置是保存在本地的 Cookie 中的，`2015 重制版`可以支持设置的导入/导出以及通过 QQ 之类的工具传输，而旧版只有选股列表可以跨计算机迁移；
+* ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，`2015 重制版`可以支持设置的导入/导出以及通过 QQ 之类的工具传输；而旧版仅选股列表支持跨计算机迁移；
 * ShadowStock 影子證券(雅虎奇摩台灣版)调用的是经二次包装的雅虎奇摩数据源 http://tool.iihtml.com/shadowstock/tw/stockdata.aspx?rn={0}&list={1} ，
-您可以在 `/TW/Shared.js` 中找到定义，不建议修改；  
+您可以在 `/_tw/Shared.js` 中找到定义，不建议修改；  
   
 
 ================================================
