@@ -237,8 +237,14 @@
                 getClass: getClassAsNone,
                 getText: function (data) {
                     if (this._text == undefined) {
-                        this._text = _formatString('<a title=\"技术指标\" href=\"TI.htm?{0}\" target=\"_blank\">T</a>',
-                            this.siblings[_appSettings.sinaSymbolColumnId].getText(data));
+                        this._text = _formatString(
+                            '<a title="必读" href="http://f10.eastmoney.com/f10_v2/OperationsRequired.aspx?code={0}&timetip={2}#dstx-0" target="_blank">必</a>'
+                            + ' <a title="业绩" href="http://gu.qq.com/sstock/quotpage/q/{1}.htm#10" target="_blank">绩</a>'
+                            + ' <a title="分红" href="http://f10.eastmoney.com/f10_v2/BonusFinancing.aspx?code={0}&timetip={2}#fhyx-0" target="_blank">红</a>'
+                            + ' <a title="曲线" href="TI.htm?{0}" target="_blank">线</a>',
+                            this.siblings[_appSettings.sinaSymbolColumnId].getText(data),
+                            this.siblings[_appSettings.symbolColumnId].getText(data),
+                            _getTicks());
                     }
                     return this._text;
                 },
