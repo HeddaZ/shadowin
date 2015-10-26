@@ -135,7 +135,7 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
 * `/ShadowStock` 目录下是一个 **纯静态的网站**，放到任何主机上即可使用；  
 * ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，`2015 重制版`可以支持设置的导入/导出以及通过 QQ 之类的工具传输；而旧版仅选股列表支持跨计算机迁移；
 * ShadowStock 影子證券(雅虎奇摩台灣版)调用的是经二次包装的雅虎奇摩数据源 http://tw.stock.shadowin.net/stockdata.aspx?rn={0}&list={1} ，
-您可以在 `/_tw/Shared.js` 中找到定义，不建议修改；  
+您可以在 `/ShadowStock/_tw/Shared.js` 和 `/ShadowStock/_tw/stockdata.aspx` 中找到相关代码；  
   
 
 ================================================
