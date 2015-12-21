@@ -131,7 +131,13 @@
                 getText: getTextForNumber,
                 getValue: function (data) {
                     if (this._value == undefined) {
-                        this._value = this.siblings[_appSettings.priceColumnId].getValue(data) - this.siblings[_appSettings.closingPriceColumnId].getValue(data);
+                        if (this.siblings[_appSettings.priceColumnId].getValue(data) == 0) // 停牌或异常
+                        {
+                            this._value = 0;
+                        }
+                        else {
+                            this._value = this.siblings[_appSettings.priceColumnId].getValue(data) - this.siblings[_appSettings.closingPriceColumnId].getValue(data);
+                        }
                     }
                     return this._value;
                 }
