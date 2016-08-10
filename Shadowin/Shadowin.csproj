@@ -12,7 +12,7 @@
     <AssemblyName>Shadowin</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>Resources\Shadowin.ico</ApplicationIcon>
+    <ApplicationIcon>Shadowin_48.ico</ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -97,9 +97,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Shadowin16.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Shadowin.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +120,12 @@
       <Project>{a472f2b0-9191-47e3-8f4f-82cbe7d8a761}</Project>
       <Name>Plusal.Windows</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shadowin_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Shadowin_48.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
