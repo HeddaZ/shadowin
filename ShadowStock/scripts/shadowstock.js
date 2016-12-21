@@ -530,13 +530,14 @@
 
         suggestionCache = {},
         suggestionRequest = function (term) {
-            var token = escape(term);
+            var keywords = escape(term.toLowerCase());
+            var token = keywords;
             var vars = [];
             var suggestionName = 'suggestion_' + _getTicks();
             vars[0] = suggestionName;
             _requestData(suggestionRetriever, {
                 token: token,
-                url: _formatString(_appSettings.suggestionUrl, suggestionName, escape(term)),
+                url: _formatString(_appSettings.suggestionUrl, suggestionName, keywords),
                 callback: 'ShadowStock.suggestionCallback',
                 vars: vars
             });
