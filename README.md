@@ -55,7 +55,7 @@ Shadowin 影窗浏览器 默认配置和操作方法
     <add key="Url" value="http://stock.shadowin.net/"/>
     <!-- 自动刷新时间间隔（0 表示不刷新；ShadowStock 无需设置刷新） -->
     <add key="RefreshInterval" value="0"/>
-	<!-- 分屏显示 -->
+    <!-- 分屏显示 -->
     <add key="ScreenId" value="0"/>
 
     <!-- 热键：窗口宽度 -->
