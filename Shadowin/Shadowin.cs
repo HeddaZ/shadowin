@@ -271,8 +271,17 @@ namespace Shadowin
         /// </summary>
         private void Shadowin_SizeChanged(object sender, EventArgs e)
         {
-            this.Left = Screen.PrimaryScreen.WorkingArea.Width - this.Width;
-            this.Top = Screen.PrimaryScreen.WorkingArea.Bottom - this.Height;
+            Screen screen;
+            try
+            {
+                screen = Screen.AllScreens[SwGlobal.ScreenId];
+            }
+            catch
+            {
+                screen = Screen.PrimaryScreen;
+            }
+            this.Left = screen.WorkingArea.X + screen.WorkingArea.Width - this.Width;
+            this.Top = screen.WorkingArea.Y + screen.WorkingArea.Bottom - this.Height;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

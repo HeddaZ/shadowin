@@ -18,12 +18,25 @@ namespace Shadowin.Implement
                 return SwGlobal.GetConfiguration("Url");
             }
         }
-
         public static int RefreshInterval
         {
             get
             {
                 return int.Parse(SwGlobal.GetConfiguration("RefreshInterval"));
+            }
+        }
+        public static int ScreenId
+        {
+            get
+            {
+                try
+                {
+                    return int.Parse(SwGlobal.GetConfiguration("ScreenId"));
+                }
+                catch
+                {
+                    return 0;
+                }
             }
         }
 
