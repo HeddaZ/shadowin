@@ -14,7 +14,7 @@
             "21":"开基","22":"ETF","23":"LOF","24":"货基","25":"QDII","26":"封基",
             "31":"港股","32":"窝轮","41":"美股","42":"外期"}
             */
-            suggestionUrl: 'http://suggest3.sinajs.cn/suggest/?type=11,12,13,14,15&key={1}&name={0}',
+            suggestionUrl: 'http://suggest2.sinajs.cn/suggest/?type=11,12,13,14,15&key={1}&name={0}',
             stockUrl: 'http://hq.sinajs.cn/?rn={0}&list={1}',
             stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间'
                 .split(','),
