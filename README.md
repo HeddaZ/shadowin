@@ -150,6 +150,6 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
 [雅虎奇摩]: https://tw.stock.yahoo.com
 [台泥]: https://tw.stock.yahoo.com/q/q?s=1101
 [台積電]: https://tw.stock.yahoo.com/q/q?s=2330
-[下载已编译包，解压直接使用]: https://github.com/heddaz/shadowin/releases
+[点击下载已编译包，解压直接使用]: https://github.com/heddaz/shadowin/releases
 [在此留爪]: https://github.com/heddaz/shadowin/issues
 [9812152]: tencent://message/?uin=9812152
