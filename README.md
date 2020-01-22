@@ -17,15 +17,18 @@ ShadowStock 影子证券，是上班看股、个性化盯盘神器
   
   
 ----------------------------------------------------------------------------------------------
-![](docs/download.png)  
-[下载已编译包，解压直接使用]
+
+![Shadowin 影窗浏览器](docs/logo.png)  
+[下载已编译包，解压直接使用]  
 *运行需 [Microsoft .NET Framework 2.0] 支持，Windows 7 (或以上)系统自带此组件*  
   
 ----------------------------------------------------------------------------------------------
 
 ShadowStock 影子证券 - 沪深创业板 功能介绍
 -----------------------------------------
-**http://stock.plusii.com/**  
+**地址：**  
+> http://stock.plusii.com/  
+  
   
 * 微型界面和透明效果 - 你值得拥有
 ![微型界面和透明效果](docs/demo-main.png)  
@@ -99,7 +102,7 @@ Shadowin 影窗浏览器 域名切换方法
 -------------------------------------
 1. 按 Ctrl+0 先退出程序；
 2. 使用记事本打开 Shadowin 安装目录下的 `Shadowin.exe.config` 文件；
-3. 找到 `<add key="Url" value="http://stock.shadowin.net/"/>` 这一行，将其中的 `stock.shadowin.net` 改为 `stock.plusii.com`，保存；
+3. 找到 `<add key="Url" value="http://stock.shadowin.net/"/>` 这一行，将其中的 `shadowin.net` 改为 `plusii.com`，保存；
 4. 重新运行 Shadowin 即可。  
 
 **或者，重新下载最新的已编译包，解压即可正常使用！**
@@ -127,11 +130,11 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
   
 注意事项
 --------
-* `/ShadowStock` 目录下是一个 **纯静态的网站**，放到任何主机上即可使用；  
+* `/ShadowStock` 目录下是**纯静态的网站**，按需放到任何主机上即可使用；  
 * ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，可以支持设置的导入/导出以及通过 QQ 之类的工具传输；
 * ShadowStock 影子證券(雅虎奇摩台灣版) 调用的是经二次包装的雅虎奇摩数据源 http://tw.stock.plusii.com/stockdata.aspx?rn={0}&list={1}，
 您可以在 `/ShadowStock/stock_tw/Shared.js` 和 `/ShadowStock/stock_tw/stockdata.aspx` 中找到相关代码（**注意：**自行托管 stockdata.aspx，需要 ASP.NET 2.0 服务器）； 
-* 支持 IE7 等更老浏览器的 ShadowStock 影子证券（旧版 http://v1.stock.shadowin.net/）已不再提供服务。
+* 支持 IE7 等更老浏览器的 ShadowStock 影子证券 (旧版 http://v1.stock.shadowin.net) 已不再提供服务。
   
 
 -------------------------------------------------  
