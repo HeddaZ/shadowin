@@ -244,7 +244,7 @@
                 getText: function (data) {
                     if (this._text == undefined) {
                         this._text = _formatString(
-                              ' <a title="成交" href="http://gu.qq.com/{0}/gp/detail" target="_blank">细</a>'
+                            ' <a title="成交" href="http://gu.qq.com/{0}/gp/detail" target="_blank">细</a>'
                             + ' <a title="股吧" href="http://guba.sina.com.cn/?s=bar&name={0}" target="_blank">论</a>'
                             + ' <a title="分红" href="http://stockpage.10jqka.com.cn/{1}/bonus/#bonuslist" target="_blank">红</a>'
                             + ' <a title="曲线" href="TI.htm?{0}" target="_blank">线</a>',
@@ -336,7 +336,7 @@
         },
         _findIndex = function (array, keyName, key) {
             var arrayLength = array.length;
-            for (var i = 0; i < arrayLength ; i++) {
+            for (var i = 0; i < arrayLength; i++) {
                 if (array[i][keyName] == key) {
                     return i;
                 }
@@ -403,7 +403,7 @@
             var vars = [];
             var stockList = '';
             var watchingStocksLength = _userSettings.watchingStocks.length;
-            for (var i = 0; i < watchingStocksLength ; i++) {
+            for (var i = 0; i < watchingStocksLength; i++) {
                 stockList += _userSettings.watchingStocks[i].sinaSymbol + ',';
                 vars[i] = 'hq_str_' + _userSettings.watchingStocks[i].sinaSymbol;
             }
@@ -428,7 +428,7 @@
                 var hasActionsColumn = false;
                 var stockTableHead = $('<thead>').appendTo(_elements.stockTable);
                 stockTableRow = $('<tr>').appendTo(stockTableHead);
-                for (var i = 0; i < displayColumnsLength ; i++) {
+                for (var i = 0; i < displayColumnsLength; i++) {
                     var id = _userSettings.displayColumns[i].id;
                     $('<th>').html(_columnEngines[id].name)
                         .appendTo(stockTableRow);
@@ -459,7 +459,7 @@
                     }
 
                     stockTableRow = $('<tr>').appendTo(stockTableBody);
-                    for (var i = 0; i < displayColumnsLength ; i++) {
+                    for (var i = 0; i < displayColumnsLength; i++) {
                         $('<td>').addClass(_columnEngines[_userSettings.displayColumns[i].id].getClass(data))
                             .html(_columnEngines[_userSettings.displayColumns[i].id].getText(data))
                             .appendTo(stockTableRow);
@@ -744,8 +744,8 @@
             }
             if (_elements.aboutButton) {
                 _elements.aboutButton.click(function () {
-                    if (confirm(_formatString('谢谢您使用 {0} ！\n\n作者：{1}\n邮件：{2}\n网站：{3}\n\n(尊重开源、尊重分享，再发布请保留以上信息，谢谢)',
-                        _appName, 'Hedda', 'heddaz(at)live.com', _appUrl))) {
+                    if (confirm(_formatString('谢谢您使用 {0} ！\n\n作者：{1}\n项目：{2}\nQQ：{3}\n\n(尊重开源、尊重分享，再发布请保留以上信息，谢谢)',
+                        _appName, 'HEDDAZ (大飞飞)', _appUrl, '9812152'))) {
                         window.open(_appUrl);
                     }
                 });
@@ -764,7 +764,7 @@
                 stockTimer = window.clearTimeout(stockTimer);
             }
         }
-    ;
+        ;
 
     /******************** 导出 ********************/
     _shadowStock.appId = _appId;

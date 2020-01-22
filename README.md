@@ -12,20 +12,20 @@ ShadowStock 影子证券，是上班看股、个性化盯盘神器
 ----------------------------------------------
 `Shadowin 影窗浏览器` 和 `ShadowStock 影子证券` 两个方案须配套使用方能发挥神器奇效！  
 
-* ShadowStock 提供了完备的股票盯盘界面（`2015 重制版`中已实现大量激情特性），允许创建您自己的投资组合、实现盯盘、关注实时盈亏；神不知鬼不觉助您把握股牛、满钵满盏。  
+* ShadowStock 提供了完备的股票盯盘界面，允许创建您自己的投资组合、实现盯盘、关注实时盈亏；神不知鬼不觉助您把握股牛、满钵满盏。  
 * ShadowStock 专为 Shadowin 影窗浏览器设计，站点采用 **纯静态页面 + 客户端脚本** 实现，方便二次部署，后台链接[新浪财经]实时数据源，使用模板引擎思路设计更方便扩展。  
   
   
 ----------------------------------------------------------------------------------------------
 ![](docs/download.png)  
-[下载已编译包，解压直接使用]（运行需 [Microsoft .NET Framework 2.0] 支持）  
+[下载已编译包，解压直接使用]
+*运行需 [Microsoft .NET Framework 2.0] 支持，Windows 7 (或以上)系统自带此组件*  
   
------------------------------------------
+----------------------------------------------------------------------------------------------
+
 ShadowStock 影子证券 - 沪深创业板 功能介绍
 -----------------------------------------
-**2015 重制版支持主流浏览器，地址：**  
-> http://stock.plusii.com/  
-> （IE7 或更旧浏览器请使用下文提到的旧版）  
+**http://stock.plusii.com/**  
   
 * 微型界面和透明效果 - 你值得拥有
 ![微型界面和透明效果](docs/demo-main.png)  
@@ -95,23 +95,16 @@ Shadowin 影窗浏览器 默认配置和操作方法
 |`Ctrl + 0`	|退出程序		|
   
 
+Shadowin 影窗浏览器 域名切换方法
+-------------------------------------
+1. 按 Ctrl+0 先退出程序；
+2. 使用记事本打开 Shadowin 安装目录下的 `Shadowin.exe.config` 文件；
+3. 找到 `<add key="Url" value="http://stock.shadowin.net/"/>` 这一行，将其中的 `stock.shadowin.net` 改为 `stock.plusii.com`，保存；
+4. 重新运行 Shadowin 即可。  
 
-ShadowStock 影子证券（旧版）
----------------------------
-**旧版支持 IE7 等更老级别浏览器，地址：**  
-> http://v1.stock.plusii.com/  
-  
-![ShadowStock 旧版](docs/demo-v1.gif)  
-  
-**自选股格式和范例：**  
-> 代码[/成本[/持有量]][,代码[/成本[/持有量]]]  
-> sh600026,sh600050/2.33,sz000002/20.5/100  
-  
-**附注：**  
-> 填入的股票代码采用[新浪财经]的分类规则。  
-> [上证指数]的代码是 sh000001  
-> [深证成指]的代码是 sz399001  
-  
+**或者，重新下载最新的已编译包，解压即可正常使用！**
+
+----------------------------------------------------------------------------------------------
   
 ShadowStock 影子證券（雅虎奇摩台灣版）
 ------------------------------------
@@ -135,20 +128,17 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
 注意事项
 --------
 * `/ShadowStock` 目录下是一个 **纯静态的网站**，放到任何主机上即可使用；  
-* ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，`2015 重制版`可以支持设置的导入/导出以及通过 QQ 之类的工具传输；而旧版仅选股列表支持跨计算机迁移；
+* ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，可以支持设置的导入/导出以及通过 QQ 之类的工具传输；
 * ShadowStock 影子證券(雅虎奇摩台灣版) 调用的是经二次包装的雅虎奇摩数据源 http://tw.stock.plusii.com/stockdata.aspx?rn={0}&list={1}，
-您可以在 `/ShadowStock/_tw/Shared.js` 和 `/ShadowStock/_tw/stockdata.aspx` 中找到相关代码（**注意：**自行托管 stockdata.aspx，需要 ASP.NET 2.0 服务器）；  
+您可以在 `/ShadowStock/stock_tw/Shared.js` 和 `/ShadowStock/stock_tw/stockdata.aspx` 中找到相关代码（**注意：**自行托管 stockdata.aspx，需要 ASP.NET 2.0 服务器）； 
+* 支持 IE7 等更老浏览器的 ShadowStock 影子证券（旧版 http://v1.stock.shadowin.net/）已不再提供服务。
   
 
-================================================  
-![Shadowin 影窗浏览器](docs/logo.jpg)  
-使用中有任何问题和建议，欢迎[在此留爪]。  
-若此软件对您有积极作用，欢迎 **捐赠** 帮助项目发展！  
-> QQ: 9812152  
-> [支付宝]: heddaz(at)live.com  
-> [PayPal]: heddaz(at)live.com  
-
-
+-------------------------------------------------  
+使用中有任何问题和建议，欢迎 [在此留爪] 或 QQ [9812152]。  
+![微信扫码捐赠](docs/donate-wechat.jpg)
+  
+  
 [Keys Enumeration]: https://msdn.microsoft.com/en-us/library/system.windows.forms.keys(v=vs.110).aspx
 [Microsoft .NET Framework 2.0]: http://www.microsoft.com/zh-cn/download/details.aspx?id=25150
 [新浪财经]: http://finance.sina.com.cn
@@ -157,7 +147,6 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
 [雅虎奇摩]: https://tw.stock.yahoo.com
 [台泥]: https://tw.stock.yahoo.com/q/q?s=1101
 [台積電]: https://tw.stock.yahoo.com/q/q?s=2330
-[下载已编译包，解压直接使用]: https://github.com/HeddaZ/Shadowin/releases
-[在此留爪]: https://github.com/HeddaZ/Shadowin/issues
-[支付宝]: http://www.alipay.com
-[PayPal]: http://www.paypal.com
+[下载已编译包，解压直接使用]: https://github.com/heddaz/shadowin/releases
+[在此留爪]: https://github.com/heddaz/shadowin/issues
+[9812152]: tencent://message/?uin=9812152
