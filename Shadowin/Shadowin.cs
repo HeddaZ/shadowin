@@ -14,6 +14,7 @@ namespace Shadowin
 {
     public partial class Shadowin : Form
     {
+        public readonly static string Version = "V" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         private const int SizeDifference = 15;
         private const double OpacityDifference = 0.1;
         private readonly Uri BlankUrl = new Uri("about:blank");
@@ -131,7 +132,7 @@ namespace Shadowin
             #region 窗体
 
             this.toolTip1.ToolTipTitle = SwGlobal.Title;
-            this.toolTip1.SetToolTip(this.pictureBox1, "V" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            this.toolTip1.SetToolTip(this.pictureBox1, Version);
             this.Size = Settings.Default.FormSize;
 
             #endregion
@@ -227,9 +228,13 @@ namespace Shadowin
         /// </summary>
         private void OnExitHotKey()
         {
-            if (MessageBox.Show(this, "欢迎捐献支持本项目发展，接受 支付宝 或 PayPal ^_^\n\n您确定要退出吗？", SwGlobal.Title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            using (var confirm = new Confirm("感谢您使用！您确定要关闭程序吗？"))
             {
-                this.Close();
+                var result = confirm.ShowDialog(this);
+                if (result == DialogResult.Yes)
+                {
+                    this.Close();
+                }
             }
         }
 
@@ -266,9 +271,6 @@ namespace Shadowin
             }
         }
 
-        /// <summary>
-        /// 重新定位
-        /// </summary>
         private void Shadowin_SizeChanged(object sender, EventArgs e)
         {
             Screen screen;
@@ -286,18 +288,13 @@ namespace Shadowin
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(this, string.Format("谢谢您使用 {0} ！\n\n作者：{1}\n邮件：{2}\n网站：{3}\n\n(尊重开源、尊重分享，再发布请保留以上信息，谢谢)",
-                                            SwGlobal.Title,
-                                            "Hedda",
-                                            "heddaz(at)live.com",
-                                            "https://github.com/heddaz/shadowin"
-                                            ),
-                                SwGlobal.Title,
-                                MessageBoxButtons.OKCancel,
-                                MessageBoxIcon.Information
-               ) == DialogResult.OK)
+            using (var about = new About())
             {
-                Process.Start("iexplore.exe", "https://github.com/heddaz/shadowin");
+                var result = about.ShowDialog(this);
+                if (result == DialogResult.OK)
+                {
+                    Process.Start("https://github.com/heddaz/shadowin");
+                }
             }
         }
     }

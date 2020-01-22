@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="FormFont" Type="System.Drawing.Font" Scope="Application">
-      <Value Profile="(Default)">Verdana, 8pt</Value>
+      <Value Profile="(Default)">Microsoft YaHei, 10.5pt</Value>
     </Setting>
     <Setting Name="FormBackColor" Type="System.Drawing.Color" Scope="Application">
       <Value Profile="(Default)">Desktop</Value>

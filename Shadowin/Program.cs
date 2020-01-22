@@ -8,11 +8,13 @@ namespace Shadowin
 {
     static class Program
     {
+        private static Mutex _mutex;
+
         [STAThread]
         static void Main()
         {
             bool allowStart;
-            Mutex mutex = new Mutex(true, SwGlobal.Title, out allowStart); //单实例互斥
+            _mutex = new Mutex(true, SwGlobal.Title, out allowStart); //单实例互斥
             if (allowStart)
             {
                 try
@@ -23,7 +25,7 @@ namespace Shadowin
                 }
                 finally
                 {
-                    mutex.ReleaseMutex();
+                    _mutex.ReleaseMutex();
                 }
             }
             else
