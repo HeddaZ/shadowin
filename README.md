@@ -24,7 +24,7 @@ ShadowStock 影子证券，是上班看股、个性化盯盘神器
 ShadowStock 影子证券 - 沪深创业板 功能介绍
 -----------------------------------------
 **2015 重制版支持主流浏览器，地址：**  
-> http://stock.shadowin.net/  
+> http://stock.plusii.com/  
 > （IE7 或更旧浏览器请使用下文提到的旧版）  
   
 * 微型界面和透明效果 - 你值得拥有
@@ -52,7 +52,7 @@ Shadowin 影窗浏览器 默认配置和操作方法
   <appSettings>
 
     <!-- URL -->
-    <add key="Url" value="http://stock.shadowin.net/"/>
+    <add key="Url" value="http://stock.plusii.com/"/>
     <!-- 自动刷新时间间隔（0 表示不刷新；ShadowStock 无需设置刷新） -->
     <add key="RefreshInterval" value="0"/>
     <!-- 分屏显示 -->
@@ -99,7 +99,7 @@ Shadowin 影窗浏览器 默认配置和操作方法
 ShadowStock 影子证券（旧版）
 ---------------------------
 **旧版支持 IE7 等更老级别浏览器，地址：**  
-> http://v1.stock.shadowin.net/  
+> http://v1.stock.plusii.com/  
   
 ![ShadowStock 旧版](docs/demo-v1.gif)  
   
@@ -119,7 +119,7 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
 對臺灣股票（tw）實現同樣完美的支持——隱蔽操作、自訂股票、實時行情關注、漲跌警示、盈虧分析等，首開國內兩岸之先河！   
   
 **位址：**  
-> http://tw.stock.shadowin.net/  
+> http://tw.stock.plusii.com/  
 
 **自選股格式和範例：**  
 > 代號[/成本[/持倉]][,代號[/成本[/持倉]]]  
@@ -136,7 +136,7 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
 --------
 * `/ShadowStock` 目录下是一个 **纯静态的网站**，放到任何主机上即可使用；  
 * ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，`2015 重制版`可以支持设置的导入/导出以及通过 QQ 之类的工具传输；而旧版仅选股列表支持跨计算机迁移；
-* ShadowStock 影子證券(雅虎奇摩台灣版) 调用的是经二次包装的雅虎奇摩数据源 http://tw.stock.shadowin.net/stockdata.aspx?rn={0}&list={1}，
+* ShadowStock 影子證券(雅虎奇摩台灣版) 调用的是经二次包装的雅虎奇摩数据源 http://tw.stock.plusii.com/stockdata.aspx?rn={0}&list={1}，
 您可以在 `/ShadowStock/_tw/Shared.js` 和 `/ShadowStock/_tw/stockdata.aspx` 中找到相关代码（**注意：**自行托管 stockdata.aspx，需要 ASP.NET 2.0 服务器）；  
   
 
