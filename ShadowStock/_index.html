@@ -1,8 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>ShadowStock 影子证券主域名变更通知</title>
     <meta charset="utf-8" />
+    <title>ShadowStock 影子证券主域名变更通知</title>
+    <script type="text/javascript" src="scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="scripts/jquery.cookie.js"></script>
     <style type="text/css">
         body {
             font-family: 'Microsoft YaHei';
@@ -27,8 +29,13 @@
         <li>自选股列表地址由 http://stock.<i>shadowin.net</i> 变更为 http://stock.<b>plusii.com</b></li>
         <li>推荐<a href="https://github.com/heddaz/shadowin/releases" target="_blank">重新下载最新的 Shadowin 程序</a>，覆盖安装以获得最佳体验！</li>
         <li>或者，参照<a href="https://github.com/HeddaZ/Shadowin#shadowin-%E5%BD%B1%E7%AA%97%E6%B5%8F%E8%A7%88%E5%99%A8-%E5%9F%9F%E5%90%8D%E5%88%87%E6%8D%A2%E6%96%B9%E6%B3%95" target="_blank">域名切换方法</a>，手工迁移自选股列表地址。</li>
-        <li>项目地址：<a href="https://github.com/heddaz/shadowin/releases" target="_blank">https://github.com/heddaz/shadowin/releases</a></li>
     </ul>
+    <i>您现有的自选股列表配置如下。请先【复制】保存，然后在新版【设置】中导入。</i><br/>
+    <textarea id="stockString" rows="3" cols="80" onfocus="this.select()"></textarea><br />
     <img src="http://sb.plusii.com/images/donate-wechat.jpg" />
+    
+    <script type="text/javascript">
+        $('#stockString').val($.cookie('ShadowStock_SH_SZ'));
+    </script>
 </body>
 </html>
