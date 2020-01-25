@@ -230,7 +230,7 @@ namespace Shadowin
         {
             using (var confirm = new Confirm("感谢您使用！您确定要关闭程序吗？"))
             {
-                var result = confirm.ShowDialog(this);
+                var result = confirm.ShowDialog();
                 if (result == DialogResult.Yes)
                 {
                     this.Close();
@@ -290,7 +290,7 @@ namespace Shadowin
         {
             using (var about = new About())
             {
-                var result = about.ShowDialog(this);
+                var result = about.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     Process.Start("https://github.com/heddaz/shadowin");
