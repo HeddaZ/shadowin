@@ -9,6 +9,7 @@
         _appSettings = {
             cookieExpires: 365,
             minRefreshInterval: 3000,
+            maxWatchingStockCount: 22,
             /*
             {"11":"A 股","12":"B 股","13":"权证","14":"期货","15":"债券",
             "21":"开基","22":"ETF","23":"LOF","24":"货基","25":"QDII","26":"封基",
@@ -558,10 +559,12 @@
                 var suggestionsLength = suggestions.length;
                 for (var i = 0; i < suggestionsLength; i++) {
                     var suggestionColumns = suggestions[i].split(',');
-                    source.push({
-                        label: _formatString('{0} {1} {2}', suggestionColumns[0], suggestionColumns[2], suggestionColumns[4]),
-                        value: suggestionColumns[3]
-                    });
+                    if (suggestionColumns.length > 4) {
+                        source.push({
+                            label: _formatString('{0} {1} {2}', suggestionColumns[0], suggestionColumns[2], suggestionColumns[4]),
+                            value: suggestionColumns[3]
+                        });
+                    }
                 }
                 var term = unescape(args.token);
                 suggestionCache[term] = source;
@@ -686,20 +689,25 @@
                         }
                     },
                     select: function (event, ui) {
-                        var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', ui.item.value);
-                        if (i >= 0) {
-                            var watchingStock = _userSettings.watchingStocks[i];
-                            showAlert(_formatString('{0} ({1}) 已存在', watchingStock.name, watchingStock.sinaSymbol));
+                        if (_userSettings.watchingStocks.length < _appSettings.maxWatchingStockCount) {
+                            var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', ui.item.value);
+                            if (i >= 0) {
+                                var watchingStock = _userSettings.watchingStocks[i];
+                                showAlert(_formatString('{0} ({1}) 已存在', watchingStock.name, watchingStock.sinaSymbol));
+                            }
+                            else {
+                                var sinaSymbol = ui.item.value;
+                                var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') + 1);
+                                _userSettings.watchingStocks.push({
+                                    sinaSymbol: sinaSymbol,
+                                    name: name
+                                });
+                                setUserSettings();
+                                showAlert(_formatString('{0} ({1}) 已添加', name, sinaSymbol));
+                            }
                         }
                         else {
-                            var sinaSymbol = ui.item.value;
-                            var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') + 1);
-                            _userSettings.watchingStocks.push({
-                                sinaSymbol: sinaSymbol,
-                                name: name
-                            });
-                            setUserSettings();
-                            showAlert(_formatString('{0} ({1}) 已添加', name, sinaSymbol));
+                            showAlert(_formatString('自选股数量请不要超过 {0}', _appSettings.maxWatchingStockCount));
                         }
 
                         $(event.target).focus().select();
@@ -717,12 +725,16 @@
                     trigger: 'manual',
                     placement: 'bottom'
                 }).click(function () {
+                    var displayColumnsKey = 'cookieDisplayColumns';
+                    var availableColumnsKey = 'cookieAvailableColumns';
+                    $.cookie(displayColumnsKey, _userSettings.displayColumns);
+                    $.cookie(availableColumnsKey, _appSettings.availableColumns);
                     $(this).attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="settings" src="settings.html?{0}"></iframe>', escape(JSON.stringify({
                         token: _appId,
                         callback: 'ShadowStock.settingsCallback',
                         refreshInterval: _userSettings.refreshInterval,
-                        displayColumns: _userSettings.displayColumns,
-                        availableColumns: _appSettings.availableColumns,
+                        displayColumns: displayColumnsKey,
+                        availableColumns: availableColumnsKey,
                         actionsColumnId: _appSettings.actionsColumnId
                     })))).popover('show');
                 });
@@ -734,10 +746,12 @@
                     trigger: 'manual',
                     placement: 'bottom'
                 }).click(function () {
+                    var userSettingsKey = 'cookieUserSettings';
+                    $.cookie(userSettingsKey, _userSettings);
                     $(this).attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="impexp" src="impexp.html?{0}"></iframe>', escape(JSON.stringify({
                         token: _appId,
                         callback: 'ShadowStock.impexpCallback',
-                        userSettings: _userSettings
+                        userSettings: userSettingsKey
                     })))).popover('show');
                     return false;
                 });
@@ -763,8 +777,7 @@
             if (stockTimer) {
                 stockTimer = window.clearTimeout(stockTimer);
             }
-        }
-        ;
+        };
 
     /******************** 导出 ********************/
     _shadowStock.appId = _appId;

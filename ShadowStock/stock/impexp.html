@@ -39,6 +39,7 @@
     </div>
 
     <script src="scripts/jquery-1.10.2.js"></script>
+    <script src="scripts/jquery.cookie.js"></script>
     <script type="text/javascript">
         $(function () {
             var _intelliFocus = function () {
@@ -47,6 +48,10 @@
 
             // 初始化
             var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+            if (typeof _args.userSettings == 'string') {
+                _args.userSettings = JSON.parse($.cookie(_args.userSettings));
+            }
+
             var _userSettings = $('#userSettings').val(JSON.stringify(_args.userSettings)).bind({
                 focus: _intelliFocus,
                 dblclick: _intelliFocus

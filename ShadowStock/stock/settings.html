@@ -59,10 +59,17 @@
     </div>
 
     <script src="scripts/jquery-1.10.2.js"></script>
+    <script src="scripts/jquery.cookie.js"></script>
     <script type="text/javascript">
         $(function () {
             // 初始化
             var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+            if (typeof _args.displayColumns == 'string') {
+                _args.displayColumns = JSON.parse($.cookie(_args.displayColumns));
+            }
+            if (typeof _args.availableColumns == 'string') {
+                _args.availableColumns = JSON.parse($.cookie(_args.availableColumns));
+            }
 
             var _refreshInterval = $('#refreshInterval').val(_args.refreshInterval);
 
