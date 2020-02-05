@@ -10,15 +10,69 @@
             cookieExpires: 365,
             minRefreshInterval: 3000,
             maxWatchingStockCount: 22,
-            /*
-            {"11":"A 股","12":"B 股","13":"权证","14":"期货","15":"债券",
-            "21":"开基","22":"ETF","23":"LOF","24":"货基","25":"QDII","26":"封基",
-            "31":"港股","32":"窝轮","41":"美股","42":"外期"}
-            */
-            suggestionUrl: 'http://suggest2.sinajs.cn/suggest/?type=11,12,13,14,15&key={1}&name={0}',
+            suggestionUrl: 'http://suggest2.sinajs.cn/suggest/?type=11,12,73&key={1}&name={0}',
             stockUrl: 'http://hq.sinajs.cn/?rn={0}&list={1}',
             stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间'
                 .split(','),
+            /*
+            "11": "A 股",
+            "12": "B 股",
+            "13": "权证",
+            "14": "期货",
+            "15": "债券",
+            "21": "开基",
+            "22": "ETF",
+            "23": "LOF",
+            "24": "货基",
+            "25": "QDII",
+            "26": "封基",
+            "31": "港股",
+            "32": "窝轮",
+            "33": "港指数",
+            "41": "美股",
+            "42": "外期",
+            '81': '债券',
+            '82': '债券',
+            '103': '英股',
+            '120': '债券',
+            "111": "A股",
+            "71": "外汇",
+            "72": "基金",     //场内基金（带市场）
+            "85": "期货",     //内盘期货
+            "86": "期货",     //外盘期货
+            "87": "期货",     //内盘期货连续，股指期货连续，50ETF期权
+            "88": "期货",     //内盘股指期货
+            "73": "新三板",
+            "74": "板块",
+            "75": "板块",     //新浪行业
+            "76": "板块",     //申万行业
+            "77": "板块",     //申万二级
+            "78": "板块",     //热门概念（财汇概念）
+            "79": "板块",     //地域板块
+            "80": "板块",     //证监会行业
+            "101": "基金",    //所有基金
+            "100": "指数",    //全球指数
+            "102": "指数",    //全部板块指数(概念、地域、行业)
+            "103": "英股",
+            "104": "国债", //暂时是美国国债"
+            "105": "ETF", //美股ETF,国际线索组-中文站）"
+            "106": "ETF", //美股ETF,国际线索组-英文站）"
+            "107": "msci"
+            */
+            stockTypes: {
+                "11": {
+                    name: "Ａ股",
+                    prefix: ""
+                },
+                "12": {
+                    name: "Ｂ股",
+                    prefix: ""
+                },
+                "73": {
+                    name: "三板",
+                    prefix: ""
+                }
+            }
         },
 
         _userSettings,
@@ -545,9 +599,9 @@
         },
         _suggestionCallback = function (args) {
             /*
-            xtdh,11,002125,sz002125,湘潭电化,xtdh;
-            xtdq,11,300372,sz300372,欣泰电气,xtdq;
-            qxtd,11,002408,sz002408,齐翔腾达,qxtd
+            [suggest2.sinajs.cn]
+            xtdh,11,002125,sz002125,湘潭电化,xtdh
+            zglt,11,600050,sh600050,中国联通,zglt,中国联通,0
             */
             for (var key in args) {
                 if (key == 'token') {
@@ -558,20 +612,28 @@
                 var suggestions = args[key].split(';');
                 var suggestionsLength = suggestions.length;
                 for (var i = 0; i < suggestionsLength; i++) {
-                    var suggestionColumns = suggestions[i].split(',');
-                    if (suggestionColumns.length > 4) {
+                    var suggestionData = suggestions[i].split(',');
+                    if (suggestionData.length > 4) {
                         source.push({
-                            label: _formatString('{0} {1} {2}', suggestionColumns[0], suggestionColumns[2], suggestionColumns[4]),
-                            value: suggestionColumns[3]
+                            label: getSuggestionLabel(suggestionData),
+                            value: getSuggestionValue(suggestionData)
                         });
                     }
                 }
+
                 var term = unescape(args.token);
                 suggestionCache[term] = source;
                 _elements.suggestionText.autocomplete('option', 'source', source);
                 _elements.suggestionText.autocomplete('search', term); // 重新激活搜索以抵消异步延迟
                 break;
             }
+        },
+        getSuggestionLabel = function (data) {
+            return _formatString('[{0}] {1} {2} {3}', _appSettings.stockTypes[data[1]].name, data[0], data[2], data[4]);
+        },
+        getSuggestionValue = function (data) {
+            var prefix = _appSettings.stockTypes[data[1]].prefix;
+            return prefix ? prefix + data[2] : data[3];
         },
 
         _editorCallback = function (args) {
