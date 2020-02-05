@@ -20,7 +20,8 @@ ShadowStock 影子证券，是上班看股、个性化盯盘神器
 
 ![Shadowin 影窗浏览器](docs/logo.png)  
 **[点击下载已编译包，解压直接使用]**  
-> 运行需 [Microsoft .NET Framework 2.0] 支持，Windows 7 (或以上)系统自带此组件  
+> 运行需 [Microsoft .NET Framework 2.0] 支持  
+> 或使用 [Microsoft .NET Framework 4.0] 编译的版本  
   
 ----------------------------------------------------------------------------------------------
 
@@ -143,7 +144,8 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
   
   
 [Keys Enumeration]: https://msdn.microsoft.com/en-us/library/system.windows.forms.keys(v=vs.110).aspx
-[Microsoft .NET Framework 2.0]: http://www.microsoft.com/zh-cn/download/details.aspx?id=25150
+[Microsoft .NET Framework 2.0]: https://www.microsoft.com/zh-cn/download/details.aspx?id=25150
+[Microsoft .NET Framework 4.0]: https://www.microsoft.com/zh-cn/download/details.aspx?id=17718
 [新浪财经]: http://finance.sina.com.cn
 [上证指数]: http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml
 [深证成指]: http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml
