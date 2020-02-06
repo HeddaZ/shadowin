@@ -10,9 +10,9 @@
             cookieExpires: 365,
             minRefreshInterval: 3000,
             maxWatchingStockCount: 22,
-            suggestionUrl: 'http://suggest2.sinajs.cn/suggest/?type=11,12,72,73,81&key={1}&name={0}',
+            suggestionUrl: 'http://suggest2.sinajs.cn/suggest/?type=11,12,72,73,81,31,41&key={1}&name={0}',
             stockUrl: 'http://hq.sinajs.cn/?rn={0}&list={1}',
-            stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间'
+            stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间,市盈率'
                 .split(','),
             /*
             "11": "A 股",
@@ -63,37 +63,37 @@
                 "11": {
                     name: "Ａ股",
                     prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34]
                 },
                 "12": {
                     name: "Ｂ股",
                     prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34]
                 },
                 "72": {
                     name: "基金",
                     prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34]
                 },
                 "73": {
                     name: "三板",
                     prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34]
                 },
                 "81": {
                     name: "债券",
                     prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34]
                 },
                 "31": {
                     name: "港股",
                     prefix: "rt_hk",
-                    columnMapping: []
+                    columnMapping: [1, 2, 3, 6, 4, 5, -1, -1, 12, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 17, 18, 13]
                 },
                 "41": {
                     name: "美股",
                     prefix: "gb_",
-                    columnMapping: []
+                    columnMapping: [0, 5, 26, 1, 6, 7, -1, -1, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3, 14]
                 }
             }
         },
@@ -172,9 +172,6 @@
             _appSettings.quantityColumnId = 42;
             _columnEngines[_appSettings.quantityColumnId] = { id: _appSettings.quantityColumnId, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
 
-            _appSettings.priceEarningColumnId = 43;
-            _columnEngines[_appSettings.priceEarningColumnId] = { id: _appSettings.priceEarningColumnId, name: '市盈率', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
-
             // 本地扩展 - 非数据源栏位
             _appSettings.actionsColumnId = 50;
             _columnEngines[_appSettings.actionsColumnId] = {
@@ -244,7 +241,13 @@
                 getClass: getClassDefault,
                 getText: function (data) {
                     if (this._text == undefined) {
-                        this._text = this.siblings[_appSettings.sinaSymbolColumnId].getText(data).replace(/[^\d]/g, '');
+                        var text = this.siblings[_appSettings.sinaSymbolColumnId].getText(data);
+                        if (/\d/g.test(text)) {
+                            this._text = text.replace(/[^\d]/g, '');
+                        }
+                        else {
+                            this._text = text.substr(text.lastIndexOf('_') + 1).toUpperCase();
+                        }
                     }
                     return this._text;
                 },
@@ -258,7 +261,7 @@
                 getText: function (data) {
                     if (this._text == undefined) {
                         this._text = _formatString('{2} <a title="新浪股票" href="http://biz.finance.sina.com.cn/suggest/lookup_n.php?q={0}" target="_blank">{1}</a>',
-                            this.siblings[_appSettings.sinaSymbolColumnId].getText(data),
+                            this.siblings[_appSettings.symbolColumnId].getText(data),
                             this.siblings[_appSettings.nameColumnId].getText(data),
                             this.siblings[_appSettings.symbolColumnId].getText(data));
                     }
@@ -438,20 +441,36 @@
         },
         getTextDefault = function (data) {
             if (this._text == undefined) {
+                var columnMapping = _appSettings.stockTypes[data.type].columnMapping;
+                var index = this.id;
+                if (this.id < columnMapping.length) {
+                    index = columnMapping[index]; // 根据股票类型，映射原始数据源中的栏位（扩展栏位索引从 40 开始，不进行映射）
+                    if (!$.isNumeric(index) || index < 0) { // 不存在映射
+                        this._text = '';
+                        return this._text;
+                    }
+                }
+
                 var value = this.getValue(data);
                 this._text = $.isNumeric(value)
                     ? _toShortNumberText(value)
-                    : data[this.id];
+                    : data[index];
             }
             return this._text;
         },
         getValueDefault = function (data) {
             if (this._value == undefined) {
+                var columnMapping = _appSettings.stockTypes[data.type].columnMapping;
+                var index = this.id;
+                if (this.id < columnMapping.length) {
+                    index = columnMapping[index]; // 根据股票类型，映射原始数据源中的栏位（扩展栏位索引从 40 开始，不进行映射）
+                    if (!$.isNumeric(index) || index < 0) { // 不存在映射
+                        this._value = '';
+                        return this._value;
+                    }
+                }
 
-                //var index =  this.siblings[]   this.id;
-
-
-                this._value = Number(data[this.id]); // 返回数值或 NaN
+                this._value = Number(data[index]); // 返回数值或 NaN
             }
             return this._value;
         },
@@ -480,6 +499,7 @@
             return '';
         },
 
+        stockVarPrefix = 'hq_str_',
         stockRequest = function () {
             _disableStockTimer(true);
             getUserSettings();
@@ -491,7 +511,7 @@
             var watchingStocksLength = _userSettings.watchingStocks.length;
             for (var i = 0; i < watchingStocksLength; i++) {
                 stockList += _userSettings.watchingStocks[i].sinaSymbol + ',';
-                vars[i] = 'hq_str_' + _userSettings.watchingStocks[i].sinaSymbol;
+                vars[i] = stockVarPrefix + _userSettings.watchingStocks[i].sinaSymbol;
             }
             _requestData(stockRetriever, {
                 token: token,
@@ -532,7 +552,7 @@
                     }
 
                     clearColumnEnginesCache();
-                    var sinaSymbol = key.substr(key.lastIndexOf('_') + 1);
+                    var sinaSymbol = key.replace(stockVarPrefix, '');
                     // 远程 - 数据源
                     var data = args[key].split(',');
                     // 本地扩展 - 数据源
@@ -615,12 +635,13 @@
             });
         },
 
+        suggestionVarPrefix = 'suggestion_',
         suggestionCache = {},
         suggestionRequest = function (term) {
             var keywords = escape(term.toLowerCase());
             var token = keywords;
             var vars = [];
-            var suggestionName = 'suggestion_' + _getTicks();
+            var suggestionName = suggestionVarPrefix + _getTicks();
             vars[0] = suggestionName;
             _requestData(suggestionRetriever, {
                 token: token,
@@ -657,8 +678,12 @@
         },
         /*
         [suggest2.sinajs.cn]
-        xtdh,11,002125,sz002125,湘潭电化,xtdh
         zglt,11,600050,sh600050,中国联通,zglt,中国联通,0
+        orcl,41,orcl,oracle corp.,甲骨文,jgw,甲骨文,0
+        txkg,31,00700,00700,腾讯控股,txkg,腾讯控股,10
+        pfzz,81,110059,sh110059,浦发转债,pfzz,浦发转债,0
+        510500,72,510500,sh510500,500etf,500etf,500ETF,0
+        cb5,73,400002,sb400002,长白5,cb5,长白5,0
         */
         getSuggestionLabel = function (data) {
             var typeId = data[1];
@@ -667,8 +692,13 @@
         getSuggestionValue = function (data) {
             var typeId = data[1];
             var prefix = _appSettings.stockTypes[typeId].prefix;
-            return _formatString('{0}{1}|{2}', prefix, data[3], typeId);
-        },
+            if (prefix) {
+                return _formatString('{0}|{1}', prefix + data[2], typeId);
+            }
+            else {
+                return _formatString('{0}|{1}', data[3], typeId);
+        }
+    },
 
         _editorCallback = function (args) {
             try {
@@ -686,7 +716,7 @@
 
                             setUserSettings();
                             showAlert(_formatString('{0} ({1}) 已更新, 成本: {2} 持有量: {3}', watchingStock.name, watchingStock.sinaSymbol, watchingStock.cost, watchingStock.quantity));
-                        }
+                    }
                         break;
 
                     case 'clear':
@@ -698,29 +728,29 @@
 
                             setUserSettings();
                             showAlert(_formatString('{0} ({1}) 已更新, 成本: {2} 持有量: {3}', watchingStock.name, watchingStock.sinaSymbol, watchingStock.cost, watchingStock.quantity));
-                        }
+                    }
                         break;
 
                     case 'cancel':
                     default:
                         break;
-                }
             }
+        }
             finally {
                 $('.container-action>.glyphicon-edit').popover('hide');
-            }
-        },
+        }
+    },
         showAlert = function (message, duration) {
             if (!$.isNumeric(duration) || duration < 0) {
                 duration = 2000;
-            }
+        }
             _elements.alertPanel.html(message).slideDown(function () {
                 var _this = $(this);
                 window.setTimeout(function () {
                     _this.slideUp();
                 }, duration);
             });
-        },
+    },
 
         _settingsCallback = function (args) {
             try {
@@ -735,12 +765,12 @@
                     case 'cancel':
                     default:
                         break;
-                }
             }
+        }
             finally {
                 _elements.settingsButton.popover('hide');
-            }
-        },
+        }
+    },
         _impexpCallback = function (args) {
             try {
                 switch (args.result) {
@@ -753,12 +783,12 @@
                     case 'cancel':
                     default:
                         break;
-                }
             }
+        }
             finally {
                 _elements.impexpButton.popover('hide');
-            }
-        },
+        }
+    },
 
         /******************** 外部方法 ********************/
         _elements,
@@ -766,25 +796,25 @@
             _elements = elements;
             if (_elements.stockTable) {
                 _elements.stockTable.empty();
-            }
+        }
             if (_elements.suggestionText) {
                 _elements.suggestionText.focus(function () {
                     $(this).select();
                 }).autocomplete({
-                    minLength: 1,
-                    autoFocus: true,
-                    source: [],
-                    search: function (event, ui) {
+                        minLength: 1,
+                        autoFocus: true,
+                        source: [],
+                        search: function (event, ui) {
                         var term = event.target.value;
                         if (term) {
                             if (term in suggestionCache) {
                                 _elements.suggestionText.autocomplete('option', 'source', suggestionCache[term]);
                                 return;
-                            }
+                        }
                             suggestionRequest(term);
                         }
-                    },
-                    select: function (event, ui) {
+                },
+                        select: function (event, ui) {
                         if (_userSettings.watchingStocks.length < _appSettings.maxWatchingStockCount) {
                             var values = ui.item.value.split('|'); // 对应 getSuggestionValue
                             var sinaSymbol = values[0];
@@ -796,15 +826,15 @@
                                 showAlert(_formatString('{0} ({1}) 已存在', watchingStock.name, watchingStock.sinaSymbol));
                             }
                             else {
-                                var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') + 1);
+                                var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') +1); // 对应 getSuggestionLabel
                                 _userSettings.watchingStocks.push({
-                                    sinaSymbol: sinaSymbol,
-                                    type: type,
-                                    name: name
+                                        sinaSymbol: sinaSymbol,
+                                        type: type,
+                                        name: name
                                 });
                                 setUserSettings();
                                 showAlert(_formatString('{0} ({1}) 已添加', name, sinaSymbol));
-                            }
+                        }
                         }
                         else {
                             showAlert(_formatString('自选股数量请不要超过 {0}', _appSettings.maxWatchingStockCount));
@@ -812,72 +842,72 @@
 
                         $(event.target).focus().select();
                         return false;
-                    }
+                }
                 });
-            }
+        }
             if (_elements.alertPanel) {
                 _elements.alertPanel.hide();
-            }
+        }
             if (_elements.settingsButton) {
                 _elements.settingsButton.popover({
-                    container: 'body',
-                    html: true,
-                    trigger: 'manual',
-                    placement: 'bottom'
+                        container: 'body',
+                        html: true,
+                        trigger: 'manual',
+                        placement: 'bottom'
                 }).click(function () {
                     var displayColumnsKey = 'cookieDisplayColumns';
                     var availableColumnsKey = 'cookieAvailableColumns';
                     $.cookie(displayColumnsKey, _userSettings.displayColumns);
                     $.cookie(availableColumnsKey, _appSettings.availableColumns);
                     $(this).attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="settings" src="settings.html?{0}"></iframe>', escape(JSON.stringify({
-                        token: _appId,
-                        callback: 'ShadowStock.settingsCallback',
-                        refreshInterval: _userSettings.refreshInterval,
-                        displayColumns: displayColumnsKey,
-                        availableColumns: availableColumnsKey,
-                        actionsColumnId: _appSettings.actionsColumnId
+                            token: _appId,
+                            callback: 'ShadowStock.settingsCallback',
+                            refreshInterval: _userSettings.refreshInterval,
+                            displayColumns: displayColumnsKey,
+                            availableColumns: availableColumnsKey,
+                            actionsColumnId: _appSettings.actionsColumnId
                     })))).popover('show');
                 });
-            }
+        }
             if (_elements.impexpButton) {
                 _elements.impexpButton.popover({
-                    container: 'body',
-                    html: true,
-                    trigger: 'manual',
-                    placement: 'bottom'
+                        container: 'body',
+                        html: true,
+                        trigger: 'manual',
+                        placement: 'bottom'
                 }).click(function () {
                     var userSettingsKey = 'cookieUserSettings';
                     $.cookie(userSettingsKey, _userSettings);
                     $(this).attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="impexp" src="impexp.html?{0}"></iframe>', escape(JSON.stringify({
-                        token: _appId,
-                        callback: 'ShadowStock.impexpCallback',
-                        userSettings: userSettingsKey
+                            token: _appId,
+                            callback: 'ShadowStock.impexpCallback',
+                            userSettings: userSettingsKey
                     })))).popover('show');
                     return false;
                 });
-            }
+        }
             if (_elements.aboutButton) {
                 _elements.aboutButton.click(function () {
                     if (confirm(_formatString('谢谢您使用 {0} ！\n\n作者：{1}\n项目：{2}\nQQ：{3}\n\n(尊重开源、尊重分享，再发布请保留以上信息，谢谢)',
                         _appName, 'HEDDAZ (大飞飞)', _appUrl, '9812152'))) {
                         window.open(_appUrl);
-                    }
+                }
                 });
-            }
-        },
+        }
+    },
 
         stockTimer,
         duringStockRefresh,
         _enableStockTimer = function (forStockRefresh) {
             stockTimer = window.setTimeout(stockRequest, _userSettings.refreshInterval);
             duringStockRefresh = false;
-        },
+    },
         _disableStockTimer = function (forStockRefresh) {
             duringStockRefresh = forStockRefresh;
             if (stockTimer) {
                 stockTimer = window.clearTimeout(stockTimer);
-            }
-        };
+        }
+};
 
     /******************** 导出 ********************/
     _shadowStock.appId = _appId;
