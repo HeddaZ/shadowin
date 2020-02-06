@@ -441,9 +441,11 @@
         },
         getTextDefault = function (data) {
             if (this._text == undefined) {
-                var columnMapping = _appSettings.stockTypes[data.type].columnMapping;
+                var columnMapping = _appSettings.stockTypes[data.type]
+                    ? _appSettings.stockTypes[data.type].columnMapping
+                    : null;
                 var index = this.id;
-                if (this.id < columnMapping.length) {
+                if (columnMapping && this.id < columnMapping.length) {
                     index = columnMapping[index]; // 根据股票类型，映射原始数据源中的栏位（扩展栏位索引从 40 开始，不进行映射）
                     if (!$.isNumeric(index) || index < 0) { // 不存在映射
                         this._text = '';
@@ -460,9 +462,11 @@
         },
         getValueDefault = function (data) {
             if (this._value == undefined) {
-                var columnMapping = _appSettings.stockTypes[data.type].columnMapping;
+                var columnMapping = _appSettings.stockTypes[data.type]
+                    ? _appSettings.stockTypes[data.type].columnMapping
+                    : null;
                 var index = this.id;
-                if (this.id < columnMapping.length) {
+                if (columnMapping && this.id < columnMapping.length) {
                     index = columnMapping[index]; // 根据股票类型，映射原始数据源中的栏位（扩展栏位索引从 40 开始，不进行映射）
                     if (!$.isNumeric(index) || index < 0) { // 不存在映射
                         this._value = '';
