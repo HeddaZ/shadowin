@@ -10,7 +10,7 @@
             cookieExpires: 365,
             minRefreshInterval: 3000,
             maxWatchingStockCount: 22,
-            suggestionUrl: 'http://suggest2.sinajs.cn/suggest/?type=11,12,73&key={1}&name={0}',
+            suggestionUrl: 'http://suggest2.sinajs.cn/suggest/?type=11,12,72,73,81&key={1}&name={0}',
             stockUrl: 'http://hq.sinajs.cn/?rn={0}&list={1}',
             stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间'
                 .split(','),
@@ -62,15 +62,38 @@
             stockTypes: {
                 "11": {
                     name: "Ａ股",
-                    prefix: ""
+                    prefix: "",
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
                 },
                 "12": {
                     name: "Ｂ股",
-                    prefix: ""
+                    prefix: "",
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                },
+                "72": {
+                    name: "基金",
+                    prefix: "",
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
                 },
                 "73": {
                     name: "三板",
-                    prefix: ""
+                    prefix: "",
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                },
+                "81": {
+                    name: "债券",
+                    prefix: "",
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                },
+                "31": {
+                    name: "港股",
+                    prefix: "rt_hk",
+                    columnMapping: []
+                },
+                "41": {
+                    name: "美股",
+                    prefix: "gb_",
+                    columnMapping: []
                 }
             }
         },
@@ -97,10 +120,11 @@
                 { id: 59, name: '工具' }
             ],
             watchingStocks: [
-                { sinaSymbol: 'sh000001', name: '上证指数' },
-                { sinaSymbol: 'sz399006', name: '创业板指' },
-                { sinaSymbol: 'sh600036', name: '招商银行' },
-                { sinaSymbol: 'sz000002', name: '万科A' }
+                { sinaSymbol: 'sh000001', type: '11', name: '上证指数' },
+                { sinaSymbol: 'sz399006', type: '11', name: '创业板指' },
+                { sinaSymbol: 'sz000002', type: '11', name: '万科A' },
+                { sinaSymbol: 'rt_hk00700', type: '31', name: '腾讯控股' },
+                { sinaSymbol: 'gb_msft', type: '41', name: '微软' }
             ]
         },
         getUserSettings = function () {
@@ -147,6 +171,9 @@
 
             _appSettings.quantityColumnId = 42;
             _columnEngines[_appSettings.quantityColumnId] = { id: _appSettings.quantityColumnId, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
+
+            _appSettings.priceEarningColumnId = 43;
+            _columnEngines[_appSettings.priceEarningColumnId] = { id: _appSettings.priceEarningColumnId, name: '市盈率', siblings: _columnEngines, getClass: getClassDefault, getText: getTextForNumber, getValue: getValueDefault };
 
             // 本地扩展 - 非数据源栏位
             _appSettings.actionsColumnId = 50;
@@ -420,6 +447,10 @@
         },
         getValueDefault = function (data) {
             if (this._value == undefined) {
+
+                //var index =  this.siblings[]   this.id;
+
+
                 this._value = Number(data[this.id]); // 返回数值或 NaN
             }
             return this._value;
@@ -511,6 +542,7 @@
                         var watchingStock = _userSettings.watchingStocks[i];
                         data[_appSettings.costColumnId] = watchingStock.cost;
                         data[_appSettings.quantityColumnId] = watchingStock.quantity;
+                        data.type = watchingStock.type;
                     }
 
                     stockTableRow = $('<tr>').appendTo(stockTableBody);
@@ -598,11 +630,6 @@
             });
         },
         _suggestionCallback = function (args) {
-            /*
-            [suggest2.sinajs.cn]
-            xtdh,11,002125,sz002125,湘潭电化,xtdh
-            zglt,11,600050,sh600050,中国联通,zglt,中国联通,0
-            */
             for (var key in args) {
                 if (key == 'token') {
                     continue;
@@ -628,12 +655,19 @@
                 break;
             }
         },
+        /*
+        [suggest2.sinajs.cn]
+        xtdh,11,002125,sz002125,湘潭电化,xtdh
+        zglt,11,600050,sh600050,中国联通,zglt,中国联通,0
+        */
         getSuggestionLabel = function (data) {
-            return _formatString('[{0}] {1} {2} {3}', _appSettings.stockTypes[data[1]].name, data[0], data[2], data[4]);
+            var typeId = data[1];
+            return _formatString('[{0}] {1} {2} {3}', _appSettings.stockTypes[typeId].name, data[0], data[2], data[4]);
         },
         getSuggestionValue = function (data) {
-            var prefix = _appSettings.stockTypes[data[1]].prefix;
-            return prefix ? prefix + data[2] : data[3];
+            var typeId = data[1];
+            var prefix = _appSettings.stockTypes[typeId].prefix;
+            return _formatString('{0}{1}|{2}', prefix, data[3], typeId);
         },
 
         _editorCallback = function (args) {
@@ -752,16 +786,20 @@
                     },
                     select: function (event, ui) {
                         if (_userSettings.watchingStocks.length < _appSettings.maxWatchingStockCount) {
-                            var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', ui.item.value);
+                            var values = ui.item.value.split('|'); // 对应 getSuggestionValue
+                            var sinaSymbol = values[0];
+                            var type = values[1];
+
+                            var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', sinaSymbol);
                             if (i >= 0) {
                                 var watchingStock = _userSettings.watchingStocks[i];
                                 showAlert(_formatString('{0} ({1}) 已存在', watchingStock.name, watchingStock.sinaSymbol));
                             }
                             else {
-                                var sinaSymbol = ui.item.value;
                                 var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') + 1);
                                 _userSettings.watchingStocks.push({
                                     sinaSymbol: sinaSymbol,
+                                    type: type,
                                     name: name
                                 });
                                 setUserSettings();
