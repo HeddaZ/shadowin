@@ -1,7 +1,7 @@
 ﻿(function (window, document, undefined) {
     var _shadowStock = {},
         _appId = 'ShadowStock_SH_SZ',
-        _appName = 'ShadowStock 影子证券 - 沪深创业板',
+        _appName = 'ShadowStock 影子证券',
         _appVersion = '2.1',
         _appUrl = 'https://github.com/heddaz/shadowin',
 
@@ -889,7 +889,7 @@
             if (_elements.aboutButton) {
                 _elements.aboutButton.click(function () {
                     if (confirm(_formatString('谢谢您使用 {0} ！\n\n作者：{1}\n项目：{2}\nQQ：{3}\n\n(尊重开源、尊重分享，再发布请保留以上信息，谢谢)',
-                        _appName, 'HEDDAZ (大飞飞)', _appUrl, '9812152'))) {
+                        _appName, 'HEDDAZ(大飞飞)', _appUrl, '9812152'))) {
                         window.open(_appUrl);
                 }
                 });
