@@ -39,6 +39,20 @@ namespace Shadowin.Implement
                 }
             }
         }
+        public static int PageZoom
+        {
+            get
+            {
+                try
+                {
+                    return int.Parse(SwGlobal.GetConfiguration("PageZoom").Replace("%", string.Empty));
+                }
+                catch
+                {
+                    return 100;
+                }
+            }
+        }
 
         #region 热键
 

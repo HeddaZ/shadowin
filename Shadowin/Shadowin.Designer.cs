@@ -29,56 +29,57 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.logoImage = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.logoImage)).BeginInit();
             this.SuspendLayout();
             // 
-            // webBrowser1
+            // webBrowser
             // 
-            this.webBrowser1.AllowWebBrowserDrop = false;
-            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(1060, 240);
-            this.webBrowser1.TabIndex = 0;
-            this.webBrowser1.TabStop = false;
+            this.webBrowser.AllowWebBrowserDrop = false;
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(0, 0);
+            this.webBrowser.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(1060, 240);
+            this.webBrowser.TabIndex = 0;
+            this.webBrowser.TabStop = false;
+            this.webBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser_DocumentCompleted);
             // 
-            // toolTip1
+            // toolTip
             // 
-            this.toolTip1.IsBalloon = true;
-            this.toolTip1.ShowAlways = true;
-            this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTip.IsBalloon = true;
+            this.toolTip.ShowAlways = true;
+            this.toolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
-            // timer1
+            // refreshTimer
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
-            // pictureBox1
+            // logoImage
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox1.Image = global::Shadowin.Properties.Resources.Shadowin_16;
-            this.pictureBox1.Location = new System.Drawing.Point(1018, 207);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(16, 16);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.logoImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.logoImage.BackColor = System.Drawing.Color.White;
+            this.logoImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.logoImage.Image = global::Shadowin.Properties.Resources.Shadowin_16;
+            this.logoImage.Location = new System.Drawing.Point(1018, 207);
+            this.logoImage.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.logoImage.Name = "logoImage";
+            this.logoImage.Size = new System.Drawing.Size(16, 16);
+            this.logoImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.logoImage.TabIndex = 1;
+            this.logoImage.TabStop = false;
+            this.logoImage.Click += new System.EventHandler(this.logoImage_Click);
             // 
             // Shadowin
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = global::Shadowin.Properties.Settings.Default.FormBackColor;
             this.ClientSize = new System.Drawing.Size(1060, 240);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.webBrowser1);
+            this.Controls.Add(this.logoImage);
+            this.Controls.Add(this.webBrowser);
             this.Font = global::Shadowin.Properties.Settings.Default.FormFont;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
@@ -93,7 +94,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Shadowin_FormClosing);
             this.SizeChanged += new System.EventHandler(this.Shadowin_SizeChanged);
             this.VisibleChanged += new System.EventHandler(this.Shadowin_VisibleChanged);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logoImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,10 +102,10 @@
 
         #endregion
 
-        private System.Windows.Forms.WebBrowser webBrowser1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.WebBrowser webBrowser;
+        private System.Windows.Forms.PictureBox logoImage;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Timer refreshTimer;
     }
 }
 
