@@ -61,6 +61,8 @@ Shadowin 影窗浏览器 默认配置和操作方法
     <add key="RefreshInterval" value="0"/>
     <!-- 分屏显示 -->
     <add key="ScreenId" value="0"/>
+    <!-- 页面缩放 -->
+    <add key="PageZoom" value="100%"/>
 
     <!-- 热键：窗口宽度 -->
     <add key="IncreaseWidthHotKeyModifierKey" value="Control"/>
