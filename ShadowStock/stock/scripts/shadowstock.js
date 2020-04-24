@@ -701,8 +701,8 @@
             }
             else {
                 return _formatString('{0}|{1}', data[3], typeId);
-        }
-    },
+            }
+        },
 
         _editorCallback = function (args) {
             try {
@@ -720,7 +720,7 @@
 
                             setUserSettings();
                             showAlert(_formatString('{0} ({1}) 已更新, 成本: {2} 持有量: {3}', watchingStock.name, watchingStock.sinaSymbol, watchingStock.cost, watchingStock.quantity));
-                    }
+                        }
                         break;
 
                     case 'clear':
@@ -732,29 +732,29 @@
 
                             setUserSettings();
                             showAlert(_formatString('{0} ({1}) 已更新, 成本: {2} 持有量: {3}', watchingStock.name, watchingStock.sinaSymbol, watchingStock.cost, watchingStock.quantity));
-                    }
+                        }
                         break;
 
                     case 'cancel':
                     default:
                         break;
+                }
             }
-        }
             finally {
                 $('.container-action>.glyphicon-edit').popover('hide');
-        }
-    },
+            }
+        },
         showAlert = function (message, duration) {
             if (!$.isNumeric(duration) || duration < 0) {
                 duration = 2000;
-        }
+            }
             _elements.alertPanel.html(message).slideDown(function () {
                 var _this = $(this);
                 window.setTimeout(function () {
                     _this.slideUp();
                 }, duration);
             });
-    },
+        },
 
         _settingsCallback = function (args) {
             try {
@@ -769,12 +769,12 @@
                     case 'cancel':
                     default:
                         break;
+                }
             }
-        }
             finally {
                 _elements.settingsButton.popover('hide');
-        }
-    },
+            }
+        },
         _impexpCallback = function (args) {
             try {
                 switch (args.result) {
@@ -787,12 +787,12 @@
                     case 'cancel':
                     default:
                         break;
+                }
             }
-        }
             finally {
                 _elements.impexpButton.popover('hide');
-        }
-    },
+            }
+        },
 
         /******************** 外部方法 ********************/
         _elements,
@@ -800,28 +800,28 @@
             _elements = elements;
             if (_elements.stockTable) {
                 _elements.stockTable.empty();
-        }
+            }
             if (_elements.suggestionText) {
                 _elements.suggestionText.focus(function () {
                     $(this).select();
                 }).autocomplete({
-                        minLength: 1,
-                        autoFocus: true,
-                        source: [],
-                        search: function (event, ui) {
+                    minLength: 1,
+                    autoFocus: true,
+                    source: [],
+                    search: function (event, ui) {
                         var term = event.target.value;
                         if (term) {
                             if (term in suggestionCache) {
                                 _elements.suggestionText.autocomplete('option', 'source', suggestionCache[term]);
                                 return;
-                        }
+                            }
                             suggestionRequest(term);
                         }
-                },
-                        select: function (event, ui) {
+                    },
+                    select: function (event, ui) {
                         if (_userSettings.watchingStocks.length < _appSettings.maxWatchingStockCount) {
                             var values = ui.item.value.split('|'); // 对应 getSuggestionValue
-                            var sinaSymbol = values[0];
+                            var sinaSymbol = values[0].replace(/\./g, '$'); // 新浪标记里 "." 需替换为 "$"
                             var type = values[1];
 
                             var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', sinaSymbol);
@@ -830,15 +830,15 @@
                                 showAlert(_formatString('{0} ({1}) 已存在', watchingStock.name, watchingStock.sinaSymbol));
                             }
                             else {
-                                var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') +1); // 对应 getSuggestionLabel
+                                var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') + 1); // 对应 getSuggestionLabel
                                 _userSettings.watchingStocks.push({
-                                        sinaSymbol: sinaSymbol,
-                                        type: type,
-                                        name: name
+                                    sinaSymbol: sinaSymbol,
+                                    type: type,
+                                    name: name
                                 });
                                 setUserSettings();
                                 showAlert(_formatString('{0} ({1}) 已添加', name, sinaSymbol));
-                        }
+                            }
                         }
                         else {
                             showAlert(_formatString('自选股数量请不要超过 {0}', _appSettings.maxWatchingStockCount));
@@ -846,72 +846,72 @@
 
                         $(event.target).focus().select();
                         return false;
-                }
+                    }
                 });
-        }
+            }
             if (_elements.alertPanel) {
                 _elements.alertPanel.hide();
-        }
+            }
             if (_elements.settingsButton) {
                 _elements.settingsButton.popover({
-                        container: 'body',
-                        html: true,
-                        trigger: 'manual',
-                        placement: 'bottom'
+                    container: 'body',
+                    html: true,
+                    trigger: 'manual',
+                    placement: 'bottom'
                 }).click(function () {
                     var displayColumnsKey = 'cookieDisplayColumns';
                     var availableColumnsKey = 'cookieAvailableColumns';
                     $.cookie(displayColumnsKey, _userSettings.displayColumns);
                     $.cookie(availableColumnsKey, _appSettings.availableColumns);
                     $(this).attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="settings" src="settings.html?{0}"></iframe>', escape(JSON.stringify({
-                            token: _appId,
-                            callback: 'ShadowStock.settingsCallback',
-                            refreshInterval: _userSettings.refreshInterval,
-                            displayColumns: displayColumnsKey,
-                            availableColumns: availableColumnsKey,
-                            actionsColumnId: _appSettings.actionsColumnId
+                        token: _appId,
+                        callback: 'ShadowStock.settingsCallback',
+                        refreshInterval: _userSettings.refreshInterval,
+                        displayColumns: displayColumnsKey,
+                        availableColumns: availableColumnsKey,
+                        actionsColumnId: _appSettings.actionsColumnId
                     })))).popover('show');
                 });
-        }
+            }
             if (_elements.impexpButton) {
                 _elements.impexpButton.popover({
-                        container: 'body',
-                        html: true,
-                        trigger: 'manual',
-                        placement: 'bottom'
+                    container: 'body',
+                    html: true,
+                    trigger: 'manual',
+                    placement: 'bottom'
                 }).click(function () {
                     var userSettingsKey = 'cookieUserSettings';
                     $.cookie(userSettingsKey, _userSettings);
                     $(this).attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="impexp" src="impexp.html?{0}"></iframe>', escape(JSON.stringify({
-                            token: _appId,
-                            callback: 'ShadowStock.impexpCallback',
-                            userSettings: userSettingsKey
+                        token: _appId,
+                        callback: 'ShadowStock.impexpCallback',
+                        userSettings: userSettingsKey
                     })))).popover('show');
                     return false;
                 });
-        }
+            }
             if (_elements.aboutButton) {
                 _elements.aboutButton.click(function () {
                     if (confirm(_formatString('谢谢您使用 {0} ！\n\n作者：{1}\n项目：{2}\nQQ：{3}\n\n(尊重开源、尊重分享，再发布请保留以上信息，谢谢)',
                         _appName, 'HEDDAZ(大飞飞)', _appUrl, '9812152'))) {
                         window.open(_appUrl);
-                }
+                    }
                 });
-        }
-    },
+            }
+        },
 
         stockTimer,
         duringStockRefresh,
         _enableStockTimer = function (forStockRefresh) {
             stockTimer = window.setTimeout(stockRequest, _userSettings.refreshInterval);
             duringStockRefresh = false;
-    },
+        },
         _disableStockTimer = function (forStockRefresh) {
             duringStockRefresh = forStockRefresh;
             if (stockTimer) {
                 stockTimer = window.clearTimeout(stockTimer);
-        }
-};
+            }
+        };
 
     /******************** 导出 ********************/
     _shadowStock.appId = _appId;
