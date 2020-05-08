@@ -164,7 +164,7 @@ var ColorBaseIndex = 43;
 var RefreshInterval = 5000;
 
 //股票数据定义地址格式
-var StockDatasDeclareUrlFormat = "http://hq.sinajs.cn/rn={0}&list={1}";
+var StockDatasDeclareUrlFormat = "http://data.stock.plusii.com/?rn={0}&list={1}";
 /* 备用地址：
 http://hq.sinajs.cn/rn=1111&list=sh000001,sz399001,sz399106
 http://61.172.207.163/rn=1111&list=sh000001,sz399001,sz399106
