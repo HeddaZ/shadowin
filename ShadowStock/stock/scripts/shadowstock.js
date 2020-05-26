@@ -101,6 +101,7 @@
         _userSettings,
         defaultUserSettings = {
             refreshInterval: 5000,
+            blackMode: false,
             displayColumns: [
                 { id: 50, name: '操作' },
                 { id: 54, name: '名称代码' },
@@ -432,10 +433,15 @@
         /******************** 内部方法 ********************/
         getClassDefault = function (data) {
             if (this._class == undefined) {
-                var value = this.siblings[_appSettings.changeColumnId].getValue(data);
-                this._class = value > 0
-                    ? 'positive'
-                    : (value < 0 ? 'negative' : '');
+                if (!_userSettings.blackMode) {
+                    var value = this.siblings[_appSettings.changeColumnId].getValue(data);
+                    this._class = value > 0
+                        ? 'positive'
+                        : (value < 0 ? 'negative' : '');
+                }
+                else {
+                    this._class = '';
+                }
             }
             return this._class;
         },
@@ -492,10 +498,15 @@
         },
         getClassForGainLoss = function (data) {
             if (this._class == undefined) {
-                var value = this.siblings[_appSettings.gainLossColumnId].getValue(data);
-                this._class = value > 0
-                    ? 'btn-danger'
-                    : (value < 0 ? 'btn-success' : 'btn-default disabled');
+                if (!_userSettings.blackMode) {
+                    var value = this.siblings[_appSettings.gainLossColumnId].getValue(data);
+                    this._class = value > 0
+                        ? 'btn-danger'
+                        : (value < 0 ? 'btn-success' : 'disabled');
+                }
+                else {
+                    this._class = 'disabled';
+                }
             }
             return this._class;
         },
@@ -761,6 +772,7 @@
                 switch (args.result) {
                     case 'save':
                         _userSettings.refreshInterval = args.refreshInterval;
+                        _userSettings.blackMode = args.blackMode;
                         _userSettings.displayColumns = args.displayColumns;
                         setUserSettings();
                         showAlert('设置已更新，立即生效');
@@ -867,6 +879,7 @@
                         token: _appId,
                         callback: 'ShadowStock.settingsCallback',
                         refreshInterval: _userSettings.refreshInterval,
+                        blackMode: _userSettings.blackMode,
                         displayColumns: displayColumnsKey,
                         availableColumns: availableColumnsKey,
                         actionsColumnId: _appSettings.actionsColumnId

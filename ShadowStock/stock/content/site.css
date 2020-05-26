@@ -108,3 +108,11 @@ iframe.impexp {
 #stockTable td.btn-default {
     background-color: transparent;
 }
+
+.display-block {
+    display: block;
+}
+
+.font-weight-normal {
+    font-weight: normal !important;
+}

@@ -11,17 +11,28 @@
 <body>
     <div class="container-fluid container-settings">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-5">
                 <div class="form-group">
-                    <label for="refreshInterval">刷新间隔（秒）</label>
+                    <label for="refreshInterval">刷新间隔</label>
                     <select id="refreshInterval" class="form-control input-sm">
-                        <option value="3000">3</option>
-                        <option value="5000">5</option>
-                        <option value="8000">8</option>
-                        <option value="10000">10</option>
-                        <option value="30000">30</option>
-                        <option value="60000">60</option>
+                        <option value="3000">3 秒</option>
+                        <option value="5000">5 秒</option>
+                        <option value="8000">8 秒</option>
+                        <option value="10000">10 秒</option>
+                        <option value="30000">30 秒</option>
+                        <option value="60000">60 秒</option>
                     </select>
+                </div>
+            </div>
+            <div class="col-xs-2">
+            </div>
+            <div class="col-xs-5">
+                <div class="form-group">
+                    <label class="display-block">强化隐蔽</label>
+                    <label class="font-weight-normal">
+                        <input type="checkbox" id="blackMode" />
+                        启用黑色字体
+                    </label>
                 </div>
             </div>
         </div>
@@ -72,6 +83,7 @@
             }
 
             var _refreshInterval = $('#refreshInterval').val(_args.refreshInterval);
+            var _blackMode = $('#blackMode').attr('checked', _args.blackMode);
 
             var _availableColumns = $('#availableColumns').empty().dblclick(function () {
                 $('[data-action="addColumn"]').click();
@@ -142,6 +154,7 @@
                     token: _args.token,
                     result: $(this).data('result'),
                     refreshInterval: _refreshInterval.val(),
+                    blackMode: _blackMode.is(':checked'),
                     displayColumns: displayColumns
                 };
                 eval('window.parent.' + _args.callback + '(args)');
