@@ -76,10 +76,14 @@
             // 初始化
             var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
             if (typeof _args.displayColumns == 'string') {
-                _args.displayColumns = JSON.parse($.cookie(_args.displayColumns));
+                var key = _args.displayColumns;
+                _args.displayColumns = JSON.parse($.cookie(key));
+                $.removeCookie(key);
             }
             if (typeof _args.availableColumns == 'string') {
-                _args.availableColumns = JSON.parse($.cookie(_args.availableColumns));
+                var key = _args.availableColumns;
+                _args.availableColumns = JSON.parse($.cookie(key));
+                $.removeCookie(key);
             }
 
             var _refreshInterval = $('#refreshInterval').val(_args.refreshInterval);

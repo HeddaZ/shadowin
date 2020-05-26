@@ -49,7 +49,9 @@
             // 初始化
             var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
             if (typeof _args.userSettings == 'string') {
-                _args.userSettings = JSON.parse($.cookie(_args.userSettings));
+                var key = _args.userSettings;
+                _args.userSettings = JSON.parse($.cookie(key));
+                $.removeCookie(key);
             }
 
             var _userSettings = $('#userSettings').val(JSON.stringify(_args.userSettings)).bind({
