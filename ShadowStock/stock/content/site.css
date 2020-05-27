@@ -1,21 +1,24 @@
 ﻿body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
 body {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
 .container-fluid {
     padding-left: 10px !important;
     padding-right: 10px !important;
 }
+
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
 .table-condensed > tfoot > tr > th,
 .table-condensed > thead > tr > td,
 .table-condensed > tbody > tr > td,
 .table-condensed > tfoot > tr > td {
-  padding: 3px;
+    padding: 3px;
 }
 
 .ad {
@@ -26,6 +29,7 @@ body {
 .show-grid {
     margin-bottom: 5px;
 }
+
 .show-grid-lg {
     margin-bottom: 10px;
 }
@@ -51,9 +55,11 @@ td {
 [role="handle"] {
     cursor: move;
 }
+
 td.positive {
     color: red;
 }
+
 td.negative {
     color: green;
 }
@@ -70,26 +76,32 @@ td.negative {
 .popover {
     max-width: 1000px;
 }
+
 iframe.editor {
     border: 0;
     width: 220px;
     height: 120px;
 }
+
 .container-editor {
     width: 210px;
 }
+
 iframe.settings {
     border: 0;
     width: 510px;
     height: 280px;
 }
+
 .container-settings {
     width: 500px;
 }
+
 #displayColumns,
 #availableColumns {
     height: 120px;
 }
+
 .col-toolbar-vertical {
     padding-top: 30px;
     line-height: 50px;
@@ -101,6 +113,7 @@ iframe.impexp {
     width: 510px;
     height: 235px;
 }
+
 .container-impexp {
     width: 500px;
 }
@@ -115,4 +128,25 @@ iframe.impexp {
 
 .font-weight-normal {
     font-weight: normal !important;
+}
+
+.black-mode.positive {
+    color: #333 !important;
+}
+.black-mode.negative {
+    color: #333 !important;
+    text-decoration: line-through;
+}
+
+.black-mode.btn-danger {
+    color: #333 !important;
+    background-color: transparent;
+    background-image: none;
+}
+
+.black-mode.btn-success {
+    color: #333 !important;
+    text-decoration: line-through;
+    background-color: transparent;
+    background-image: none;
 }
