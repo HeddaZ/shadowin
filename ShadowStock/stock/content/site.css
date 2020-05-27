@@ -12,6 +12,14 @@ body {
     padding-right: 10px !important;
 }
 
+.display-block {
+    display: block;
+}
+
+.font-weight-normal {
+    font-weight: normal !important;
+}
+
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
 .table-condensed > tfoot > tr > th,
@@ -116,37 +124,4 @@ iframe.impexp {
 
 .container-impexp {
     width: 500px;
-}
-
-#stockTable td.btn-default {
-    background-color: transparent;
-}
-
-.display-block {
-    display: block;
-}
-
-.font-weight-normal {
-    font-weight: normal !important;
-}
-
-.black-mode.positive {
-    color: #333 !important;
-}
-.black-mode.negative {
-    color: #333 !important;
-    text-decoration: line-through;
-}
-
-.black-mode.btn-danger {
-    color: #333 !important;
-    background-color: transparent;
-    background-image: none;
-}
-
-.black-mode.btn-success {
-    color: #333 !important;
-    text-decoration: line-through;
-    background-color: transparent;
-    background-image: none;
 }
