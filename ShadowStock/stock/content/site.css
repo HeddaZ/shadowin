@@ -125,3 +125,24 @@ iframe.impexp {
 .container-impexp {
     width: 500px;
 }
+
+iframe.about {
+    border: 0;
+    width: 560px;
+    height: 200px;
+}
+
+.container-about {
+    width: 550px;
+    line-height: 180%;
+}
+
+    .container-about .title {
+        color: #c52c23;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .container-about .donate {
+        padding: 0;
+    }

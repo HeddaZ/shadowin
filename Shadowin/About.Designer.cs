@@ -108,7 +108,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(150, 121);
+            this.label4.Location = new System.Drawing.Point(156, 95);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(45, 20);
             this.label4.TabIndex = 7;
@@ -117,7 +117,7 @@
             // qqLink
             // 
             this.qqLink.AutoSize = true;
-            this.qqLink.Location = new System.Drawing.Point(201, 121);
+            this.qqLink.Location = new System.Drawing.Point(201, 95);
             this.qqLink.Name = "qqLink";
             this.qqLink.Size = new System.Drawing.Size(65, 20);
             this.qqLink.TabIndex = 8;
@@ -129,7 +129,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(150, 95);
+            this.label5.Location = new System.Drawing.Point(150, 121);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 20);
             this.label5.TabIndex = 5;
@@ -138,7 +138,7 @@
             // projectLink
             // 
             this.projectLink.AutoSize = true;
-            this.projectLink.Location = new System.Drawing.Point(201, 95);
+            this.projectLink.Location = new System.Drawing.Point(201, 121);
             this.projectLink.Name = "projectLink";
             this.projectLink.Size = new System.Drawing.Size(268, 20);
             this.projectLink.TabIndex = 6;

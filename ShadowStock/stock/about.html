@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <title>ShadowStock 影子证券 - 关于</title>
+    <link href="content/bootstrap.css" rel="stylesheet" />
+    <link href="content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="content/site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid container-about">
+        <div class="row show-grid-lg">
+            <div class="col-xs-12 title">
+                ShadowStock 影子证券 V<span id="version">1.0</span>
+            </div>
+        </div>
+        <div class="row show-grid-lg">
+            <div class="col-xs-8">
+                感谢您使用！<br />
+                作者: HEDDAZ (大飞飞)<br />
+                &nbsp;QQ: <a href="tencent://message/?uin=9812152">9812152</a><br />
+                项目: <a href="https://github.com/heddaz/shadowin/" target="_blank">https://github.com/heddaz/shadowin/</a>
+            </div>
+            <div class="col-xs-4 donate">
+                <img alt="微信捐赠二维码" src="http://images.iiwho.com/donate-wechat.jpg" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <button type="button" class="btn btn-sm btn-default" data-result="cancel">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // 初始化
+            var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+            $('#version').text(_args.version);
+
+            $('[data-result]').click(function () {
+                var args = {
+                    token: _args.token,
+                    result: $(this).data('result')
+                };
+
+                eval('window.parent.' + _args.callback + '(args)');
+            });
+        });
+    </script>
+</body>
+</html>

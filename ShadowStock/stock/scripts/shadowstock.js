@@ -2,7 +2,7 @@
     var _shadowStock = {},
         _appId = 'ShadowStock_SH_SZ',
         _appName = 'ShadowStock 影子证券',
-        _appVersion = '2.1',
+        _appVersion = '2.6',
         _appUrl = 'https://github.com/heddaz/shadowin',
 
         /******************** 配置 ********************/
@@ -100,7 +100,7 @@
 
         _userSettings,
         defaultUserSettings = {
-            refreshInterval: 5000,
+            refreshInterval: 8000,
             blackMode: false,
             displayColumns: [
                 { id: 50, name: '操作' },
@@ -804,6 +804,18 @@
                 _elements.impexpButton.popover('hide');
             }
         },
+        _aboutCallback = function (args) {
+            try {
+                switch (args.result) {
+                    case 'cancel':
+                    default:
+                        break;
+                }
+            }
+            finally {
+                _elements.aboutButton.popover('hide');
+            }
+        },
 
         /******************** 外部方法 ********************/
         _elements,
@@ -903,11 +915,18 @@
                 });
             }
             if (_elements.aboutButton) {
-                _elements.aboutButton.click(function () {
-                    if (confirm(_formatString('谢谢您使用 {0} ！\n\n作者：{1}\n项目：{2}\nQQ：{3}\n\n(尊重开源、尊重分享，再发布请保留以上信息，谢谢)',
-                        _appName, 'HEDDAZ(大飞飞)', _appUrl, '9812152'))) {
-                        window.open(_appUrl);
-                    }
+                _elements.aboutButton.popover({
+                    container: 'body',
+                    html: true,
+                    trigger: 'manual',
+                    placement: 'bottom'
+                }).click(function () {
+                    $(this).attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="about" src="about.html?{0}"></iframe>', escape(JSON.stringify({
+                        token: _appId,
+                        callback: 'ShadowStock.aboutCallback',
+                        version: _appVersion
+                    })))).popover('show');
+                    return false;
                 });
             }
         },
@@ -948,6 +967,7 @@
     _shadowStock.editorCallback = _editorCallback;
     _shadowStock.settingsCallback = _settingsCallback;
     _shadowStock.impexpCallback = _impexpCallback;
+    _shadowStock.aboutCallback = _aboutCallback;
 
     _shadowStock.enableStockTimer = _enableStockTimer;
     _shadowStock.disableStockTimer = _disableStockTimer;
