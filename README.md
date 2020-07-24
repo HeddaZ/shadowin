@@ -20,8 +20,7 @@ ShadowStock 影子证券，是上班看股、个性化盯盘神器
 
 ![Shadowin 影窗浏览器](docs/logo.png)  
 **[点击下载已编译包，解压直接使用]**  
-> 运行需 [Microsoft .NET Framework 2.0] 支持  
-> 或使用 [Microsoft .NET Framework 4.0] 编译的版本  
+> 运行需 [Microsoft .NET Framework 4.0] 支持 (Win10 已内置)  
   
 ----------------------------------------------------------------------------------------------
 
@@ -137,12 +136,13 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
 * ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，可以支持设置的导入/导出以及通过 QQ 之类的工具传输；
 * ShadowStock 影子證券(雅虎奇摩台灣版) 调用的是经二次包装的雅虎奇摩数据源 http://tw.stock.plusii.com/stockdata.aspx?rn={0}&list={1}，
 您可以在 `/ShadowStock/stock_tw/Shared.js` 和 `/ShadowStock/stock_tw/stockdata.aspx` 中找到相关代码（**注意：**自行托管 stockdata.aspx，需要 ASP.NET 2.0 服务器）； 
-* 支持 IE7 等更老浏览器的 ShadowStock 影子证券 (旧版 http://v1.stock.shadowin.net) 已不再提供服务。
+* 支持 IE7 等更老浏览器的旧版 ShadowStock 影子证券 (http://v1.stock.shadowin.net) 已不再提供服务；需要的同学请下载源码自行部署。
   
 
 -------------------------------------------------  
 使用中有任何问题和建议，欢迎 [在此留爪] 或 QQ [9812152]。  
-![微信扫码捐赠](docs/donate-wechat.jpg)
+（聊表心意，金额随意)  
+![微信扫码捐赠](http://images.iiwho.com/donate-wechat.jpg)
   
   
 [Keys Enumeration]: https://msdn.microsoft.com/en-us/library/system.windows.forms.keys(v=vs.110).aspx
