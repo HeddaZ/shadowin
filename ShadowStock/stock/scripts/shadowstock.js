@@ -2,7 +2,7 @@
     var _shadowStock = {},
         _appId = 'ShadowStock_SH_SZ',
         _appName = 'ShadowStock 影子证券',
-        _appVersion = '2.6',
+        _appVersion = '3.0',
         _appUrl = 'https://github.com/heddaz/shadowin',
 
         /******************** 配置 ********************/
@@ -12,7 +12,7 @@
             maxWatchingStockCount: 22,
             suggestionUrl: 'http://stock-data.plusii.com/suggest/?type=11,12,72,73,81,31,41&key={1}&name={0}',
             stockUrl: 'http://stock-data.plusii.com/data/?rn={0}&list={1}',
-            stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间,市盈率'
+            stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间'
                 .split(','),
             /*
             "11": "A 股",
@@ -63,27 +63,27 @@
                 "11": {
                     name: "Ａ股",
                     prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34]
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
                 },
                 "12": {
                     name: "Ｂ股",
                     prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34]
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
                 },
                 "72": {
                     name: "基金",
                     prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34]
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
                 },
                 "73": {
                     name: "三板",
                     prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34]
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
                 },
                 "81": {
                     name: "债券",
                     prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 34]
+                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
                 },
                 "31": {
                     name: "港股",
@@ -172,6 +172,9 @@
 
             _appSettings.quantityColumnId = 42;
             _columnEngines[_appSettings.quantityColumnId] = { id: _appSettings.quantityColumnId, name: '持有量', siblings: _columnEngines, getClass: getClassDefault, getText: getTextAsNumber, getValue: getValueDefault };
+
+            _appSettings.displayNameColumnId = 43;
+            _columnEngines[_appSettings.displayNameColumnId] = { id: _appSettings.displayNameColumnId, name: '显示名', siblings: _columnEngines, getClass: getClassDefault, getText: getTextDefault, getValue: getValueDefault };
 
             // 本地扩展 - 非数据源栏位
             _appSettings.actionsColumnId = 50;
@@ -577,6 +580,7 @@
                         var watchingStock = _userSettings.watchingStocks[i];
                         data[_appSettings.costColumnId] = watchingStock.cost;
                         data[_appSettings.quantityColumnId] = watchingStock.quantity;
+                        data[_appSettings.displayNameColumnId] = watchingStock.name;
                         data.type = watchingStock.type;
                     }
 
