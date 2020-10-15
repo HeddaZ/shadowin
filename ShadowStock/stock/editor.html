@@ -14,7 +14,7 @@
             <div class="col-xs-12">
                 <div class="input-group input-group-sm">
                     <span class="input-group-addon">显示名</span>
-                    <input type="text" class="form-control text-right" id="cost" placeholder="示例: 联不通" />
+                    <input type="text" class="form-control text-right" id="displayName" placeholder="示例: 联不通" />
                 </div>
             </div>
         </div>
@@ -67,10 +67,14 @@
 
             // 初始化
             var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
-            $('#cost').val($.isNumeric(_args.cost) ? _args.cost : '').bind({
+            $('#displayName').val(_args.displayName).bind({
                 keydown: _intelliEnter,
                 focus: _intelliFocus
             }).focus();
+            $('#cost').val($.isNumeric(_args.cost) ? _args.cost : '').bind({
+                keydown: _intelliEnter,
+                focus: _intelliFocus
+            });
             $('#quantity').val($.isNumeric(_args.quantity) ? _args.quantity : '').bind({
                 keydown: _intelliEnter,
                 focus: _intelliFocus

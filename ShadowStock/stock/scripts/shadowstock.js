@@ -194,6 +194,7 @@
                         .attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="editor" src="editor.html?{0}"></iframe>', escape(JSON.stringify({
                             token: sinaSymbol,
                             callback: 'ShadowStock.editorCallback',
+                            displayName: this.siblings[_appSettings.displayNameColumnId].getText(data),
                             cost: this.siblings[_appSettings.costColumnId].getText(data),
                             quantity: this.siblings[_appSettings.quantityColumnId].getText(data)
                         }))))
@@ -606,7 +607,7 @@
                 handle: '.container-action>.glyphicon-move',
                 cursor: 'move',
                 axis: 'y',
-                opacity: 0.9,
+                opacity: 0.8,
                 revert: true,
                 scroll: false,
                 start: function (event, ui) { _disableStockTimer(); },
@@ -725,6 +726,9 @@
                         var i = _findIndex(_userSettings.watchingStocks, 'sinaSymbol', args.token);
                         if (i >= 0) {
                             var watchingStock = _userSettings.watchingStocks[i];
+                            watchingStock.name = args.displayName //???????????????????
+                                ? args.displayName
+                                : undefined;
                             watchingStock.cost = $.isNumeric(args.cost)
                                 ? Number(args.cost)
                                 : undefined;
@@ -733,7 +737,7 @@
                                 : undefined;
 
                             setUserSettings();
-                            showAlert(_formatString('{0} ({1}) 已更新, 成本: {2} 持有量: {3}', watchingStock.name, watchingStock.sinaSymbol, watchingStock.cost, watchingStock.quantity));
+                            showAlert(_formatString('{0} ({1}) 已更新, 显示名: {2} 成本: {3} 持有量: {4}', watchingStock.name, watchingStock.sinaSymbol, watchingStock.cost, watchingStock.quantity));
                         }
                         break;
 
