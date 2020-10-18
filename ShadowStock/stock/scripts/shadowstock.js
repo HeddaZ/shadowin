@@ -102,6 +102,7 @@
         defaultUserSettings = {
             refreshInterval: 8000,
             blackMode: false,
+            hideHead: false,
             displayColumns: [
                 { id: 50, name: '操作' },
                 { id: 54, name: '名称代码' },
@@ -547,17 +548,29 @@
             }
 
             try {
+                // 界面
+                if (_userSettings.blackMode) {
+                    $('#settingsButton').removeClass('btn-info').addClass('btn-default');
+                    $('#settingsMenu').removeClass('btn-info').addClass('btn-default');
+                }
+                else {
+                    $('#settingsButton').removeClass('btn-default').addClass('btn-info');
+                    $('#settingsMenu').removeClass('btn-default').addClass('btn-info');
+                }
+
                 _elements.stockTable.empty();
                 var displayColumnsLength = _userSettings.displayColumns.length;
                 var stockTableRow;
 
                 // 表头
-                var stockTableHead = $('<thead>').appendTo(_elements.stockTable);
-                stockTableRow = $('<tr>').appendTo(stockTableHead);
-                for (var i = 0; i < displayColumnsLength; i++) {
-                    var id = _userSettings.displayColumns[i].id;
-                    $('<th>').html(_columnEngines[id].name)
-                        .appendTo(stockTableRow);
+                if (!_userSettings.hideHead) {
+                    var stockTableHead = $('<thead>').appendTo(_elements.stockTable);
+                    stockTableRow = $('<tr>').appendTo(stockTableHead);
+                    for (var i = 0; i < displayColumnsLength; i++) {
+                        var id = _userSettings.displayColumns[i].id;
+                        $('<th>').html(_columnEngines[id].name)
+                            .appendTo(stockTableRow);
+                    }
                 }
 
                 // 表体
@@ -780,6 +793,7 @@
                     case 'save':
                         _userSettings.refreshInterval = args.refreshInterval;
                         _userSettings.blackMode = args.blackMode;
+                        _userSettings.hideHead = args.hideHead;
                         _userSettings.displayColumns = args.displayColumns;
                         setUserSettings();
                         showAlert('设置已更新，立即生效');
@@ -899,6 +913,7 @@
                         callback: 'ShadowStock.settingsCallback',
                         refreshInterval: _userSettings.refreshInterval,
                         blackMode: _userSettings.blackMode,
+                        hideHead: _userSettings.hideHead,
                         displayColumns: displayColumnsKey,
                         availableColumns: availableColumnsKey,
                         actionsColumnId: _appSettings.actionsColumnId

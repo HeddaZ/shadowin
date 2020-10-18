@@ -28,10 +28,14 @@
             </div>
             <div class="col-xs-5">
                 <div class="form-group">
-                    <label class="display-block">强化隐蔽</label>
+                    <label class="display-block">隐蔽强化</label>
                     <label class="font-weight-normal">
                         <input type="checkbox" id="blackMode" />
-                        启用单色字体
+                        单色字体
+                    </label>
+                    <label class="font-weight-normal">
+                        <input type="checkbox" id="hideHead" />
+                        隐藏表头
                     </label>
                 </div>
             </div>
@@ -88,6 +92,7 @@
 
             var _refreshInterval = $('#refreshInterval').val(_args.refreshInterval);
             var _blackMode = $('#blackMode').attr('checked', _args.blackMode);
+            var _hideHead = $('#hideHead').attr('checked', _args.hideHead);
 
             var _availableColumns = $('#availableColumns').empty().dblclick(function () {
                 $('[data-action="addColumn"]').click();
@@ -159,6 +164,7 @@
                     result: $(this).data('result'),
                     refreshInterval: _refreshInterval.val(),
                     blackMode: _blackMode.is(':checked'),
+                    hideHead: _hideHead.is(':checked'),
                     displayColumns: displayColumns
                 };
                 eval('window.parent.' + _args.callback + '(args)');
