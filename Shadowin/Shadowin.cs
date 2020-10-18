@@ -6,9 +6,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
-using Plusal.Windows;
-using Shadowin.Implement;
 using Shadowin.Properties;
+using Shadowin.WinApi;
 
 namespace Shadowin
 {
@@ -21,27 +20,16 @@ namespace Shadowin
         private Screen _currentScreen;
         private int? _currentZoom;
 
-        #region 属性
-
-        /// <summary>
-        /// 热键管理器
-        /// </summary>
         private HotKeyManager SwHotKeyManager
         {
             get;
             set;
         }
-
-        /// <summary>
-        /// 允许自动刷新
-        /// </summary>
         private bool RefreshEnabled
         {
             get;
             set;
         }
-
-        #endregion
 
         public Shadowin()
         {
@@ -91,54 +79,46 @@ namespace Shadowin
 
             this.SwHotKeyManager = new HotKeyManager(this);
 
-            //增大宽度
+            // 增大宽度
             this.SwHotKeyManager.Register(
-                (Enumeration.ModifierKeys)Enumeration.FromString<Enumeration.ModifierKeys>(SwGlobal.IncreaseWidthHotKeyModifierKey),
-                (Keys)Enumeration.FromString<Keys>(SwGlobal.IncreaseWidthHotKeyKey),
-                new HotKeyEventHandler(this.OnIncreaseWidthHotKey)
-                );
-            //减小宽度
+                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.IncreaseWidthHotKeyModifierKey),
+                SwGlobal.StringToEnum<Keys>(SwGlobal.IncreaseWidthHotKeyKey),
+                new HotKeyEventHandler(this.OnIncreaseWidthHotKey));
+            // 减小宽度
             this.SwHotKeyManager.Register(
-                (Enumeration.ModifierKeys)Enumeration.FromString<Enumeration.ModifierKeys>(SwGlobal.DecreaseWidthHotKeyModifierKey),
-                (Keys)Enumeration.FromString<Keys>(SwGlobal.DecreaseWidthHotKeyKey),
-                new HotKeyEventHandler(this.OnDecreaseWidthHotKey)
-                );
-            //增大高度
+                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.DecreaseWidthHotKeyModifierKey),
+                SwGlobal.StringToEnum<Keys>(SwGlobal.DecreaseWidthHotKeyKey),
+                new HotKeyEventHandler(this.OnDecreaseWidthHotKey));
+            // 增大高度
             this.SwHotKeyManager.Register(
-                (Enumeration.ModifierKeys)Enumeration.FromString<Enumeration.ModifierKeys>(SwGlobal.IncreaseHeightHotKeyModifierKey),
-                (Keys)Enumeration.FromString<Keys>(SwGlobal.IncreaseHeightHotKeyKey),
-                new HotKeyEventHandler(this.OnIncreaseHeightHotKey)
-                );
-            //减小高度
+                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.IncreaseHeightHotKeyModifierKey),
+                SwGlobal.StringToEnum<Keys>(SwGlobal.IncreaseHeightHotKeyKey),
+                new HotKeyEventHandler(this.OnIncreaseHeightHotKey));
+            // 减小高度
             this.SwHotKeyManager.Register(
-                (Enumeration.ModifierKeys)Enumeration.FromString<Enumeration.ModifierKeys>(SwGlobal.DecreaseHeightHotKeyModifierKey),
-                (Keys)Enumeration.FromString<Keys>(SwGlobal.DecreaseHeightHotKeyKey),
-                new HotKeyEventHandler(this.OnDecreaseHeightHotKey)
-                );
-            //增大不透明度
+                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.DecreaseHeightHotKeyModifierKey),
+                SwGlobal.StringToEnum<Keys>(SwGlobal.DecreaseHeightHotKeyKey),
+                new HotKeyEventHandler(this.OnDecreaseHeightHotKey));
+            // 增大不透明度
             this.SwHotKeyManager.Register(
-                (Enumeration.ModifierKeys)Enumeration.FromString<Enumeration.ModifierKeys>(SwGlobal.IncreaseOpacityHotKeyModifierKey),
-                (Keys)Enumeration.FromString<Keys>(SwGlobal.IncreaseOpacityHotKeyKey),
-                new HotKeyEventHandler(this.OnIncreaseOpacityHotKey)
-                );
-            //减小不透明度
+                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.IncreaseOpacityHotKeyModifierKey),
+                SwGlobal.StringToEnum<Keys>(SwGlobal.IncreaseOpacityHotKeyKey),
+                new HotKeyEventHandler(this.OnIncreaseOpacityHotKey));
+            // 减小不透明度
             this.SwHotKeyManager.Register(
-                (Enumeration.ModifierKeys)Enumeration.FromString<Enumeration.ModifierKeys>(SwGlobal.DecreaseOpacityHotKeyModifierKey),
-                (Keys)Enumeration.FromString<Keys>(SwGlobal.DecreaseOpacityHotKeyKey),
-                new HotKeyEventHandler(this.OnDecreaseOpacityHotKey)
-                );
-            //显示隐藏
+                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.DecreaseOpacityHotKeyModifierKey),
+                SwGlobal.StringToEnum<Keys>(SwGlobal.DecreaseOpacityHotKeyKey),
+                new HotKeyEventHandler(this.OnDecreaseOpacityHotKey));
+            // 显示隐藏
             this.SwHotKeyManager.Register(
-                (Enumeration.ModifierKeys)Enumeration.FromString<Enumeration.ModifierKeys>(SwGlobal.ShowHideHotKeyModifierKey),
-                (Keys)Enumeration.FromString<Keys>(SwGlobal.ShowHideHotKeyKey),
-                new HotKeyEventHandler(this.OnShowHideHotKey)
-                );
-            //退出
+                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.ShowHideHotKeyModifierKey),
+                SwGlobal.StringToEnum<Keys>(SwGlobal.ShowHideHotKeyKey),
+                new HotKeyEventHandler(this.OnShowHideHotKey));
+            // 退出
             this.SwHotKeyManager.Register(
-                (Enumeration.ModifierKeys)Enumeration.FromString<Enumeration.ModifierKeys>(SwGlobal.ExitHotKeyModifierKey),
-                (Keys)Enumeration.FromString<Keys>(SwGlobal.ExitHotKeyKey),
-                new HotKeyEventHandler(this.OnExitHotKey)
-                );
+                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.ExitHotKeyModifierKey),
+                SwGlobal.StringToEnum<Keys>(SwGlobal.ExitHotKeyKey),
+                new HotKeyEventHandler(this.OnExitHotKey));
 
             #endregion
 
@@ -169,9 +149,6 @@ namespace Shadowin
 
         #region 热键委托
 
-        /// <summary>
-        /// 增大宽度
-        /// </summary>
         private void OnIncreaseWidthHotKey()
         {
             if (this.Visible)
@@ -179,9 +156,6 @@ namespace Shadowin
                 this.Width += SizeDifference;
             }
         }
-        /// <summary>
-        /// 减小宽度
-        /// </summary>
         private void OnDecreaseWidthHotKey()
         {
             if (this.Visible)
@@ -189,9 +163,6 @@ namespace Shadowin
                 this.Width -= SizeDifference;
             }
         }
-        /// <summary>
-        /// 增大高度
-        /// </summary>
         private void OnIncreaseHeightHotKey()
         {
             if (this.Visible)
@@ -199,9 +170,6 @@ namespace Shadowin
                 this.Height += SizeDifference;
             }
         }
-        /// <summary>
-        /// 减小高度
-        /// </summary>
         private void OnDecreaseHeightHotKey()
         {
             if (this.Visible)
@@ -209,9 +177,6 @@ namespace Shadowin
                 this.Height -= SizeDifference;
             }
         }
-        /// <summary>
-        /// 增大不透明度
-        /// </summary>
         private void OnIncreaseOpacityHotKey()
         {
             if (this.Visible)
@@ -219,9 +184,6 @@ namespace Shadowin
                 this.Opacity += OpacityDifference;
             }
         }
-        /// <summary>
-        /// 减小不透明度
-        /// </summary>
         private void OnDecreaseOpacityHotKey()
         {
             if (this.Visible)
@@ -229,16 +191,10 @@ namespace Shadowin
                 this.Opacity -= OpacityDifference;
             }
         }
-        /// <summary>
-        /// 显示隐藏
-        /// </summary>
         private void OnShowHideHotKey()
         {
             this.Visible = !this.Visible;
         }
-        /// <summary>
-        /// 退出
-        /// </summary>
         private void OnExitHotKey()
         {
             using (var confirm = new Confirm("感谢您使用！您确定要关闭程序吗？"))
@@ -268,7 +224,7 @@ namespace Shadowin
             }
             else
             {
-                //后台歇息
+                // 后台歇息
                 webBrowser.Url = BlankUrl;
             }
 

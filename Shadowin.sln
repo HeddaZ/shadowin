@@ -1,13 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shadowin", "Shadowin\Shadowin.csproj", "{9F3C911F-6A05-41C2-9E99-9F845D7048FA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plusal.Shared", "Plusal.Shared\Plusal.Shared.csproj", "{0D436F8C-12AB-44C4-ABCD-48CE6E9B6E6C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plusal.Windows", "Plusal.Windows\Plusal.Windows.csproj", "{A472F2B0-9191-47E3-8F4F-82CBE7D8A761}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShadowStock", "http://localhost:2556", "{31C0CB9D-2976-4C13-B6AE-FF6648CF882B}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -57,14 +53,6 @@ Global
 		{9F3C911F-6A05-41C2-9E99-9F845D7048FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F3C911F-6A05-41C2-9E99-9F845D7048FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F3C911F-6A05-41C2-9E99-9F845D7048FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D436F8C-12AB-44C4-ABCD-48CE6E9B6E6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D436F8C-12AB-44C4-ABCD-48CE6E9B6E6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D436F8C-12AB-44C4-ABCD-48CE6E9B6E6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D436F8C-12AB-44C4-ABCD-48CE6E9B6E6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A472F2B0-9191-47E3-8F4F-82CBE7D8A761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A472F2B0-9191-47E3-8F4F-82CBE7D8A761}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A472F2B0-9191-47E3-8F4F-82CBE7D8A761}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A472F2B0-9191-47E3-8F4F-82CBE7D8A761}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31C0CB9D-2976-4C13-B6AE-FF6648CF882B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31C0CB9D-2976-4C13-B6AE-FF6648CF882B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31C0CB9D-2976-4C13-B6AE-FF6648CF882B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
@@ -72,5 +60,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96F0C10E-FE60-41A0-A8DE-E8BA90334370}
 	EndGlobalSection
 EndGlobal

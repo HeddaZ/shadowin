@@ -54,6 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -73,7 +74,7 @@
     <Compile Include="Confirm.Designer.cs">
       <DependentUpon>Confirm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Implement\SwGlobal.cs" />
+    <Compile Include="SwGlobal.cs" />
     <Compile Include="Shadowin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +83,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WinApi\GlobalAtom.cs" />
+    <Compile Include="WinApi\HotKeyManager.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
@@ -126,16 +129,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Plusal.Shared\Plusal.Shared.csproj">
-      <Project>{0d436f8c-12ab-44c4-abcd-48ce6e9b6e6c}</Project>
-      <Name>Plusal.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plusal.Windows\Plusal.Windows.csproj">
-      <Project>{a472f2b0-9191-47e3-8f4f-82cbe7d8a761}</Project>
-      <Name>Plusal.Windows</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shadowin_16.png" />
