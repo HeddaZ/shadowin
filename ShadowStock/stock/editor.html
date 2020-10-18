@@ -15,6 +15,7 @@
                 <div class="input-group input-group-sm">
                     <span class="input-group-addon">显示名</span>
                     <input type="text" class="form-control text-right" id="displayName" placeholder="示例: 联不通" />
+                    <input type="hidden" class="form-control" id="name" />
                 </div>
             </div>
         </div>
@@ -67,6 +68,7 @@
 
             // 初始化
             var _args = JSON.parse(unescape(window.location.href.substr(window.location.href.indexOf('?') + 1)));
+            $('#name').val(_args.name);
             $('#displayName').val(_args.displayName).bind({
                 keydown: _intelliEnter,
                 focus: _intelliFocus
