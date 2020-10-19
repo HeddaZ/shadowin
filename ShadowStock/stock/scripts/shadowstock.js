@@ -102,7 +102,7 @@
         defaultUserSettings = {
             refreshInterval: 8000,
             blackMode: false,
-            hideHead: false,
+            simplifiedMode: false,
             displayColumns: [
                 { id: 50, name: '操作' },
                 { id: 54, name: '名称代码' },
@@ -440,15 +440,10 @@
         /******************** 内部方法 ********************/
         getClassDefault = function (data) {
             if (this._class == undefined) {
-                if (!_userSettings.blackMode) {
-                    var value = this.siblings[_appSettings.changeColumnId].getValue(data);
-                    this._class = value > 0
-                        ? 'positive'
-                        : (value < 0 ? 'negative' : '');
-                }
-                else {
-                    this._class = '';
-                }
+                var value = this.siblings[_appSettings.changeColumnId].getValue(data);
+                this._class = value > 0
+                    ? 'positive'
+                    : (value < 0 ? 'negative' : '');
             }
             return this._class;
         },
@@ -505,15 +500,10 @@
         },
         getClassForGainLoss = function (data) {
             if (this._class == undefined) {
-                if (!_userSettings.blackMode) {
-                    var value = this.siblings[_appSettings.gainLossColumnId].getValue(data);
-                    this._class = value > 0
-                        ? 'btn-danger'
-                        : (value < 0 ? 'btn-success' : 'disabled');
-                }
-                else {
-                    this._class = 'disabled';
-                }
+                var value = this.siblings[_appSettings.gainLossColumnId].getValue(data);
+                this._class = value > 0
+                    ? 'btn-danger'
+                    : (value < 0 ? 'btn-success' : 'disabled');
             }
             return this._class;
         },
@@ -548,33 +538,21 @@
             }
 
             try {
-                // 界面
-                if (_userSettings.blackMode) {
-                    $('#settingsButton').removeClass('btn-info').addClass('btn-default');
-                    $('#settingsMenu').removeClass('btn-info').addClass('btn-default');
-                }
-                else {
-                    $('#settingsButton').removeClass('btn-default').addClass('btn-info');
-                    $('#settingsMenu').removeClass('btn-default').addClass('btn-info');
-                }
-
                 _elements.stockTable.empty();
                 var displayColumnsLength = _userSettings.displayColumns.length;
                 var stockTableRow;
 
                 // 表头
-                if (!_userSettings.hideHead) {
-                    var stockTableHead = $('<thead>').appendTo(_elements.stockTable);
-                    stockTableRow = $('<tr>').appendTo(stockTableHead);
-                    for (var i = 0; i < displayColumnsLength; i++) {
-                        var id = _userSettings.displayColumns[i].id;
-                        $('<th>').html(_columnEngines[id].name)
-                            .appendTo(stockTableRow);
-                    }
+                var stockTableHead = $('<thead>').addClass('mode-simplified').appendTo(_elements.stockTable);
+                stockTableRow = $('<tr>').appendTo(stockTableHead);
+                for (var i = 0; i < displayColumnsLength; i++) {
+                    var id = _userSettings.displayColumns[i].id;
+                    $('<th>').html(_columnEngines[id].name)
+                        .appendTo(stockTableRow);
                 }
 
                 // 表体
-                var stockTableBody = $('<tbody>').appendTo(_elements.stockTable);
+                var stockTableBody = $('<tbody>').addClass('mode-black').appendTo(_elements.stockTable);
                 for (var key in args) {
                     if (key == 'token') {
                         continue;
@@ -605,6 +583,25 @@
 
                 // 操作响应
                 assignActions();
+
+                // 界面模式
+                if (_userSettings.blackMode) {
+                    if ($('button.mode-black').hasClass('btn-info')) {
+                        $('button.mode-black').removeClass('btn-info').addClass('btn-default');
+                    }
+                    $('.mode-black td').removeAttr('class');
+                }
+                else {
+                    if (!$('button.mode-black').hasClass('btn-info')) {
+                        $('button.mode-black').removeClass('btn-default').addClass('btn-info');
+                    }
+                }
+                if (_userSettings.simplifiedMode) {
+                    $('.mode-simplified').hide();
+                }
+                else {
+                    $('.mode-simplified').show();
+                }
             }
             finally {
                 _enableStockTimer(true);
@@ -793,7 +790,7 @@
                     case 'save':
                         _userSettings.refreshInterval = args.refreshInterval;
                         _userSettings.blackMode = args.blackMode;
-                        _userSettings.hideHead = args.hideHead;
+                        _userSettings.simplifiedMode = args.simplifiedMode;
                         _userSettings.displayColumns = args.displayColumns;
                         setUserSettings();
                         showAlert('设置已更新，立即生效');
@@ -913,7 +910,7 @@
                         callback: 'ShadowStock.settingsCallback',
                         refreshInterval: _userSettings.refreshInterval,
                         blackMode: _userSettings.blackMode,
-                        hideHead: _userSettings.hideHead,
+                        simplifiedMode: _userSettings.simplifiedMode,
                         displayColumns: displayColumnsKey,
                         availableColumns: availableColumnsKey,
                         actionsColumnId: _appSettings.actionsColumnId
