@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Shadowin
 {
-    public class SwGlobal
+    public class AppHelper
     {
         public static string Title = "Shadowin 影窗浏览器";
         internal const string User32DllName = "user32.dll";
@@ -16,14 +16,14 @@ namespace Shadowin
         {
             get
             {
-                return SwGlobal.GetConfig("Url");
+                return AppHelper.GetConfig("Url");
             }
         }
         public static int RefreshInterval
         {
             get
             {
-                return int.Parse(SwGlobal.GetConfig("RefreshInterval"));
+                return int.Parse(AppHelper.GetConfig("RefreshInterval"));
             }
         }
         public static int ScreenId
@@ -32,7 +32,7 @@ namespace Shadowin
             {
                 try
                 {
-                    return int.Parse(SwGlobal.GetConfig("ScreenId"));
+                    return int.Parse(AppHelper.GetConfig("ScreenId"));
                 }
                 catch
                 {
@@ -46,7 +46,7 @@ namespace Shadowin
             {
                 try
                 {
-                    return int.Parse(SwGlobal.GetConfig("PageZoom").Replace("%", string.Empty));
+                    return int.Parse(AppHelper.GetConfig("PageZoom").Replace("%", string.Empty));
                 }
                 catch
                 {
@@ -61,14 +61,14 @@ namespace Shadowin
         {
             get
             {
-                return SwGlobal.GetConfig("IncreaseWidthHotKeyModifierKey");
+                return AppHelper.GetConfig("IncreaseWidthHotKeyModifierKey");
             }
         }
         public static string IncreaseWidthHotKeyKey
         {
             get
             {
-                return SwGlobal.GetConfig("IncreaseWidthHotKeyKey");
+                return AppHelper.GetConfig("IncreaseWidthHotKeyKey");
             }
         }
 
@@ -76,14 +76,14 @@ namespace Shadowin
         {
             get
             {
-                return SwGlobal.GetConfig("DecreaseWidthHotKeyModifierKey");
+                return AppHelper.GetConfig("DecreaseWidthHotKeyModifierKey");
             }
         }
         public static string DecreaseWidthHotKeyKey
         {
             get
             {
-                return SwGlobal.GetConfig("DecreaseWidthHotKeyKey");
+                return AppHelper.GetConfig("DecreaseWidthHotKeyKey");
             }
         }
 
@@ -91,14 +91,14 @@ namespace Shadowin
         {
             get
             {
-                return SwGlobal.GetConfig("IncreaseHeightHotKeyModifierKey");
+                return AppHelper.GetConfig("IncreaseHeightHotKeyModifierKey");
             }
         }
         public static string IncreaseHeightHotKeyKey
         {
             get
             {
-                return SwGlobal.GetConfig("IncreaseHeightHotKeyKey");
+                return AppHelper.GetConfig("IncreaseHeightHotKeyKey");
             }
         }
 
@@ -106,14 +106,14 @@ namespace Shadowin
         {
             get
             {
-                return SwGlobal.GetConfig("DecreaseHeightHotKeyModifierKey");
+                return AppHelper.GetConfig("DecreaseHeightHotKeyModifierKey");
             }
         }
         public static string DecreaseHeightHotKeyKey
         {
             get
             {
-                return SwGlobal.GetConfig("DecreaseHeightHotKeyKey");
+                return AppHelper.GetConfig("DecreaseHeightHotKeyKey");
             }
         }
 
@@ -121,14 +121,14 @@ namespace Shadowin
         {
             get
             {
-                return SwGlobal.GetConfig("IncreaseOpacityHotKeyModifierKey");
+                return AppHelper.GetConfig("IncreaseOpacityHotKeyModifierKey");
             }
         }
         public static string IncreaseOpacityHotKeyKey
         {
             get
             {
-                return SwGlobal.GetConfig("IncreaseOpacityHotKeyKey");
+                return AppHelper.GetConfig("IncreaseOpacityHotKeyKey");
             }
         }
 
@@ -136,14 +136,14 @@ namespace Shadowin
         {
             get
             {
-                return SwGlobal.GetConfig("DecreaseOpacityHotKeyModifierKey");
+                return AppHelper.GetConfig("DecreaseOpacityHotKeyModifierKey");
             }
         }
         public static string DecreaseOpacityHotKeyKey
         {
             get
             {
-                return SwGlobal.GetConfig("DecreaseOpacityHotKeyKey");
+                return AppHelper.GetConfig("DecreaseOpacityHotKeyKey");
             }
         }
 
@@ -151,14 +151,14 @@ namespace Shadowin
         {
             get
             {
-                return SwGlobal.GetConfig("ShowHideHotKeyModifierKey");
+                return AppHelper.GetConfig("ShowHideHotKeyModifierKey");
             }
         }
         public static string ShowHideHotKeyKey
         {
             get
             {
-                return SwGlobal.GetConfig("ShowHideHotKeyKey");
+                return AppHelper.GetConfig("ShowHideHotKeyKey");
             }
         }
 
@@ -166,14 +166,14 @@ namespace Shadowin
         {
             get
             {
-                return SwGlobal.GetConfig("ExitHotKeyModifierKey");
+                return AppHelper.GetConfig("ExitHotKeyModifierKey");
             }
         }
         public static string ExitHotKeyKey
         {
             get
             {
-                return SwGlobal.GetConfig("ExitHotKeyKey");
+                return AppHelper.GetConfig("ExitHotKeyKey");
             }
         }
 

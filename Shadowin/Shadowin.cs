@@ -81,50 +81,50 @@ namespace Shadowin
 
             // 增大宽度
             this.SwHotKeyManager.Register(
-                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.IncreaseWidthHotKeyModifierKey),
-                SwGlobal.StringToEnum<Keys>(SwGlobal.IncreaseWidthHotKeyKey),
+                AppHelper.StringToEnum<ModifierKeys>(AppHelper.IncreaseWidthHotKeyModifierKey),
+                AppHelper.StringToEnum<Keys>(AppHelper.IncreaseWidthHotKeyKey),
                 new HotKeyEventHandler(this.OnIncreaseWidthHotKey));
             // 减小宽度
             this.SwHotKeyManager.Register(
-                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.DecreaseWidthHotKeyModifierKey),
-                SwGlobal.StringToEnum<Keys>(SwGlobal.DecreaseWidthHotKeyKey),
+                AppHelper.StringToEnum<ModifierKeys>(AppHelper.DecreaseWidthHotKeyModifierKey),
+                AppHelper.StringToEnum<Keys>(AppHelper.DecreaseWidthHotKeyKey),
                 new HotKeyEventHandler(this.OnDecreaseWidthHotKey));
             // 增大高度
             this.SwHotKeyManager.Register(
-                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.IncreaseHeightHotKeyModifierKey),
-                SwGlobal.StringToEnum<Keys>(SwGlobal.IncreaseHeightHotKeyKey),
+                AppHelper.StringToEnum<ModifierKeys>(AppHelper.IncreaseHeightHotKeyModifierKey),
+                AppHelper.StringToEnum<Keys>(AppHelper.IncreaseHeightHotKeyKey),
                 new HotKeyEventHandler(this.OnIncreaseHeightHotKey));
             // 减小高度
             this.SwHotKeyManager.Register(
-                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.DecreaseHeightHotKeyModifierKey),
-                SwGlobal.StringToEnum<Keys>(SwGlobal.DecreaseHeightHotKeyKey),
+                AppHelper.StringToEnum<ModifierKeys>(AppHelper.DecreaseHeightHotKeyModifierKey),
+                AppHelper.StringToEnum<Keys>(AppHelper.DecreaseHeightHotKeyKey),
                 new HotKeyEventHandler(this.OnDecreaseHeightHotKey));
             // 增大不透明度
             this.SwHotKeyManager.Register(
-                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.IncreaseOpacityHotKeyModifierKey),
-                SwGlobal.StringToEnum<Keys>(SwGlobal.IncreaseOpacityHotKeyKey),
+                AppHelper.StringToEnum<ModifierKeys>(AppHelper.IncreaseOpacityHotKeyModifierKey),
+                AppHelper.StringToEnum<Keys>(AppHelper.IncreaseOpacityHotKeyKey),
                 new HotKeyEventHandler(this.OnIncreaseOpacityHotKey));
             // 减小不透明度
             this.SwHotKeyManager.Register(
-                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.DecreaseOpacityHotKeyModifierKey),
-                SwGlobal.StringToEnum<Keys>(SwGlobal.DecreaseOpacityHotKeyKey),
+                AppHelper.StringToEnum<ModifierKeys>(AppHelper.DecreaseOpacityHotKeyModifierKey),
+                AppHelper.StringToEnum<Keys>(AppHelper.DecreaseOpacityHotKeyKey),
                 new HotKeyEventHandler(this.OnDecreaseOpacityHotKey));
             // 显示隐藏
             this.SwHotKeyManager.Register(
-                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.ShowHideHotKeyModifierKey),
-                SwGlobal.StringToEnum<Keys>(SwGlobal.ShowHideHotKeyKey),
+                AppHelper.StringToEnum<ModifierKeys>(AppHelper.ShowHideHotKeyModifierKey),
+                AppHelper.StringToEnum<Keys>(AppHelper.ShowHideHotKeyKey),
                 new HotKeyEventHandler(this.OnShowHideHotKey));
             // 退出
             this.SwHotKeyManager.Register(
-                SwGlobal.StringToEnum<ModifierKeys>(SwGlobal.ExitHotKeyModifierKey),
-                SwGlobal.StringToEnum<Keys>(SwGlobal.ExitHotKeyKey),
+                AppHelper.StringToEnum<ModifierKeys>(AppHelper.ExitHotKeyModifierKey),
+                AppHelper.StringToEnum<Keys>(AppHelper.ExitHotKeyKey),
                 new HotKeyEventHandler(this.OnExitHotKey));
 
             #endregion
 
             #region 窗体
 
-            this.toolTip.ToolTipTitle = SwGlobal.Title;
+            this.toolTip.ToolTipTitle = AppHelper.Title;
             this.toolTip.SetToolTip(this.logoImage, Version);
             this.Size = Settings.Default.FormSize;
 
@@ -132,9 +132,9 @@ namespace Shadowin
 
             #region 刷新定时器
 
-            if (SwGlobal.RefreshInterval > 0)
+            if (AppHelper.RefreshInterval > 0)
             {
-                refreshTimer.Interval = SwGlobal.RefreshInterval;
+                refreshTimer.Interval = AppHelper.RefreshInterval;
                 this.RefreshEnabled = true;
             }
             else
@@ -234,7 +234,7 @@ namespace Shadowin
         {
             if (webBrowser.Url == null || webBrowser.Url.Equals(BlankUrl))
             {
-                webBrowser.Url = new Uri(SwGlobal.Url);
+                webBrowser.Url = new Uri(AppHelper.Url);
             }
             else
             {
@@ -248,7 +248,7 @@ namespace Shadowin
             {
                 try
                 {
-                    _currentScreen = Screen.AllScreens[SwGlobal.ScreenId];
+                    _currentScreen = Screen.AllScreens[AppHelper.ScreenId];
                 }
                 catch
                 {
@@ -265,7 +265,7 @@ namespace Shadowin
             // 缩放
             if (!_currentZoom.HasValue)
             {
-                _currentZoom = SwGlobal.PageZoom;
+                _currentZoom = AppHelper.PageZoom;
                 object value = _currentZoom.Value, obj = null;
                 try
                 {

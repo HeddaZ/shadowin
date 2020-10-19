@@ -22,9 +22,9 @@ namespace Shadowin.WinApi
     {
         private const int WM_HOTKEY = 0x0312;
 
-        [DllImport(SwGlobal.User32DllName)]
+        [DllImport(AppHelper.User32DllName)]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-        [DllImport(SwGlobal.User32DllName)]
+        [DllImport(AppHelper.User32DllName)]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         private Control Owner

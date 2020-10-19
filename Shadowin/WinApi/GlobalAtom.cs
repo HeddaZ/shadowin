@@ -8,11 +8,11 @@ namespace Shadowin.WinApi
 {
     public class GlobalAtom
     {
-        [DllImport(SwGlobal.Kernel32DllName)]
+        [DllImport(AppHelper.Kernel32DllName)]
         private static extern ushort GlobalAddAtom(string lpString);
-        [DllImport(SwGlobal.Kernel32DllName)]
+        [DllImport(AppHelper.Kernel32DllName)]
         private static extern ushort GlobalFindAtom(string lpString);
-        [DllImport(SwGlobal.Kernel32DllName)]
+        [DllImport(AppHelper.Kernel32DllName)]
         private static extern ushort GlobalDeleteAtom(ushort nAtom);
 
         public static ushort Add(string key)

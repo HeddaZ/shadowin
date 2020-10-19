@@ -74,7 +74,7 @@
     <Compile Include="Confirm.Designer.cs">
       <DependentUpon>Confirm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SwGlobal.cs" />
+    <Compile Include="AppHelper.cs" />
     <Compile Include="Shadowin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,7 +151,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>DEL /Q *.pdb</PostBuildEvent>
+    <PostBuildEvent>DEL /Q *.pdb
+COPY /Y $(SolutionDir)LICENSE $(TargetDir)
+COPY /Y $(SolutionDir)README.md $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
