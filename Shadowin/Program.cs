@@ -13,7 +13,7 @@ namespace Shadowin
         static void Main()
         {
             bool allowStart;
-            _mutex = new Mutex(true, SwGlobal.Title, out allowStart); //单实例互斥
+            _mutex = new Mutex(true, AppHelper.Title, out allowStart); //单实例互斥
             if (allowStart)
             {
                 try
@@ -29,7 +29,7 @@ namespace Shadowin
             }
             else
             {
-                MessageBox.Show(SwGlobal.Title + "正在运行中，使用预设热键即可激活显示。\r\n谢谢使用！", SwGlobal.Title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(AppHelper.Title + "正在运行中，使用预设热键即可激活显示。\r\n谢谢使用！", AppHelper.Title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

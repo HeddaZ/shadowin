@@ -74,7 +74,7 @@
     <Compile Include="Confirm.Designer.cs">
       <DependentUpon>Confirm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SwGlobal.cs" />
+    <Compile Include="AppHelper.cs" />
     <Compile Include="Shadowin.cs">
       <SubType>Form</SubType>
     </Compile>
