@@ -10,6 +10,11 @@
             cookieExpires: 365,
             minRefreshInterval: 3000,
             maxWatchingStockCount: 22,
+            /*
+            新浪选股源不太稳定，需使用 hosts:
+            121.14.32.171	suggest2.sinajs.cn
+            112.90.6.159	suggest2.sinajs.cn
+            */
             suggestionUrl: 'http://stock-data.plusii.com/suggest/?type=11,12,72,73,81,31,41&key={1}&name={0}',
             stockUrl: 'http://stock-data.plusii.com/data/?rn={0}&list={1}',
             stockColumns: '名称,今开,昨收,最新价,最高,最低,买入,卖出,成交量,成交额,买①量,买①,买②量,买②,买③量,买③,买④量,买④,买⑤量,买⑤,卖①量,卖①,卖②量,卖②,卖③量,卖③,卖④量,卖④,卖⑤量,卖⑤,日期,时间'
