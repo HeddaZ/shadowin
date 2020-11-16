@@ -690,19 +690,19 @@
                     continue;
                 }
 
+                var term = unescape(args.token);
                 var source = [];
                 var suggestions = args[key].split(';');
                 for (var i = 0; i < suggestions.length; i++) {
                     var suggestionData = suggestions[i].split(',');
                     if (suggestionData.length > 5 && _appSettings.stockTypes[suggestionData[1]]) {
                         source.push({
-                            label: getSuggestionLabel(suggestionData),
-                            value: getSuggestionValue(suggestionData)
+                            label: getSuggestionLabel(suggestionData, term),
+                            value: getSuggestionValue(suggestionData, term)
                         });
                     }
                 }
 
-                var term = unescape(args.token);
                 suggestionCache[term] = source;
                 _elements.suggestionText.autocomplete('option', 'source', source);
                 _elements.suggestionText.autocomplete('search', term); // 重新激活搜索以抵消异步延迟
@@ -717,12 +717,15 @@
         pfzz,81,110059,sh110059,浦发转债,pfzz,浦发转债,0
         510500,72,510500,sh510500,500etf,500etf,500ETF,0
         cb5,73,400002,sb400002,长白5,cb5,长白5,0
+        [suggest.sinajs.cn]
+        中国铝业,11,601600,sh601600,中国铝业,,中国铝业,99,1
+        中国联通,11,600050,sh600050,中国联通,,中国联通,99,1
         */
-        getSuggestionLabel = function (data) {
+        getSuggestionLabel = function (data, term) {
             var typeId = data[1];
-            return _formatString('[{0}] {1} {2} {3}', _appSettings.stockTypes[typeId].name, data[5], data[2], data[4]);
+            return _formatString('[{0}] {1} {2} {3}', _appSettings.stockTypes[typeId].name, term, data[2], data[4]);
         },
-        getSuggestionValue = function (data) {
+        getSuggestionValue = function (data, term) {
             var typeId = data[1];
             var prefix = _appSettings.stockTypes[typeId].prefix;
             if (prefix) {
