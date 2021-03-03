@@ -401,7 +401,7 @@
                 return args[parseInt(index) + 1];
             });
         },
-        _round = function (value, precision) {
+        _round = function (value, precision, flexiblePrecision) {
             if (!$.isNumeric(value)) {
                 return NaN;
             }
@@ -409,6 +409,15 @@
             if (precision <= 0) {
                 return Math.round(value);
             }
+
+            // 松散模式的四舍五入会多往后考虑一位，若不是 0 则多保留一位
+            if (flexiblePrecision) {
+                var tempValue = value * Math.pow(10, precision + 1);
+                if (tempValue % 10 != 0) {
+                    precision++;
+                }
+            }
+
             return Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision);
         },
         _getTicks = function () {
@@ -421,7 +430,7 @@
             var unit8 = Math.pow(10, 8), unit4 = Math.pow(10, 4);
             return value >= unit8
                 ? _round(value / unit8, 2) + '亿'
-                : (value >= unit4 ? _round(value / unit4, 2) + '万' : _round(value, 2).toString());
+                : (value >= unit4 ? _round(value / unit4, 2) + '万' : _round(value, 2, true).toString());
         },
         _toPercentageText = function (value) {
             if (!$.isNumeric(value)) {
@@ -499,7 +508,7 @@
         },
         getTextAsNumber = function (data) {
             if (this._text == undefined) {
-                this._text = _round(this.getValue(data), 2);
+                this._text = _round(this.getValue(data), 2, true);
             }
             return this._text;
         },
