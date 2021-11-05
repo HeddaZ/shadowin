@@ -109,35 +109,15 @@ Shadowin 影窗浏览器 域名切换方法
 4. 重新运行 Shadowin 即可。  
   
 **或者，重新[点击下载已编译包，解压直接使用]**
-
-----------------------------------------------------------------------------------------------
-  
-ShadowStock 影子證券（雅虎奇摩台灣版）
-------------------------------------
-應網友要求，2011-02-18 發佈了《ShadowStock 影子證券(雅虎奇摩台灣版)》，後臺連接雅虎奇摩實時數據源，
-對臺灣股票（tw）實現同樣完美的支持——隱蔽操作、自訂股票、實時行情關注、漲跌警示、盈虧分析等，首開國內兩岸之先河！   
-  
-**位址：**  
-> http://tw.stock.plusii.com/  
-
-**自選股格式和範例：**  
-> 代號[/成本[/持倉]][,代號[/成本[/持倉]]]  
-> tw1101,tw1103/2.33,tw2305/20.5/100  
-  
-**附註：**  
-> 填入的股票代碼需以 tw 作為前綴。  
-> [台泥]的代碼是 tw1101  
-> [台積電]的代碼是 tw2330  
   
   
   
 注意事项
 --------
-* `/ShadowStock` 目录下是**纯静态的网站**，按需放到任何主机上即可使用；  
-* ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，可以支持设置的导入/导出以及通过 QQ 之类的工具传输；
-* ShadowStock 影子證券(雅虎奇摩台灣版) 调用的是经二次包装的雅虎奇摩数据源 http://tw.stock.plusii.com/stockdata.aspx?rn={0}&list={1}，
-您可以在 `/ShadowStock/stock_tw/Shared.js` 和 `/ShadowStock/stock_tw/stockdata.aspx` 中找到相关代码（**注意：**自行托管 stockdata.aspx，需要 ASP.NET 2.0 服务器）； 
-* 支持 IE7 等更老浏览器的旧版 ShadowStock 影子证券 (http://v1.stock.shadowin.net) 已不再提供服务；需要的同学请下载源码自行部署。
+* `/ShadowStock` 目录下是**纯静态网站程序**，放到任何主机上即可使用；  
+* ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，可以支持设置的导入、导出，以及通过微信、QQ之类工具传输；
+* 支持 IE7 等老浏览器影子证券 V1 (http://v1.stock.shadowin.net) 不再提供服务；需要的同学请下载源码自行部署。
+* 自 2021 年 11 月 1 日起雅虎中断了来自中国大陆的访问，雅虎奇摩台湾版 (http://tw.stock.plusii.com) 不再提供服务；需要的同学请下载源码自行部署。
   
 
 -------------------------------------------------  
@@ -147,14 +127,10 @@ ShadowStock 影子證券（雅虎奇摩台灣版）
   
   
 [Keys Enumeration]: https://msdn.microsoft.com/en-us/library/system.windows.forms.keys(v=vs.110).aspx
-[Microsoft .NET Framework 2.0]: https://www.microsoft.com/zh-cn/download/details.aspx?id=25150
 [Microsoft .NET Framework 4.0]: https://www.microsoft.com/zh-cn/download/details.aspx?id=17718
 [新浪财经]: http://finance.sina.com.cn
 [上证指数]: http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml
 [深证成指]: http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml
-[雅虎奇摩]: https://tw.stock.yahoo.com
-[台泥]: https://tw.stock.yahoo.com/q/q?s=1101
-[台積電]: https://tw.stock.yahoo.com/q/q?s=2330
 [点击下载已编译包，解压直接使用]: https://github.com/heddaz/shadowin/releases
 [在此留爪]: https://github.com/heddaz/shadowin/issues
 [9812152]: tencent://message/?uin=9812152
