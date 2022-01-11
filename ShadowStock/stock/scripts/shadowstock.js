@@ -616,6 +616,12 @@
                 else {
                     $('.mode-simplified').show();
                 }
+                if (_userSettings.blackMode || _userSettings.simplifiedMode) {
+                    $('.newyear').hide();
+                }
+                else {
+                    $('.newyear').show();
+                }
             }
             finally {
                 _enableStockTimer(true);
