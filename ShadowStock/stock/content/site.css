@@ -7,11 +7,6 @@ body {
     padding-bottom: 10px;
 }
 
-.container-fluid {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-}
-
 .display-block {
     display: block;
 }
@@ -147,8 +142,12 @@ iframe.about {
         padding: 0;
     }
 
-.newyear {
+.notice {
     color: #d34838;
     font-weight: 600;
     display: none;
 }
+
+    .notice a {
+        color: #0165ff;
+    }

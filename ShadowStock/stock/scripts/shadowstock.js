@@ -617,10 +617,10 @@
                     $('.mode-simplified').show();
                 }
                 if (_userSettings.blackMode || _userSettings.simplifiedMode) {
-                    $('.newyear').hide();
+                    $('.notice').hide();
                 }
                 else {
-                    $('.newyear').show();
+                    $('.notice').show();
                 }
             }
             finally {
