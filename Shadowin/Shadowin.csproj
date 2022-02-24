@@ -12,7 +12,7 @@
     <AssemblyName>Shadowin</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>Shadowin_48.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Shadowin_48.ico</ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -136,7 +136,7 @@
   <ItemGroup>
     <None Include="Resources\Shadowin.png" />
     <None Include="Resources\donate-wechat.jpg" />
-    <Content Include="Shadowin_48.ico" />
+    <Content Include="Resources\Shadowin_48.ico" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="SHDocVw">
