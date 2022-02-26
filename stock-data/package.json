@@ -1,0 +1,17 @@
+{
+  "name": "stock-data",
+  "version": "1.0.0",
+  "description": "Data API of ShadowStock.",
+  "main": "app.js",
+  "scripts": {
+    "server": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "HeddaZ",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.13.4",
+    "koa-router": "^10.1.1",
+    "mongodb": "^4.4.0"
+  }
+}

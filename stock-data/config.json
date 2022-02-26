@@ -1,0 +1,5 @@
+{
+  "port": 3000,
+  "dataUrl": "https://hq.sinajs.cn/?rn={0}&list={1}",
+  "dbUri": "mongodb://yt-app.iiwho.com:27017"
+}
