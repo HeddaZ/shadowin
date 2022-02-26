@@ -157,3 +157,4 @@ $RECYCLE.BIN/
 
 # Other exclusions
 .vs
+.idea

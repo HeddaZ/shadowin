@@ -8,13 +8,15 @@ Shadowin 影窗浏览器，支持老板键的透明浏览器外框
 * Shadowin 会创建一个基于 IE 核心的浏览器外框，通过修改 `Shadowin.exe.config` 文件可关注任意 URL 的实时内容（比如：股票、刷秒杀、刷在线、挂等级……）。  
 * Shadowin 更允许您自行配置喜欢的系统热键（见：[Keys Enumeration]）和初始外观，改到满意为止吧！  
   
+  
 ShadowStock 影子证券，是上班看股、个性化盯盘神器
 ----------------------------------------------
 `Shadowin 影窗浏览器` 和 `ShadowStock 影子证券` 两个方案须配套使用方能发挥神器奇效！  
 
 * ShadowStock 提供了完备的股票盯盘界面，允许创建您自己的投资组合、实现盯盘、关注实时盈亏；神不知鬼不觉助您把握股牛、满钵满盏。  
-* ShadowStock 专为 Shadowin 影窗浏览器设计，站点采用 **纯静态页面 + 客户端脚本** 实现，方便二次部署，后台链接[新浪财经]实时数据源，使用模板引擎思路设计更方便扩展。  
+* ShadowStock 专为 Shadowin 影窗浏览器设计，站点采用 **纯静态页面 + 客户端脚本** 实现，方便二次部署，代码采用模板引擎设计，方便功能扩展。  
 * ShadowStock 自 V3 版本升级了几个强化隐蔽性的新特性。  
+* ShadowStock 自 V4 版本遭遇新浪封堵，切换使用[腾讯证券]数据源。  
   
   
 ----------------------------------------------------------------------------------------------
@@ -100,26 +102,15 @@ Shadowin 影窗浏览器 默认配置和操作方法
 |`Ctrl + -`	|减小窗口不透明度	|
 |`Ctrl + 0`	|退出程序		|
   
-
-Shadowin 影窗浏览器 域名切换方法
--------------------------------------
-1. 按 Ctrl+0 先退出程序；
-2. 使用记事本打开 Shadowin 安装目录下的 `Shadowin.exe.config` 文件；
-3. 找到 `<add key="Url" value="http://stock.shadowin.net/"/>` 这一行，将其中的 `shadowin.net` 改为 `plusii.com`，保存；
-4. 重新运行 Shadowin 即可。  
-  
-**或者，重新[点击下载已编译包，解压直接使用]**
-  
-  
   
 注意事项
 --------
-* `/ShadowStock` 目录下是**纯静态网站程序**，放到任何主机上即可使用；  
-* ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，可以支持设置的导入、导出，以及通过微信、QQ之类工具传输；
-* 支持 IE7 等老浏览器影子证券 V1 (http://v1.stock.shadowin.net) 不再提供服务；需要的同学请下载源码自行部署。
-* 自 2021 年 11 月 1 日起雅虎中断了来自中国大陆的访问，雅虎奇摩台湾版 (http://tw.stock.plusii.com) 不再提供服务；需要的同学请下载源码自行部署。
+* `/stock` 目录下是**纯静态网站程序**，托管到任何主机上即可使用。默认数据源 http://stock-data.plusii.com/ 是经过包装的腾讯数据源 https://web.sqt.gtimg.cn/utf8/，自建方案请切换到腾讯数据源，降低本服务器压力；  
+* ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，可以支持设置的导入、导出，以及通过微信、QQ之类工具传输；  
+* 支持 IE7 等老浏览器影子证券 V1 (http://v1.stock.shadowin.net) 不再提供服务；需要的同学请牵出旧源码自行部署。  
+* 自 2021 年 11 月 1 日起雅虎中断了来自中国大陆的访问，雅虎奇摩台湾版 (http://tw.stock.plusii.com) 不再提供服务；需要的同学请牵出旧源码自行部署。  
   
-
+  
 -------------------------------------------------  
 使用中有任何问题和建议，欢迎 [在此留爪] 或 QQ [9812152]。  
 (聊表心意，金额随意)  
@@ -128,9 +119,9 @@ Shadowin 影窗浏览器 域名切换方法
   
 [Keys Enumeration]: https://msdn.microsoft.com/en-us/library/system.windows.forms.keys(v=vs.110).aspx
 [Microsoft .NET Framework 4.0]: https://www.microsoft.com/zh-cn/download/details.aspx?id=17718
-[新浪财经]: http://finance.sina.com.cn
-[上证指数]: http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml
-[深证成指]: http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml
+[腾讯证券]: https://new.qq.com/ch/finance_stock/
+[上证指数]: https://gu.qq.com/sh000001/zs
+[深证成指]: https://gu.qq.com/sz399001/zs
 [点击下载已编译包，解压直接使用]: https://github.com/heddaz/shadowin/releases
 [在此留爪]: https://github.com/heddaz/shadowin/issues
 [9812152]: tencent://message/?uin=9812152
