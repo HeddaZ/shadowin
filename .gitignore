@@ -156,5 +156,6 @@ $RECYCLE.BIN/
 .DS_Store
 
 # Other exclusions
-.vs
-.idea
+node_modules/
+.vs/
+.idea/
