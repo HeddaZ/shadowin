@@ -105,7 +105,7 @@ Shadowin 影窗浏览器 默认配置和操作方法
   
 注意事项
 --------
-* `/stock` 目录下是**纯静态网站程序**，托管到任何主机上即可使用。默认数据源 http://stock-data.plusii.com/ 是经过包装的腾讯数据源 https://web.sqt.gtimg.cn/utf8/， 自建方案请切换到腾讯数据源，降低本服务器压力；  
+* `/stock` 目录下是**纯静态网站程序**，托管到任何主机上即可使用。默认数据源 http://stock-data.plusii.com/ 是经过包装的腾讯数据源 https://web.sqt.gtimg.cn/utf8/ 自建方案请切换到腾讯数据源，降低本服务器压力；  
 * ShadowStock 的个性化设置是保存在本地的 `Cookie` 中的，可以支持设置的导入、导出，以及通过微信、QQ之类工具传输；  
 * 支持 IE7 等老浏览器影子证券 V1 (http://v1.stock.shadowin.net) 不再提供服务；需要的同学请牵出旧源码自行部署。  
 * 自 2021 年 11 月 1 日起雅虎中断了来自中国大陆的访问，雅虎奇摩台湾版 (http://tw.stock.plusii.com) 不再提供服务；需要的同学请牵出旧源码自行部署。  
