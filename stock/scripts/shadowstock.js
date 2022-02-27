@@ -8,28 +8,74 @@
         /******************** 配置 ********************/
         itemSeparator = ',',
         internalTag = '!',
+        columnMapping1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+        columnMapping2 = [0, 1, 2, 3, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 24, 25, 26, 27, 28, -1, 30],
         _appSettings = {
             cookieExpires: 365,
             minRefreshInterval: 8000,
             maxWatchingStockCount: 25,
-            suggestionUrl: 'http://stock-data.plusii.com/suggest/?type=11,12,31,41&key={1}&name={0}',
+            suggestionUrl: 'http://stock-data.plusii.com/suggest/?v=2&q={0}&t=all',
             stockUrl: 'http://stock-data.plusii.com/data/?r={0}&q={1}&offset=2,4,5,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,34,35,37,38,39,40',
             stockColumns: '名称,最新价,昨收,今开,买①,买①量,买②,买②量,买③,买③量,买④,买④量,买⑤,买⑤量,卖①,卖①量,卖②,卖②量,卖③,卖③量,卖④,卖④量,卖⑤,卖⑤量,!日期时间,最高,最低,成交量,成交额,换手率,市盈率'.split(itemSeparator),
             stockTypes: {
-                "11": {
+                "shGP-A": {
                     name: "Ａ股",
-                    prefix: "",
-                    columnMapping: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+                    prefix: "sh",
+                    columnMapping: columnMapping1
                 },
-                "31": {
+                "szGP-A": {
+                    name: "Ａ股",
+                    prefix: "sz",
+                    columnMapping: columnMapping1
+                },
+                "shGP-B": {
+                    name: "Ｂ股",
+                    prefix: "sh",
+                    columnMapping: columnMapping1
+                },
+                "szGP-B": {
+                    name: "Ｂ股",
+                    prefix: "sz",
+                    columnMapping: columnMapping1
+                },
+
+                "shZS": {
+                    name: "指数",
+                    prefix: "sh",
+                    columnMapping: columnMapping1
+                },
+                "szZS": {
+                    name: "指数",
+                    prefix: "sz",
+                    columnMapping: columnMapping1
+                },
+
+                "shETF": {
+                    name: "基金",
+                    prefix: "sh",
+                    columnMapping: columnMapping1
+                },
+                "szETF": {
+                    name: "基金",
+                    prefix: "sz",
+                    columnMapping: columnMapping1
+                },
+
+                "nqGP": {
+                    name: "三板",
+                    prefix: "nq",
+                    columnMapping: columnMapping2
+                },
+
+                "hkGP": {
                     name: "港股",
                     prefix: "hk",
-                    columnMapping: [0, 1, 2, 3, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 24, 25, 26, 27, 28, -1, 30]
+                    columnMapping: columnMapping2
                 },
-                "41": {
+                "usGP": {
                     name: "美股",
                     prefix: "us",
-                    columnMapping: [0, 1, 2, 3, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 24, 25, 26, 27, 28, -1, 30]
+                    columnMapping: columnMapping2
                 }
             }
         },
@@ -59,12 +105,12 @@
                 {id: 68, name: '工具'}
             ],
             watchingStocks: [
-                {symbol: 'sh000001', type: '11', name: '上证指数'},
-                {symbol: 'sz399006', type: '11', name: '创业板指'},
-                {symbol: 'sh600000', type: '11', name: '浦发银行'},
-                {symbol: 'sz000002', type: '11', name: '万科A'},
-                {symbol: 'hk00700', type: '31', name: '腾讯控股'},
-                {symbol: 'usMSFT', type: '41', name: '微软'}
+                {symbol: 'sh000001', type: 'shZS', name: '上证指数'},
+                {symbol: 'sz399006', type: 'szZS', name: '创业板指'},
+                {symbol: 'sh600000', type: 'shGP-A', name: '浦发银行'},
+                {symbol: 'sz000002', type: 'szGP-A', name: '万科A'},
+                {symbol: 'hk00700', type: 'hkGP', name: '腾讯控股'},
+                {symbol: 'usMSFT', type: 'usGP', name: '微软'}
             ]
         },
         getUserSettings = function () {
@@ -174,7 +220,7 @@
                 getClass: getClassDefault,
                 getText: function (data) {
                     if (this._text == undefined) {
-                        /*
+                        /* 数据示例
                         20220225161403
                         2022-02-25 16:00:03
                         2022/02/25 16:09:10
@@ -674,19 +720,18 @@
             });
         },
 
-        suggestionVarPrefix = 'suggestion_',
-        suggestionGroupSeparator = ';',
-        suggestionDataSeparator = ',',
+        suggestionVarName = 'v_hint',
+        suggestionGroupSeparator = '^',
+        suggestionDataSeparator = '~',
         suggestionCache = {},
         suggestionRequest = function (term) {
             var keywords = escape(term.toLowerCase());
             var token = keywords;
             var vars = [];
-            var suggestionName = suggestionVarPrefix + _getTicks();
-            vars[0] = suggestionName;
+            vars[0] = suggestionVarName;
             _requestData(suggestionRetriever, {
                 token: token,
-                url: _formatString(_appSettings.suggestionUrl, suggestionName, keywords),
+                url: _formatString(_appSettings.suggestionUrl, keywords),
                 callback: 'ShadowStock.suggestionCallback',
                 vars: vars
             });
@@ -699,14 +744,17 @@
 
                 var term = unescape(args.token);
                 var source = [];
-                var suggestions = args[key].split(suggestionGroupSeparator);
+                var suggestions = unescape(args[key]).split(suggestionGroupSeparator);
                 for (var i = 0; i < suggestions.length; i++) {
                     var suggestionData = suggestions[i].split(suggestionDataSeparator);
-                    if (suggestionData.length > 5 && _appSettings.stockTypes[suggestionData[1]]) {
-                        source.push({
-                            label: getSuggestionLabel(suggestionData, term),
-                            value: getSuggestionValue(suggestionData, term)
-                        });
+                    if (suggestionData.length >= 5) {
+                        var stockType = suggestionData[0] + suggestionData[4]; // sz~000002~万科A~wka~GP-A
+                        if (_appSettings.stockTypes[stockType]) {
+                            source.push({
+                                label: getSuggestionLabel(suggestionData, term),
+                                value: getSuggestionValue(suggestionData, term)
+                            });
+                        }
                     }
                 }
 
@@ -716,31 +764,16 @@
                 break;
             }
         },
-        /*
-        [suggest2.sinajs.cn]
-        zglt,11,600050,sh600050,中国联通,zglt,中国联通,0
-        orcl,41,orcl,oracle corp.,甲骨文,jgw,甲骨文,0
-        txkg,31,00700,00700,腾讯控股,txkg,腾讯控股,10
-        pfzz,81,110059,sh110059,浦发转债,pfzz,浦发转债,0
-        510500,72,510500,sh510500,500etf,500etf,500ETF,0
-        cb5,73,400002,sb400002,长白5,cb5,长白5,0
-        [suggest.sinajs.cn]
-        中国铝业,11,601600,sh601600,中国铝业,,中国铝业,99,1
-        中国联通,11,600050,sh600050,中国联通,,中国联通,99,1
-        */
         getSuggestionLabel = function (data, term) {
-            var typeId = data[1];
-            return _formatString('[{0}] {1} {2} {3}', _appSettings.stockTypes[typeId].name, term, data[2], data[4]);
+            var stockType = data[0] + data[4];
+            return _formatString('[{0}] {1} {2} {3}', _appSettings.stockTypes[stockType].name, data[3], data[1], data[2]);
         },
-        suggestionKeyValueSeparator = '|',
+        suggestionTypeSeparator = '.',
         getSuggestionValue = function (data, term) {
-            var typeId = data[1];
-            var prefix = _appSettings.stockTypes[typeId].prefix;
-            if (prefix) {
-                return _formatString('{0}{1}{2}', prefix + data[2].toUpperCase(), suggestionKeyValueSeparator, typeId);
-            } else {
-                return _formatString('{0}{1}{2}', data[3], suggestionKeyValueSeparator, typeId);
-            }
+            var stockType = data[0] + data[4];
+            var prefix = _appSettings.stockTypes[stockType].prefix;
+            var symbol = prefix + data[1].toUpperCase().split(suggestionTypeSeparator)[0];
+            return _formatString('{0}{1}{2}', symbol, suggestionTypeSeparator, stockType);
         },
 
         _editorCallback = function (args) {
@@ -873,7 +906,7 @@
                     },
                     select: function (event, ui) {
                         if (_userSettings.watchingStocks.length < _appSettings.maxWatchingStockCount) {
-                            var values = ui.item.value.split(suggestionKeyValueSeparator); // 对应 getSuggestionValue
+                            var values = ui.item.value.split(suggestionTypeSeparator); // 对应 getSuggestionValue
                             var symbol = values[0];
                             var type = values[1];
 
