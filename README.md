@@ -24,6 +24,7 @@ ShadowStock 影子证券，是上班看股、个性化盯盘神器
 ![Shadowin 影窗浏览器](docs/logo.png)  
 **点击下载[已编译包]，解压直接使用！**  
 > 运行需 [Microsoft .NET Framework 4.0] 支持 (Win10 已内置)  
+> 使用中遇到问题，请务必看一下 [常见问题]
   
 ----------------------------------------------------------------------------------------------
 
@@ -120,6 +121,7 @@ Shadowin 影窗浏览器 默认配置和操作方法
   
 [Keys Enumeration]: https://msdn.microsoft.com/en-us/library/system.windows.forms.keys(v=vs.110).aspx
 [Microsoft .NET Framework 4.0]: https://www.microsoft.com/zh-cn/download/details.aspx?id=17718
+[常见问题]: https://github.com/HeddaZ/Shadowin/issues/43
 [腾讯证券]: https://new.qq.com/ch/finance_stock/
 [已编译包]: https://github.com/heddaz/shadowin/releases
 [在此留爪]: https://github.com/heddaz/shadowin/issues
