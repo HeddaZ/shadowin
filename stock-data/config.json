@@ -20,7 +20,8 @@
   ],
   "dataSeparator": "v_|\";\\s|=\"",
   "dataRefreshInterval": 5000,
-  "dataRefreshPriority": 30,
+  "dataRefreshEnabledPriority": 30,
+  "dataRefreshDisabledPriority": -1,
   "dataRefreshBatchSize": 20,
   "dataRefreshConcurrency": 2,
 

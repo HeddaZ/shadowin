@@ -1,5 +1,5 @@
 const Koa = require('koa');
-const app = new Koa();
+const app = new Koa({proxy: true});
 const util = require('util');
 const helper = require('./helper.js');
 const {Worker} = require('worker_threads');
