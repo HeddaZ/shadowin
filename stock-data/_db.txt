@@ -1,0 +1,5 @@
+-- DB index
+db.data.createIndex( { "symbol": 1 }, { unique: true } )
+db.data.createIndex( { "priority": 1 } )
+
+db.suggest.createIndex( { "symbol": 1 }, { unique: true } )

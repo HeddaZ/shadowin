@@ -1,19 +1,30 @@
 const Koa = require('koa');
 const app = new Koa();
+const util = require('util');
+const helper = require('./helper.js');
+const {Worker} = require('worker_threads');
 
-// Put config in context
+const env = process.env;
 const config = require('./config.json');
-const runtimeInfo = 'Server is running on http://localhost:' + config.port;
+
+// RefreshService
+new Worker('./refresh-data.js', {
+    workerData: {
+        config: config
+    }
+});
+
+// DataAPI - Initialize
+const runtimeInfo = util.format('%s %s @ http://%s:%s', env.npm_package_description, env.npm_package_version, config.host, config.port);
 app.use(async (ctx, next) => {
-    ctx.state.config = config;
+    ctx.config = config;
     ctx.state.runtimeInfo = runtimeInfo;
     await next();
 });
-
-// Register controllers
-const controllers = require('./controllers')
+// DataAPI - Register controllers
+const controllers = require('./controllers');
 app.use(controllers.routes()).use(controllers.allowedMethods());
-
-app.listen(config.port, () => {
-    console.log(runtimeInfo);
+// DataAPI - Launch
+app.listen(config.port, config.host, () => {
+    helper.log(runtimeInfo);
 });

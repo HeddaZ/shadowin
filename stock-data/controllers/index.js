@@ -11,7 +11,7 @@ const controllerDir = __dirname;
 const indexFile = path.basename(__filename);
 fs.readdirSync(controllerDir).forEach(file => {
     if (file !== indexFile) {
-        let controller = require('./' + file);
+        const controller = require('./' + file);
         router.use(controller.routes());
     }
 });
