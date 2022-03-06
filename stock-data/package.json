@@ -1,10 +1,11 @@
 {
-  "name": "stock-data",
+  "name": "shadow-stock-data",
   "version": "1.0.0",
-  "description": "Data Middleware of ShadowStock",
+  "description": "Data API of ShadowStock",
   "main": "app.js",
   "scripts": {
-    "server": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "server": "node app.js"
   },
   "keywords": [
     "ShadowStock",

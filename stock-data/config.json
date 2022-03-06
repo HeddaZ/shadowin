@@ -1,6 +1,7 @@
 {
   "appName": "shadow-stock-data",
   "appVersion": "1.0.0",
+  "appDescription": "Data API of ShadowStock",
   "host": "localhost",
   "port": 3000,
   "cacheUrl": "mongodb://localhost/shadowstock",

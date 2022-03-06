@@ -3,8 +3,6 @@ const app = new Koa();
 const util = require('util');
 const helper = require('./helper.js');
 const {Worker} = require('worker_threads');
-
-const env = process.env;
 const config = require('./config.json');
 
 // RefreshService
@@ -15,7 +13,7 @@ new Worker('./refresh-data.js', {
 });
 
 // DataAPI - Initialize
-const runtimeInfo = util.format('%s %s @ http://%s:%s', env.npm_package_description, env.npm_package_version, config.host, config.port);
+const runtimeInfo = util.format('%s %s @ http://%s:%s', config.appDescription, config.appVersion, config.host, config.port);
 app.use(async (ctx, next) => {
     ctx.config = config;
     ctx.state.runtimeInfo = runtimeInfo;
