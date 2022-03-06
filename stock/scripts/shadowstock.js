@@ -14,8 +14,8 @@
             cookieExpires: 365,
             minRefreshInterval: 8000,
             maxWatchingStockCount: 25,
-            suggestionUrl: 'https://smartbox.gtimg.cn/s3/?v=2&q={0}&t=all',
-            stockUrl: 'https://web.sqt.gtimg.cn/utf8/?r={0}&q={1}&offset=2,4,5,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,34,35,37,38,39,40',
+            suggestionUrl: 'http://stock-data.plusii.com/suggest/?k={0}',
+            stockUrl: 'http://stock-data.plusii.com/data/?s={0}&t={1}',
             stockColumns: '名称,最新价,昨收,今开,买①,买①量,买②,买②量,买③,买③量,买④,买④量,买⑤,买⑤量,卖①,卖①量,卖②,卖②量,卖③,卖③量,卖④,卖④量,卖⑤,卖⑤量,!日期时间,最高,最低,成交量,成交额(万),换手率,市盈率'.split(itemSeparator),
             stockTypes: {
                 "shGP-A": {
@@ -226,11 +226,15 @@
                         2022/02/25 16:09:10
                         */
                         var text = data[_appSettings.dateTimeColumnId];
-                        if (text.indexOf(':') < 0) {
-                            text = text.slice(0, -4) + ':' + text.slice(-4);
-                            text = text.slice(0, -2) + ':' + text.slice(-2);
+                        if (text) {
+                            if (text.indexOf(':') < 0) {
+                                text = text.slice(0, -4) + ':' + text.slice(-4);
+                                text = text.slice(0, -2) + ':' + text.slice(-2);
+                            }
+                            this._text = text.slice(-8);
+                        } else {
+                            this._text = null;
                         }
-                        this._text = text.slice(-8);
                     }
                     return this._text;
                 },
@@ -245,25 +249,29 @@
                 getText: function (data) {
                     var symbol = this.siblings[_appSettings.symbolColumnId].getText(data);
                     var actionPanel = $('<div class="container-action">');
-
+                    var displayName = this.siblings[_appSettings.displayNameColumnId].getText(data);
+                    var name = this.siblings[_appSettings.nameColumnId].getText(data);
+                    if (!name || name == '0') {
+                        name = displayName;
+                    }
                     $('<span class="glyphicon glyphicon-move" role="handle" title="排序"></span>')
                         .attr('data-id', symbol)
                         .appendTo(actionPanel);
-                    $('<span class="glyphicon glyphicon-edit" role="button"></span>')
+                    $('<span class="glyphicon glyphicon-edit" role="button" title="编辑"></span>')
                         .attr('data-id', symbol)
-                        .attr('title', _formatString('编辑 - {0}', this.siblings[_appSettings.nameColumnId].getText(data)))
+                        .attr('title', _formatString('编辑 {0}', name))
                         .attr('data-content', _formatString('<iframe frameborder="0" scrolling="no" class="editor" src="editor.html?{0}"></iframe>', escape(JSON.stringify({
                             token: symbol,
                             callback: 'ShadowStock.editorCallback',
-                            name: this.siblings[_appSettings.nameColumnId].getText(data),
-                            displayName: this.siblings[_appSettings.displayNameColumnId].getText(data),
+                            name: name,
+                            displayName: displayName,
                             cost: this.siblings[_appSettings.costColumnId].getText(data),
                             quantity: this.siblings[_appSettings.quantityColumnId].getText(data)
                         }))))
                         .appendTo(actionPanel);
                     $('<span class="glyphicon glyphicon-remove" role="button" title="删除"></span>')
                         .attr('data-id', symbol)
-                        .attr('title', this.siblings[_appSettings.nameColumnId].getText(data))
+                        .attr('title', name)
                         .appendTo(actionPanel);
 
                     return actionPanel[0].outerHTML;
@@ -578,7 +586,7 @@
             }
             _requestData(stockRetriever, {
                 token: token,
-                url: _formatString(_appSettings.stockUrl, token, stockList),
+                url: _formatString(_appSettings.stockUrl, stockList, token),
                 callback: 'ShadowStock.stockCallback',
                 vars: vars
             });
@@ -707,7 +715,7 @@
             $('.container-action>.glyphicon-remove', _elements.stockTable).click(function () {
                 var symbol = $(this).data('id');
                 var title = $(this).attr('title');
-                if (confirm(_formatString('确定删除 {0} ？', title))) {
+                if (confirm(_formatString('确定删除 {0}？', title))) {
                     var i = _findIndex(_userSettings.watchingStocks, 'symbol', symbol);
                     if (i >= 0) {
                         var watchingStock = _userSettings.watchingStocks.splice(i, 1)[0];
@@ -723,15 +731,18 @@
         suggestionVarName = 'v_hint',
         suggestionGroupSeparator = '^',
         suggestionDataSeparator = '~',
+        suggestionLabelSeparator = ' ',
+        suggestionValueSeparator = '.',
+        suggestionInvalidSymbol = '-',
         suggestionCache = {},
         suggestionRequest = function (term) {
-            var keywords = escape(term.toLowerCase());
-            var token = keywords;
+            var keyword = escape(term.toLowerCase());
+            var token = keyword;
             var vars = [];
             vars[0] = suggestionVarName;
             _requestData(suggestionRetriever, {
                 token: token,
-                url: _formatString(_appSettings.suggestionUrl, keywords),
+                url: _formatString(_appSettings.suggestionUrl, keyword),
                 callback: 'ShadowStock.suggestionCallback',
                 vars: vars
             });
@@ -748,12 +759,18 @@
                 for (var i = 0; i < suggestions.length; i++) {
                     var suggestionData = suggestions[i].split(suggestionDataSeparator);
                     if (suggestionData.length >= 5) {
-                        var stockType = suggestionData[0] + suggestionData[4]; // sz~000002~万科A~wka~GP-A
-                        if (_appSettings.stockTypes[stockType]) {
-                            source.push({
-                                label: getSuggestionLabel(suggestionData, term),
-                                value: getSuggestionValue(suggestionData, term)
-                            });
+                        var stockTypeId = suggestionData[0] + suggestionData[4]; // sz~000002~万科A~wka~GP-A ^ us~trtn-a.n~triton international ltd~*~GP
+                        var stockType = _appSettings.stockTypes[stockTypeId];
+                        if (stockType) {
+                            var symbol = stockType.prefix + suggestionData[1].toUpperCase().split(suggestionValueSeparator)[0];
+                            if (symbol.indexOf(suggestionInvalidSymbol) < 0) {
+                                var label = _formatString('[{0}] {1} {2} {3}', stockType.name, suggestionData[3], suggestionData[1], suggestionData[2]);
+                                var value = _formatString('{0}{1}{2}', symbol, suggestionValueSeparator, stockTypeId);
+                                source.push({
+                                    label: label,
+                                    value: value
+                                });
+                            }
                         }
                     }
                 }
@@ -763,17 +780,6 @@
                 _elements.suggestionText.autocomplete('search', term); // 重新激活搜索以抵消异步延迟
                 break;
             }
-        },
-        getSuggestionLabel = function (data, term) {
-            var stockType = data[0] + data[4];
-            return _formatString('[{0}] {1} {2} {3}', _appSettings.stockTypes[stockType].name, data[3], data[1], data[2]);
-        },
-        suggestionTypeSeparator = '.',
-        getSuggestionValue = function (data, term) {
-            var stockType = data[0] + data[4];
-            var prefix = _appSettings.stockTypes[stockType].prefix;
-            var symbol = prefix + data[1].toUpperCase().split(suggestionTypeSeparator)[0];
-            return _formatString('{0}{1}{2}', symbol, suggestionTypeSeparator, stockType);
         },
 
         _editorCallback = function (args) {
@@ -906,7 +912,8 @@
                     },
                     select: function (event, ui) {
                         if (_userSettings.watchingStocks.length < _appSettings.maxWatchingStockCount) {
-                            var values = ui.item.value.split(suggestionTypeSeparator); // 对应 getSuggestionValue
+                            // usTRTN.usGP sh600050.shGP-A
+                            var values = ui.item.value.split(suggestionValueSeparator);
                             var symbol = values[0];
                             var type = values[1];
 
@@ -915,7 +922,11 @@
                                 var watchingStock = _userSettings.watchingStocks[i];
                                 showAlert(_formatString('{0} ({1}) 已存在', watchingStock.name, watchingStock.symbol));
                             } else {
-                                var name = ui.item.label.substr(ui.item.label.lastIndexOf(' ') + 1); // 对应 getSuggestionLabel
+                                // [美股] * trtn.n triton international ltd [Ａ股] zglt 600050 中国联通
+                                var name = ui.item.label;
+                                for (var i = 0; i < 3; i++) {
+                                    name = name.substr(name.indexOf(suggestionLabelSeparator) + 1);
+                                }
                                 _userSettings.watchingStocks.push({
                                     symbol: symbol,
                                     type: type,
