@@ -7,7 +7,8 @@ const cacheName = 'suggest'; /* symbol, time, prefix, shortSymbol, name, keyword
 const Cache = require('../cache.js');
 
 router.get('/', async (ctx, next) => {
-    helper.log('SUGGEST - Query: ' + ctx.querystring);
+    helper.log('SUGGEST - Request: %s %s', ctx.ip, ctx.url);
+    helper.log('SUGGEST - Headers: %s %s', ctx.headers['referer'], ctx.headers['user-agent']);
     if (!ctx.query.k) {
         ctx.status = 400;
         ctx.body = ctx.status + ": Invalid keyword. (e.g. zglt)";

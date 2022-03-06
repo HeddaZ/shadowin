@@ -7,7 +7,8 @@ const cacheName = 'data'; /* symbol, data, writeTime, readTime, priority */
 const Cache = require('../cache.js');
 
 router.get('/', async (ctx, next) => {
-    helper.log('DATA - Query: ' + ctx.querystring);
+    helper.log('DATA - Request: %s %s', ctx.ip, ctx.url);
+    helper.log('DATA - Headers: %s %s', ctx.headers['referer'], ctx.headers['user-agent']);
     if (!ctx.query.s) {
         ctx.status = 400;
         ctx.body = ctx.status + ": Invalid symbol. (e.g. s=sh000001,sh600000)";
