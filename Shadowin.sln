@@ -41,6 +41,26 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "stock", "stock\", "{CD2AA47
 		SlnRelativePath = "stock\"
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "stock-data", "stock-data\", "{CB1A541E-ADE2-472A-A778-540793DF88CC}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_62491"
+		Debug.AspNetCompiler.PhysicalPath = "stock-data\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62491\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_62491"
+		Release.AspNetCompiler.PhysicalPath = "stock-data\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62491\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "62491"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +75,10 @@ Global
 		{CD2AA476-6821-4695-B845-A3923FECB5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD2AA476-6821-4695-B845-A3923FECB5E3}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD2AA476-6821-4695-B845-A3923FECB5E3}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{CB1A541E-ADE2-472A-A778-540793DF88CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB1A541E-ADE2-472A-A778-540793DF88CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB1A541E-ADE2-472A-A778-540793DF88CC}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB1A541E-ADE2-472A-A778-540793DF88CC}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
