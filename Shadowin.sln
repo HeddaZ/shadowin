@@ -20,6 +20,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C9E9045C-4
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "stock", "stock\", "{CD2AA476-6821-4695-B845-A3923FECB5E3}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_61980"
+		Debug.AspNetCompiler.PhysicalPath = "stock\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61980\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_61980"
+		Release.AspNetCompiler.PhysicalPath = "stock\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61980\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "61980"
+		SlnRelativePath = "stock\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +51,10 @@ Global
 		{9F3C911F-6A05-41C2-9E99-9F845D7048FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F3C911F-6A05-41C2-9E99-9F845D7048FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F3C911F-6A05-41C2-9E99-9F845D7048FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD2AA476-6821-4695-B845-A3923FECB5E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD2AA476-6821-4695-B845-A3923FECB5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD2AA476-6821-4695-B845-A3923FECB5E3}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD2AA476-6821-4695-B845-A3923FECB5E3}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
