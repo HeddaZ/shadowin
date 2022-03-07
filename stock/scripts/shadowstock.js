@@ -16,6 +16,8 @@
             maxWatchingStockCount: 25,
             suggestionUrl: 'http://stock-data.plusii.com/suggest/?k={0}',
             stockUrl: 'http://stock-data.plusii.com/data/?s={0}&t={1}',
+            // suggestionUrl: 'https://smartbox.gtimg.cn/s3/?q={0}&v=2&t=all',
+            // stockUrl: 'https://web.sqt.gtimg.cn/utf8/?q={0}&r={1}&offset=2,4,5,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,34,35,37,38,39,40',
             stockColumns: '名称,最新价,昨收,今开,买①,买①量,买②,买②量,买③,买③量,买④,买④量,买⑤,买⑤量,卖①,卖①量,卖②,卖②量,卖③,卖③量,卖④,卖④量,卖⑤,卖⑤量,!日期时间,最高,最低,成交量,成交额(万),换手率,市盈率'.split(itemSeparator),
             stockTypes: {
                 "shGP-A": {

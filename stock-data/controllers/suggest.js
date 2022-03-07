@@ -1,10 +1,10 @@
-const Router = require('koa-router');
+const helper = require('../helper.js');
 const util = require('util');
 const moment = require('moment');
-const helper = require('../helper.js');
+const Router = require('koa-router');
 const router = new Router({prefix: '/suggest'});
+
 const cacheName = 'suggest'; /* symbol, time, prefix, shortSymbol, name, keyword, type */
-const Cache = require('../cache.js');
 
 router.get('/', async (ctx, next) => {
     helper.log('SUGGEST - Request: %s %s', ctx.ip, ctx.url);
@@ -24,11 +24,9 @@ router.get('/', async (ctx, next) => {
         body = await helper.httpGet(url, referer);
 
         // TODO: Keep suggest info for further use
-        let cache;
+        const cache = ctx.cache;
         try {
-            cache = new Cache(config.cacheUrl);
             const cacheSet = await cache.open(cacheName);
-
             const suggestSeparator = new RegExp("v_hint=\"|\".*");
             const suggest = body.split(suggestSeparator).filter(i => i).shift();
             const suggestItems = suggest.split('^');
@@ -39,7 +37,6 @@ router.get('/', async (ctx, next) => {
                     continue;
                 }
 
-                const now = moment();
                 const prefix = suggestItemInfo[0].toLowerCase();
                 let shortSymbol = suggestItemInfo[1];
                 shortSymbol = shortSymbol // trtn-a.n
@@ -47,26 +44,25 @@ router.get('/', async (ctx, next) => {
                     .split('.').shift()
                     .toUpperCase();
                 const symbol = prefix + shortSymbol;
-                const name = helper.unescapeUnicode(suggestItemInfo[2]);
-                const keyword = suggestItemInfo[3];
-                const type = suggestItemInfo[4];
-                cacheSet.findOne({
+                const cacheData = await cacheSet.findOne({
                     symbol: symbol
-                }, (error, data) => {
-                    if (!data) {
-                        cacheSet.insertOne({
-                            symbol: symbol,
-                            time: now.toDate(),
-                            prefix: prefix,
-                            shortSymbol: shortSymbol,
-                            name: name,
-                            keyword: keyword,
-                            type: type
-                        });
-                    }
                 });
+                if (!cacheData) {
+                    await cacheSet.insertOne({
+                        symbol: symbol,
+                        time: moment().toDate(),
+                        prefix: prefix,
+                        shortSymbol: shortSymbol,
+                        name: helper.unescapeUnicode(suggestItemInfo[2]),
+                        keyword: suggestItemInfo[3],
+                        type: suggestItemInfo[4]
+                    });
+                }
             }
         } catch (error) {
+            helper.log('SUGGEST - ' + error.toString());
+        } finally {
+            await cache.close();
         }
     } catch (error) {
         helper.log('SUGGEST - ' + error.toString());

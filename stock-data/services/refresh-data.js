@@ -1,18 +1,18 @@
-const {workerData} = require('worker_threads');
+const helper = require('../helper.js');
 const util = require('util');
 const moment = require('moment');
-const helper = require('./helper.js');
-const cacheName = 'data'; /* symbol, data, writeTime, readTime, priority */
-const Cache = require('./cache.js');
+const {workerData} = require('worker_threads');
+const Cache = require('../cache.js');
 
 (() => {
+    helper.log(workerData.info);
     const config = workerData.config;
     const dataSeparatorRegExp = new RegExp(config.dataSeparator);
+    const cache = new Cache(config.cacheUrl);
+    const cacheName = 'data'; /* symbol, data, writeTime, readTime, priority */
 
-    async function run() {
-        let cache;
+    const run = async () => {
         try {
-            cache = new Cache(config.cacheUrl);
             const cacheSet = await cache.open(cacheName);
             const cacheData = await cacheSet.find({
                 priority: {$gt: config.dataRefreshEnabledPriority}
@@ -93,10 +93,7 @@ const Cache = require('./cache.js');
         } catch (error) {
             helper.log('RefreshService - %s', error.toString());
         } finally {
-            if (cache) {
-                await cache.close();
-                cache = null;
-            }
+            await cache.close();
             setTimeout(run, config.dataRefreshInterval);
         }
     }

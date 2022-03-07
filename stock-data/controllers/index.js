@@ -1,10 +1,10 @@
+const path = require('path');
+const fs = require('fs');
 const Router = require('koa-router');
 const router = new Router();
-const fs = require('fs');
-const path = require('path');
 
 router.get('/', async (ctx, next) => {
-    ctx.body = ctx.state.runtimeInfo;
+    ctx.body = ctx.state.info;
 });
 
 const controllerDir = __dirname;

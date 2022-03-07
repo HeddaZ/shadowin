@@ -1,28 +1,33 @@
-const Koa = require('koa');
-const app = new Koa({proxy: true});
-const util = require('util');
 const helper = require('./helper.js');
+const util = require('util');
+const Koa = require('koa');
 const {Worker} = require('worker_threads');
-const config = require('./config.json');
+const Cache = require('./cache.js');
 
-// RefreshService
-new Worker('./refresh-data.js', {
+const config = require('./config.json');
+const serviceInfo = util.format('%s %s - DataRefreshService', config.appDescription, config.appVersion);
+const apiInfo = util.format('%s %s @ http://%s:%s', config.appDescription, config.appVersion, config.host, config.port);
+
+// Service - DataRefresh
+new Worker('./services/refresh-data.js', {
     workerData: {
+        info: serviceInfo,
         config: config
     }
 });
 
-// DataAPI - Initialize
-const runtimeInfo = util.format('%s %s @ http://%s:%s', config.appDescription, config.appVersion, config.host, config.port);
+// API - Initialize
+const app = new Koa({proxy: true});
 app.use(async (ctx, next) => {
+    ctx.state.info = apiInfo;
     ctx.config = config;
-    ctx.state.runtimeInfo = runtimeInfo;
+    ctx.cache = new Cache(config.cacheUrl);
     await next();
 });
-// DataAPI - Register controllers
+// API - Register controllers
 const controllers = require('./controllers');
 app.use(controllers.routes()).use(controllers.allowedMethods());
-// DataAPI - Launch
+// API - Launch
 app.listen(config.port, config.host, () => {
-    helper.log(runtimeInfo);
+    helper.log(apiInfo);
 });

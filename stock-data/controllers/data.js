@@ -1,10 +1,10 @@
-const Router = require('koa-router');
+const helper = require('../helper.js');
 const util = require('util');
 const moment = require('moment');
-const helper = require('../helper.js');
+const Router = require('koa-router');
 const router = new Router({prefix: '/data'});
+
 const cacheName = 'data'; /* symbol, data, writeTime, readTime, priority */
-const Cache = require('../cache.js');
 
 router.get('/', async (ctx, next) => {
     helper.log('DATA - Request: %s %s', ctx.ip, ctx.url);
@@ -23,10 +23,9 @@ router.get('/', async (ctx, next) => {
         return;
     }
 
+    const cache = ctx.cache;
     let body = '';
-    let cache;
     try {
-        cache = new Cache(config.cacheUrl);
         const cacheSet = await cache.open(cacheName);
         for (let i = 0; i < symbols.length; i++) {
             const symbol = symbols[i];
@@ -69,10 +68,7 @@ router.get('/', async (ctx, next) => {
     } catch (error) {
         helper.log('DATA - ' + error.toString());
     } finally {
-        if (cache) {
-            await cache.close();
-            cache = null;
-        }
+        await cache.close();
     }
 
     // Response
