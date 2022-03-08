@@ -14,8 +14,11 @@ const axios = require('axios');
             return Math.floor(Math.random() * (max - min + 1)) + min;
         };
 
-        unescapeUnicode = (unicode) => {
-            return unescape(unicode.replace(/\\u/gi, '%u'));
+        unicodeDecode = (s) => {
+            return unescape(s.replace(/\\u/gi, '%u'));
+        };
+        urlEncode = (s) => {
+            return encodeURIComponent(s);
         };
 
         httpGet = async (url, referer) => {

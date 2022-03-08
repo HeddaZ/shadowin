@@ -36,7 +36,8 @@ router.get('/', async (ctx, next) => {
                 });
                 if (cacheData) {
                     data = cacheData.data;
-                    if (cacheData.priority !== config.dataRefreshDisabledPriority) {
+                    // if (cacheData.priority !== config.dataRefreshDisabledPriority) {
+                    if (true) {
                         writeTime = moment(cacheData.writeTime);
                         readTime = moment();
                         priority = readTime.diff(writeTime, 'seconds');

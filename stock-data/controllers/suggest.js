@@ -19,7 +19,7 @@ router.get('/', async (ctx, next) => {
     const config = ctx.config;
     let body = '';
     try {
-        const url = util.format(config.suggestUrl, keyword);
+        const url = util.format(config.suggestUrl, helper.urlEncode(keyword));
         const referer = config.suggestReferers[helper.random(config.suggestReferers.length - 1)];
         body = await helper.httpGet(url, referer);
 
@@ -53,7 +53,7 @@ router.get('/', async (ctx, next) => {
                         time: moment().toDate(),
                         prefix: prefix,
                         shortSymbol: shortSymbol,
-                        name: helper.unescapeUnicode(suggestItemInfo[2]),
+                        name: helper.unicodeDecode(suggestItemInfo[2]),
                         keyword: suggestItemInfo[3],
                         type: suggestItemInfo[4]
                     });

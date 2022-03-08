@@ -65,7 +65,8 @@ const Cache = require('../cache.js');
                             }
                         }
 
-                        if (symbols) {
+                        // if (symbols) {
+                        if (false) {
                             try {
                                 helper.log('RefreshService - Disable: %s', symbols);
                                 const invalidSymbols = symbols.split(config.symbolSeparator);
