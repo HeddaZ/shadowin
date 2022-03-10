@@ -7,10 +7,10 @@
   "cacheUrl": "mongodb://localhost/shadowstock?minPoolSize=10&maxPoolSize=100",
   "symbolPattern": "^[a-z]{2}(\\d{5,6}|[A-Z]{1,5})$",
   "symbolSeparator": ",",
+  "emptyData": "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
 
   "responseMaxCount": 25,
   "responseVariablePrefix": "v_",
-  "responseDummyData": "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
 
   "dataUrl": "https://web.sqt.gtimg.cn/utf8/?q=%s&r=%s&offset=2,4,5,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,34,35,37,38,39,40",
   "dataReferers": [

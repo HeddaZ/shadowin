@@ -8,7 +8,7 @@ const cacheName = 'data'; /* symbol, data, writeTime, readTime, priority */
 
 router.get('/', async (ctx, next) => {
     helper.log('DATA - Request: %s %s', ctx.ip, ctx.url);
-    helper.log('DATA - Headers: %s %s', ctx.headers['referer'], ctx.headers['user-agent']);
+    helper.log('DATA - Headers: %s %s', helper.truncate(ctx.headers['referer'], 30), ctx.headers['user-agent']);
     if (!ctx.query.s) {
         ctx.status = 400;
         ctx.body = ctx.status + ": Invalid symbol. (e.g. s=sh000001,sh600000)";
@@ -16,7 +16,7 @@ router.get('/', async (ctx, next) => {
     }
     const config = ctx.config;
     const symbolRegExp = new RegExp(config.symbolPattern);
-    const symbols = ctx.query.s.split(config.symbolSeparator).filter(i => i);
+    const symbols = ctx.query.s.split(config.symbolSeparator).filter(i => symbolRegExp.test(i));
     if (symbols.length > config.responseMaxCount) {
         ctx.status = 414;
         ctx.body = ctx.status + ": Too many symbols.";
@@ -27,45 +27,56 @@ router.get('/', async (ctx, next) => {
     let body = '';
     try {
         const cacheSet = await cache.open(cacheName);
+        const cacheData = {};
+        await cacheSet.find({symbol: {$in: symbols}}).forEach(i => {
+            cacheData[i.symbol] = i;
+        });
+
+        let data, writeTime, readTime, priority;
+        const bulkCommands = [];
         for (let i = 0; i < symbols.length; i++) {
             const symbol = symbols[i];
-            if (symbolRegExp.test(symbol)) {
-                let data, writeTime, readTime, priority;
-                const cacheData = await cacheSet.findOne({
-                    symbol: symbol
+            const symbolData = cacheData[symbol];
+            if (symbolData) {
+                data = symbolData.data;
+                writeTime = symbolData.writeTime;
+                readTime = moment();
+                priority = readTime.diff(writeTime, 'seconds');
+                bulkCommands.push({
+                    updateOne:
+                        {
+                            filter: {symbol: symbol},
+                            update: {
+                                $set: {
+                                    readTime: readTime,
+                                    priority: priority
+                                }
+                            }
+                        }
                 });
-                if (cacheData) {
-                    data = cacheData.data;
-                    // if (cacheData.priority !== config.dataRefreshDisabledPriority) {
-                    if (true) {
-                        writeTime = moment(cacheData.writeTime);
-                        readTime = moment();
-                        priority = readTime.diff(writeTime, 'seconds');
-                        // Refresh priority for background refresh
-                        await cacheSet.updateOne({
-                            symbol: symbol
-                        }, {
-                            $set: {readTime: readTime.toDate(), priority: priority}
-                        });
-                    }
-                } else {
-                    data = config.responseDummyData;
-                    writeTime = moment().subtract(1, 'days'); // High priority
-                    readTime = moment();
-                    priority = readTime.diff(writeTime, 'seconds');
-                    // Create a dummy data
-                    await cacheSet.insertOne({
-                        symbol: symbol,
-                        data: data,
-                        writeTime: writeTime.toDate(),
-                        readTime: readTime.toDate(),
-                        priority: priority
-                    });
-                }
-
-                body += util.format('%s%s="%s";\n', config.responseVariablePrefix, symbol, data);
+            } else {
+                data = config.emptyData;
+                writeTime = moment().subtract(1, 'days');
+                readTime = moment();
+                priority = readTime.diff(writeTime, 'seconds');
+                bulkCommands.push({
+                    insertOne:
+                        {
+                            document:
+                                {
+                                    symbol: symbol,
+                                    data: data,
+                                    writeTime: writeTime,
+                                    readTime: readTime,
+                                    priority: priority
+                                }
+                        }
+                });
             }
+            body += util.format('%s%s="%s";\n', config.responseVariablePrefix, symbol, data);
         }
+
+        await cacheSet.bulkWrite(bulkCommands, {ordered: false});
     } catch (error) {
         helper.log('DATA - ' + error.toString());
     } finally {

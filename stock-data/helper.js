@@ -21,6 +21,10 @@ const axios = require('axios');
             return encodeURIComponent(s);
         };
 
+        truncate = (s, length) => {
+            return (s || '').substr(0, length);
+        };
+
         httpGet = async (url, referer) => {
             try {
                 this.log('Helper.HttpGet: ' + referer + ' --> ' + url);
