@@ -20,7 +20,6 @@ const Cache = require('../cache.js');
                 .limit(batchSize)
                 .map(i => i.symbol)
                 .toArray();
-            console.log(cacheData.length);
             if (cacheData.length > 0) {
                 helper.log('RefreshService - Started: total=%s, batchSize=%s, concurrency=%s', cacheData.length, config.dataRefreshBatchSize, config.dataRefreshConcurrency);
 
