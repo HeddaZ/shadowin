@@ -18,12 +18,11 @@
     "https://finance.qq.com/",
     "https://proxy.finance.qq.com/"
   ],
-  "dataSeparator": "v_|\";\\s|=\"",
+  "dataSeparator": "\\s*v_|\";\\s*|=\"",
   "dataRefreshInterval": 5000,
-  "dataRefreshEnabledPriority": 30,
-  "dataRefreshDisabledPriority": -1,
+  "dataRefreshPriority": 30,
   "dataRefreshBatchSize": 20,
-  "dataRefreshConcurrency": 2,
+  "dataRefreshConcurrency": 6,
 
   "suggestUrl": "https://smartbox.gtimg.cn/s3/?q=%s&v=2&t=all",
   "suggestReferers": [

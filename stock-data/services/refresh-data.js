@@ -7,6 +7,7 @@ const Cache = require('../cache.js');
 (() => {
     helper.log(workerData.info);
     const config = workerData.config;
+    const batchSize = config.dataRefreshBatchSize * config.dataRefreshConcurrency;
     const dataSeparatorRegExp = new RegExp(config.dataSeparator);
     const cache = new Cache(config.cacheUrl);
     const cacheName = 'data'; /* symbol, data, writeTime, readTime, priority */
@@ -14,23 +15,24 @@ const Cache = require('../cache.js');
     const run = async () => {
         try {
             const cacheSet = await cache.open(cacheName);
-            const cacheData = await cacheSet.find({
-                priority: {$gt: config.dataRefreshEnabledPriority}
-            }).sort({
-                priority: -1
-            }).limit(config.dataRefreshBatchSize * config.dataRefreshConcurrency).project({
-                _id: 0,
-                symbol: 1
-            }).toArray();
-
+            const cacheData = await cacheSet.find({priority: {$gt: config.dataRefreshPriority}})
+                .sort({priority: -1})
+                .limit(batchSize)
+                .map(i => i.symbol)
+                .toArray();
+            console.log(cacheData.length);
             if (cacheData.length > 0) {
                 helper.log('RefreshService - Started: total=%s, batchSize=%s, concurrency=%s', cacheData.length, config.dataRefreshBatchSize, config.dataRefreshConcurrency);
+
                 let symbols = '';
+                const bulkCommands = [];
                 for (let i = 1; i <= cacheData.length; i++) {
-                    const symbol = cacheData[i - 1].symbol;
+                    const symbol = cacheData[i - 1];
                     symbols += symbol + config.symbolSeparator;
+
+                    // Resolve current batch
                     if (i % config.dataRefreshBatchSize === 0 || i === cacheData.length) {
-                        helper.log('RefreshService - Batch%s: %s', i, symbols);
+                        helper.log('RefreshService - Batch %s: %s', i, symbols);
                         const url = util.format(config.dataUrl, symbols, helper.ticks());
                         const referer = config.dataReferers[helper.random(config.dataReferers.length - 1)];
                         const data = await helper.httpGet(url, referer);
@@ -46,50 +48,31 @@ const Cache = require('../cache.js');
                                     key = dataItem;
                                 } else {
                                     value = dataItem;
-                                    helper.log('RefreshService - Complete: %s = %s', key, value);
+                                    helper.log('RefreshService - Batch OK: %s = %s', key, value);
+
                                     const now = moment();
-                                    await cacheSet.updateOne({
-                                        symbol: key
-                                    }, {
-                                        $set: {
-                                            data: value,
-                                            writeTime: now.toDate(),
-                                            readTime: now.toDate(),
-                                            priority: 0
-                                        }
+                                    bulkCommands.push({
+                                        updateOne:
+                                            {
+                                                filter: {symbol: key},
+                                                update: {
+                                                    $set: {
+                                                        data: value,
+                                                        writeTime: now.toDate(),
+                                                        readTime: now.toDate(),
+                                                        priority: 0
+                                                    }
+                                                }
+                                            }
                                     });
-                                    // Delete resolved symbol
-                                    symbols = symbols.replace(key + config.symbolSeparator, '');
                                     key = null;
                                 }
                             }
                         }
-
-                        // if (symbols) {
-                        if (false) {
-                            try {
-                                helper.log('RefreshService - Disable: %s', symbols);
-                                const invalidSymbols = symbols.split(config.symbolSeparator);
-                                for (let k = 0; k < invalidSymbols.length; k++) {
-                                    const invalidSymbol = invalidSymbols[k];
-                                    if (!invalidSymbol) {
-                                        continue;
-                                    }
-                                    await cacheSet.updateOne({
-                                        symbol: invalidSymbol
-                                    }, {
-                                        $set: {
-                                            priority: config.dataRefreshDisabledPriority
-                                        }
-                                    });
-                                }
-                            } catch (error) {
-                            } finally {
-                                symbols = '';
-                            }
-                        }
                     }
                 }
+
+                await cacheSet.bulkWrite(bulkCommands, {ordered: false});
             }
         } catch (error) {
             helper.log('RefreshService - %s', error.toString());
@@ -97,7 +80,7 @@ const Cache = require('../cache.js');
             await cache.close();
             setTimeout(run, config.dataRefreshInterval);
         }
-    }
+    };
 
     setTimeout(run, config.dataRefreshInterval);
 })();

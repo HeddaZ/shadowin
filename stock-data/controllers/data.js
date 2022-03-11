@@ -39,7 +39,7 @@ router.get('/', async (ctx, next) => {
             const symbolData = cacheData[symbol];
             if (symbolData) {
                 data = symbolData.data;
-                writeTime = symbolData.writeTime;
+                writeTime = moment(symbolData.writeTime);
                 readTime = moment();
                 priority = readTime.diff(writeTime, 'seconds');
                 bulkCommands.push({
@@ -48,7 +48,7 @@ router.get('/', async (ctx, next) => {
                             filter: {symbol: symbol},
                             update: {
                                 $set: {
-                                    readTime: readTime,
+                                    readTime: readTime.toDate(),
                                     priority: priority
                                 }
                             }
@@ -56,9 +56,9 @@ router.get('/', async (ctx, next) => {
                 });
             } else {
                 data = config.emptyData;
-                writeTime = moment().subtract(1, 'days');
-                readTime = moment();
-                priority = readTime.diff(writeTime, 'seconds');
+                writeTime = moment();
+                readTime = writeTime;
+                priority = config.dataRefreshPriority * 2;
                 bulkCommands.push({
                     insertOne:
                         {
@@ -66,13 +66,14 @@ router.get('/', async (ctx, next) => {
                                 {
                                     symbol: symbol,
                                     data: data,
-                                    writeTime: writeTime,
-                                    readTime: readTime,
+                                    writeTime: writeTime.toDate(),
+                                    readTime: readTime.toDate(),
                                     priority: priority
                                 }
                         }
                 });
             }
+
             body += util.format('%s%s="%s";\n', config.responseVariablePrefix, symbol, data);
         }
 

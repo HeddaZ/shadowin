@@ -30,35 +30,49 @@ router.get('/', async (ctx, next) => {
             const suggestSeparator = new RegExp("v_hint=\"|\".*");
             const suggest = body.split(suggestSeparator).filter(i => i).shift();
             const suggestItems = suggest.split('^');
+            const bulkCommands = [];
             for (let i = 0; i < suggestItems.length; i++) {
                 const suggestItem = suggestItems[i];
-                const suggestItemInfo = suggestItem.split('~').filter(i => i);
+                const suggestItemInfo = suggestItem.split('~');
                 if (suggestItemInfo.length !== 5) {
                     continue;
                 }
 
-                const prefix = suggestItemInfo[0].toLowerCase();
-                let shortSymbol = suggestItemInfo[1];
-                shortSymbol = shortSymbol // trtn-a.n
+                const prefix = suggestItemInfo[0]
+                    .toLowerCase();
+                const shortSymbol = suggestItemInfo[1]
                     .split('-').shift()
                     .split('.').shift()
-                    .toUpperCase();
+                    .toUpperCase(); // trtn-a.n
                 const symbol = prefix + shortSymbol;
-                const cacheData = await cacheSet.findOne({
-                    symbol: symbol
-                });
-                if (!cacheData) {
-                    await cacheSet.insertOne({
-                        symbol: symbol,
-                        time: moment().toDate(),
-                        prefix: prefix,
-                        shortSymbol: shortSymbol,
-                        name: helper.unicodeDecode(suggestItemInfo[2]),
-                        keyword: suggestItemInfo[3],
-                        type: suggestItemInfo[4]
-                    });
-                }
+                const time = moment().toDate();
+                const name = helper.unicodeDecode(suggestItemInfo[2]);
+                const keyword = suggestItemInfo[3];
+                const type = suggestItemInfo[4];
+
+                bulkCommands.push(
+                    {
+                        updateOne:
+                            {
+                                filter: {symbol: symbol},
+                                update: {
+                                    $set: {
+                                        symbol: symbol,
+                                        time: time,
+                                        prefix: prefix,
+                                        shortSymbol: shortSymbol,
+                                        name: name,
+                                        keyword: keyword,
+                                        type: type
+                                    }
+                                },
+                                upsert: true
+                            }
+                    }
+                );
             }
+
+            await cacheSet.bulkWrite(bulkCommands, {ordered: false});
         } catch (error) {
             helper.log('SUGGEST - ' + error.toString());
         } finally {
