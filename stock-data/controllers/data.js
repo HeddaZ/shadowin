@@ -77,7 +77,9 @@ router.get('/', async (ctx, next) => {
             body += util.format('%s%s="%s";\n', config.responseVariablePrefix, symbol, data);
         }
 
-        await cacheSet.bulkWrite(bulkCommands, {ordered: false});
+        if (bulkCommands.length>0) {
+            await cacheSet.bulkWrite(bulkCommands, {ordered: false});
+        }
     } catch (error) {
         helper.log('DATA - ' + error.toString());
     } finally {

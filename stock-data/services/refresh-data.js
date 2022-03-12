@@ -71,7 +71,9 @@ const Cache = require('../cache.js');
                     }
                 }
 
-                await cacheSet.bulkWrite(bulkCommands, {ordered: false});
+                if (bulkCommands.length>0) {
+                    await cacheSet.bulkWrite(bulkCommands, {ordered: false});
+                }
             }
         } catch (error) {
             helper.log('RefreshService - %s', error.toString());

@@ -72,7 +72,9 @@ router.get('/', async (ctx, next) => {
                 );
             }
 
-            await cacheSet.bulkWrite(bulkCommands, {ordered: false});
+            if (bulkCommands.length>0) {
+                await cacheSet.bulkWrite(bulkCommands, {ordered: false});
+            }
         } catch (error) {
             helper.log('SUGGEST - ' + error.toString());
         } finally {
