@@ -68,6 +68,7 @@ const Cache = require('../cache.js');
                                 }
                             }
                         }
+                        symbols = '';
                     }
                 }
 
