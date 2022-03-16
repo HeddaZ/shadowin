@@ -2,20 +2,22 @@ const {MongoClient} = require('mongodb');
 
 module.exports = class Cache {
     dbClient;
+    isConnected;
 
     constructor(url) {
         this.dbClient = new MongoClient(url);
+        this.isConnected = false;
     };
 
     open = async (name) => {
-        await this.dbClient.connect();
+        if (!this.isConnected) {
+            await this.dbClient.connect();
+            this.isConnected = true;
+        }
         return this.dbClient.db().collection(name);
     };
 
     close = async () => {
-        try {
-            await this.dbClient.close();
-        } catch (error) {
-        }
+        this.isConnected = false;
     };
 };

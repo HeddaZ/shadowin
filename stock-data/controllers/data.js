@@ -82,7 +82,6 @@ router.get('/', async (ctx, next) => {
         }
     } catch (error) {
         helper.log('DATA - ' + error.toString());
-    } finally {
         await cache.close();
     }
 

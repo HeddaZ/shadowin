@@ -77,7 +77,6 @@ router.get('/', async (ctx, next) => {
             }
         } catch (error) {
             helper.log('SUGGEST - ' + error.toString());
-        } finally {
             await cache.close();
         }
     } catch (error) {

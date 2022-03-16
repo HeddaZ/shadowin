@@ -78,8 +78,8 @@ const Cache = require('../cache.js');
             }
         } catch (error) {
             helper.log('RefreshService - %s', error.toString());
-        } finally {
             await cache.close();
+        } finally {
             setTimeout(run, config.dataRefreshInterval);
         }
     };
