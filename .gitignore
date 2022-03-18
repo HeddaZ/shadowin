@@ -157,5 +157,6 @@ $RECYCLE.BIN/
 
 # Other exclusions
 node_modules/
+package-lock.json
 .vs/
 .idea/

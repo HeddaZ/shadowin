@@ -4,28 +4,42 @@ const axios = require('axios');
     class Helper {
         log = console.log;
 
-        ticks = () => {
+        ticks() {
             return new Date().getTime();
         };
-        random = (max, min) => {
+
+        random(max, min) {
             if (!min) {
                 min = 0;
             }
             return Math.floor(Math.random() * (max - min + 1)) + min;
         };
 
-        unicodeDecode = (s) => {
+        isArray(arg) {
+            return Array.isArray(arg);
+        };
+
+        isInteger(arg) {
+            return Number.isInteger(arg);
+        };
+
+        isString(arg) {
+            return typeof arg === 'string';
+        };
+
+        unicodeDecode(s) {
             return unescape(s.replace(/\\u/gi, '%u'));
         };
-        urlEncode = (s) => {
+
+        urlEncode(s) {
             return encodeURIComponent(s);
         };
 
-        truncate = (s, length) => {
+        truncate(s, length) {
             return (s || '').substr(0, length);
         };
 
-        httpGet = async (url, referer) => {
+        async httpGet(url, referer) {
             try {
                 this.log('Helper.HttpGet: ' + referer + ' --> ' + url);
                 const response = await axios.get(url, {

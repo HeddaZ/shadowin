@@ -4,10 +4,9 @@
   "appDescription": "Data API of ShadowStock",
   "host": "localhost",
   "port": 3000,
-  "cacheUrl": "mongodb://localhost/shadowstock?authSource=admin&minPoolSize=10&maxPoolSize=100",
   "symbolPattern": "^[a-z]{2}(\\d{5,6}|[A-Z]{1,5})$",
   "symbolSeparator": ",",
-  "emptyData": "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+  "dummyData": "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
 
   "responseMaxCount": 25,
   "responseVariablePrefix": "v_",
@@ -18,11 +17,12 @@
     "https://finance.qq.com/",
     "https://proxy.finance.qq.com/"
   ],
-  "dataSeparator": "\\s*v_|\";\\s*|=\"",
-  "dataRefreshInterval": 5000,
+  "dataInvalidPattern": ".*none_match.*",
+  "dataSeparatorPattern": "\\s*v_|\";\\s*|=\"",
+  "dataRefreshInterval": 2000,
   "dataRefreshPriority": 30,
-  "dataRefreshBatchSize": 20,
-  "dataRefreshConcurrency": 6,
+  "dataRefreshBatchSize": 30,
+  "dataRefreshConcurrency": 4,
 
   "suggestUrl": "https://smartbox.gtimg.cn/s3/?q=%s&v=2&t=all",
   "suggestReferers": [

@@ -3,12 +3,11 @@ const util = require('util');
 const moment = require('moment');
 const Router = require('koa-router');
 const router = new Router({prefix: '/data'});
-
-const cacheName = 'data'; /* symbol, data, writeTime, readTime, priority */
+const cache = require('../cache.js'); /* symbol: {data, writeTime, readTime, priority} */
 
 router.get('/', async (ctx, next) => {
-    helper.log('DATA - Request: %s %s', ctx.ip, ctx.url);
-    helper.log('DATA - Headers: %s %s', helper.truncate(ctx.headers['referer'], 30), ctx.headers['user-agent']);
+    helper.log('DataApi - Request: %s %s', ctx.ip, ctx.url);
+    helper.log('DataApi - Headers: %s %s', helper.truncate(ctx.headers['referer'], 30), ctx.headers['user-agent']);
     if (!ctx.query.s) {
         ctx.status = 400;
         ctx.body = ctx.status + ": Invalid symbol. (e.g. s=sh000001,sh600000)";
@@ -23,66 +22,35 @@ router.get('/', async (ctx, next) => {
         return;
     }
 
-    const cache = ctx.cache;
     let body = '';
     try {
-        const cacheSet = await cache.open(cacheName);
-        const cacheData = {};
-        await cacheSet.find({symbol: {$in: symbols}}).forEach(i => {
-            cacheData[i.symbol] = i;
-        });
-
+        const cacheData = cache.get(symbols);
         let data, writeTime, readTime, priority;
-        const bulkCommands = [];
         for (let i = 0; i < symbols.length; i++) {
             const symbol = symbols[i];
-            const symbolData = cacheData[symbol];
+            let symbolData = cacheData[symbol];
             if (symbolData) {
                 data = symbolData.data;
                 writeTime = moment(symbolData.writeTime);
                 readTime = moment();
                 priority = readTime.diff(writeTime, 'seconds');
-                bulkCommands.push({
-                    updateOne:
-                        {
-                            filter: {symbol: symbol},
-                            update: {
-                                $set: {
-                                    readTime: readTime.toDate(),
-                                    priority: priority
-                                }
-                            }
-                        }
-                });
             } else {
-                data = config.emptyData;
+                data = config.dummyData;
                 writeTime = moment();
                 readTime = writeTime;
-                priority = config.dataRefreshPriority * 2;
-                bulkCommands.push({
-                    insertOne:
-                        {
-                            document:
-                                {
-                                    symbol: symbol,
-                                    data: data,
-                                    writeTime: writeTime.toDate(),
-                                    readTime: readTime.toDate(),
-                                    priority: priority
-                                }
-                        }
-                });
+                priority = config.dataRefreshPriority * 3;
             }
+            cache.set(symbol, {
+                data: data,
+                writeTime: writeTime.toDate(),
+                readTime: readTime.toDate(),
+                priority: priority
+            });
 
             body += util.format('%s%s="%s";\n', config.responseVariablePrefix, symbol, data);
         }
-
-        if (bulkCommands.length>0) {
-            await cacheSet.bulkWrite(bulkCommands, {ordered: false});
-        }
     } catch (error) {
-        helper.log('DATA - ' + error.toString());
-        await cache.close();
+        helper.log('DataApi - ' + error.toString());
     }
 
     // Response
