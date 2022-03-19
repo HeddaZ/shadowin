@@ -22,7 +22,7 @@
   "dataRefreshInterval": 2000,
   "dataRefreshPriority": 30,
   "dataRefreshBatchSize": 30,
-  "dataRefreshConcurrency": 4,
+  "dataRefreshBatchCount": 4,
 
   "suggestUrl": "https://smartbox.gtimg.cn/s3/?q=%s&v=2&t=all",
   "suggestReferers": [

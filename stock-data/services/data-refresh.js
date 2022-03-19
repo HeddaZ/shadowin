@@ -8,10 +8,15 @@ const cache = require('../cache.js'); /* symbol: {data, writeTime, readTime, pri
         try {
             const dataInvalidRegExp = new RegExp(config.dataInvalidPattern);
             const dataSeparatorRegExp = new RegExp(config.dataSeparatorPattern);
-            const cacheData = cache.get(0);
+            const batchLimit = config.dataRefreshBatchSize * config.dataRefreshBatchCount;
+            const cacheData = cache.get(config.dataRefreshPriority, batchLimit);
             const allSymbols = Object.keys(cacheData);
             if (allSymbols.length > 0) {
-                helper.log('DataRefreshService - Started: total=%s, batchSize=%s, concurrency=%s', allSymbols.length, config.dataRefreshBatchSize, config.dataRefreshConcurrency);
+                helper.log('DataRefreshService - Started: total=%s, batchSize=%s, batchCount=%s/%s',
+                    allSymbols.length,
+                    config.dataRefreshBatchSize,
+                    Math.ceil(allSymbols.length / config.dataRefreshBatchSize),
+                    config.dataRefreshBatchCount);
 
                 let symbols = '';
                 for (let i = 1; i <= allSymbols.length; i++) {

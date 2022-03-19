@@ -27,10 +27,6 @@ const axios = require('axios');
             return typeof arg === 'string';
         };
 
-        unicodeDecode(s) {
-            return unescape(s.replace(/\\u/gi, '%u'));
-        };
-
         urlEncode(s) {
             return encodeURIComponent(s);
         };

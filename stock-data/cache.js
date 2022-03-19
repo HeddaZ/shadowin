@@ -10,13 +10,15 @@ const NodeCache = require('node-cache');
             this._cache = new NodeCache({checkperiod: 0});
         };
 
-        get(arg) {
-            if (helper.isArray(arg)) {
-                return this._getByKeys(arg);
-            } else if (helper.isInteger(arg)) {
-                return this._getByPriority(arg);
+        get(arg, limit) {
+            if (helper.isInteger(arg)) {
+                return this._getByPriority(arg, limit);
+            } else if (helper.isArray(arg)) {
+                return this._cache.mget(arg);
             } else if (helper.isString(arg)) {
-                return this._cache.get(arg);
+                const result = {};
+                result[arg] = this._cache.get(arg);
+                return result;
             } else {
                 return null;
             }
@@ -26,20 +28,25 @@ const NodeCache = require('node-cache');
             this._cache.set(key, value);
         };
 
-        _getByKeys(keys) {
-            return this._cache.mget(keys);
-        };
-
-        _getByPriority(priority) {
+        _getByPriority(priority, limit) {
+            const maxCount = helper.isInteger(limit) ? limit : 0;
             const keys = this._cache.keys();
+
             const result = {};
+            let count = 0;
             for (let i = 0; i < keys.length; i++) {
                 const key = keys[i];
                 const value = this._cache.get(key);
-                if (value.priority && value.priority > priority) {
+                if (value && value.priority && value.priority > priority) {
                     result[key] = value;
+                    count++;
+
+                    if (maxCount && count >= maxCount) {
+                        break;
+                    }
                 }
             }
+
             return result;
         };
 
