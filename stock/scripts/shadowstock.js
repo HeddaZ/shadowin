@@ -40,6 +40,11 @@
                     prefix: "sz",
                     columnMapping: columnMapping1
                 },
+                "shGP-A-KCB": {
+                    name: "科创",
+                    prefix: "sh",
+                    columnMapping: columnMapping1
+                },
 
                 "shZS": {
                     name: "指数",

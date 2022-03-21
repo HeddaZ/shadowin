@@ -24,7 +24,7 @@
   "dataRefreshBatchSize": 30,
   "dataRefreshBatchCount": 4,
 
-  "suggestUrl": "https://smartbox.gtimg.cn/s3/?q=%s&v=2&t=all",
+  "suggestUrl": "https://proxy.finance.qq.com/smartboxgtimg/s3/?q=%s&v=2&t=all",
   "suggestReferers": [
     "https://gu.qq.com/",
     "https://finance.qq.com/",
