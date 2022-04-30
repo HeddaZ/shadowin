@@ -12,7 +12,7 @@
         columnMapping2 = [0, 1, 2, 3, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 24, 25, 26, 27, 28, -1, 30],
         _appSettings = {
             cookieExpires: 365,
-            minRefreshInterval: 8000,
+            minRefreshInterval: 5000,
             maxWatchingStockCount: 25,
             suggestionUrl: 'http://stock-data.plusii.com/suggest/?k={0}',
             stockUrl: 'http://stock-data.plusii.com/data/?s={0}&t={1}',
