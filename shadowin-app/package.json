@@ -1,0 +1,19 @@
+{
+  "name": "shadow",
+  "version": "4.0.0",
+  "description": "Shadowin for Multiplatform",
+  "main": "app.js",
+  "author": "HeddaZ",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Shadowin",
+    "Windows",
+    "macOS"
+  ],
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^11.5.0"
+  }
+}

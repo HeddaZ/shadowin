@@ -13,7 +13,7 @@
     "suggest"
   ],
   "author": "HeddaZ",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "axios": "^0.26.0",
     "koa": "^2.13.4",
