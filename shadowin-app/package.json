@@ -1,5 +1,5 @@
 {
-  "name": "shadowin-app",
+  "name": "Shadowin",
   "productName": "Shadowin",
   "version": "4.0.0",
   "description": "Shadowin for Multiplatform",
@@ -34,6 +34,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
+            "iconUrl": "./images/app.ico",
             "setupIcon": "./images/app.ico",
             "loadingGif": "./images/loading.gif"
           }
