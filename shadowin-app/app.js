@@ -23,8 +23,8 @@ app.on('ready', () => {
     //app.event
     createWindow();
 
-    const ret = globalShortcut.register('CommandOrControl+X', () => {
-        console.log('CommandOrControl+X is pressed')
+    const ret = globalShortcut.register('CommandOrControl+`', () => {
+        console.log('Ctrl + ~ is pressed')
     });
 });
 
