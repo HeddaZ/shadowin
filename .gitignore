@@ -105,5 +105,9 @@ dist
 
 # Others
 .idea/
+.vs/
+bin/
+obj/
 out/
+*.user
 package-lock.json
