@@ -1,8 +1,8 @@
 ﻿(function (window, document, undefined) {
     var _shadowStock = {},
         _appId = 'ShadowStock_QQ',
-        _appName = 'ShadowStock 影子证券',
-        _appVersion = '4.0',
+        _appName = 'ShadowStock',
+        _appVersion = '4.0.0',
         _appUrl = 'https://github.com/heddaz/shadowin',
 
         /******************** 配置 ********************/
@@ -1031,17 +1031,8 @@
     _shadowStock.appSettings = _appSettings;
     _shadowStock.userSettings = _userSettings;
     _shadowStock.columnEngines = _columnEngines;
-
-    _shadowStock.formatString = _formatString;
-    _shadowStock.round = _round;
-    _shadowStock.getTicks = _getTicks;
-    _shadowStock.toShortNumberText = _toShortNumberText;
-    _shadowStock.toPercentageText = _toPercentageText;
-    _shadowStock.requestData = _requestData;
-    _shadowStock.findIndex = _findIndex;
-
     _shadowStock.elements = _elements;
-    _shadowStock.attachElements = _attachElements;
+
     _shadowStock.stockCallback = _stockCallback;
     _shadowStock.suggestionCallback = _suggestionCallback;
     _shadowStock.editorCallback = _editorCallback;
@@ -1049,9 +1040,8 @@
     _shadowStock.impexpCallback = _impexpCallback;
     _shadowStock.aboutCallback = _aboutCallback;
 
-    _shadowStock.enableStockTimer = _enableStockTimer;
-    _shadowStock.disableStockTimer = _disableStockTimer;
     _shadowStock.init = _init;
+    _shadowStock.attachElements = _attachElements;
     _shadowStock.start = _start;
 
     window.ShadowStock = _shadowStock;
