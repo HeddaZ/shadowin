@@ -7,8 +7,8 @@ if (require('electron-squirrel-startup')) {
 }
 
 // 公共方法
-const showQuestion = (message, detail) => {
-    return dialog.showMessageBoxSync({
+const showQuestion = (parent, message, detail) => {
+    return dialog.showMessageBoxSync(parent, {
         title: config.appName + ' V' + config.appVersion,
         message: message,
         detail: detail,
@@ -20,8 +20,6 @@ const showQuestion = (message, detail) => {
 }
 
 app.on('ready', () => {
-    // 注册事件
-
     // 初始化
     const mainWindow = new BrowserWindow({
         minimizable: false,
@@ -40,14 +38,24 @@ app.on('ready', () => {
             textAreasAreResizable: false
         }
     });
-    mainWindow.webContents.on('new-window', function(event, url) {
+    mainWindow.webContents.on('new-window', (event, url) => {
         event.preventDefault();
         shell.openExternal(url);
     });
     mainWindow.loadURL(config.url);
 
+    // 注册事件
+    app.on('window-all-closed', () => {
+        app.exit();
+    });
+    app.on('before-quit', (event) => {
+        if (showQuestion(mainWindow, '确定要退出程序吗？', '(尊重开源 尊重分享 谢谢使用)') == 1) {
+            event.preventDefault();
+        }
+    });
+
     // 注册热键
     globalShortcut.register('CommandOrControl+`', () => {
-        console.log('Ctrl + ~ is pressed')
+        app.quit();
     });
 });
