@@ -28,7 +28,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "./images/app"
+        "icon": "./images/app",
+        "appCopyright": "Copyright (C) 2022 HEDDAZ"
       },
       "makers": [
         {

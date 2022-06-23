@@ -1,0 +1,13 @@
+{
+  "appName": "Shadowin 影窗浏览器",
+  "appVersion": "4.0.0",
+  "appDescription": "Shadowin for Multiplatform",
+
+  "url": "http://localhost:63342/shadowin/stock/index.html?_ijt=ospiksqfo2jr5f0j68vqerqk4r&_ij_reload=RELOAD_ON_SAVE",
+  "windowOnTop": true,
+
+  "windowWidth": 1000,
+  "windowHeight": 400,
+  "windowZoom": 1.0,
+  "windowOpacity": 0.6
+}

@@ -48,6 +48,9 @@ body {
 
 #logo {
     font-weight: bold;
+    /* Electron Drag Region */
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
 }
 
 th,

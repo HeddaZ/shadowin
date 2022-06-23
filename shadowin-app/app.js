@@ -1,35 +1,53 @@
-const {app, BrowserWindow, globalShortcut} = require('electron');
+const {app, BrowserWindow, globalShortcut, dialog, shell} = require('electron');
+const config = require('./config.json');
 
+// 安装后启动
 if (require('electron-squirrel-startup')) {
     app.quit();
 }
 
-const createWindow = () => {
-    const mainWindow = new BrowserWindow({
-        width: 900,
-        height: 450,
-        opacity: 0.6
+// 公共方法
+const showQuestion = (message, detail) => {
+    return dialog.showMessageBoxSync({
+        title: config.appName + ' V' + config.appVersion,
+        message: message,
+        detail: detail,
+        type: 'question',
+        buttons: ['确定', '取消'],
+        defaultId: 0,
+        cancelId: 1
     });
-    mainWindow.loadURL('http://stock.plusii.com');
-};
+}
 
 app.on('ready', () => {
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow();
+    // 注册事件
+
+    // 初始化
+    const mainWindow = new BrowserWindow({
+        minimizable: false,
+        maximizable: false,
+        closable: false,
+        alwaysOnTop: config.windowOnTop,
+        fullscreenable: false,
+        skipTaskbar: true,
+        title: config.appName,
+        frame: false,
+        width: config.windowWidth,
+        height: config.windowHeight,
+        opacity: config.windowOpacity,
+        webPreferences: {
+            zoomFactor: config.windowZoom,
+            textAreasAreResizable: false
         }
     });
+    mainWindow.webContents.on('new-window', function(event, url) {
+        event.preventDefault();
+        shell.openExternal(url);
+    });
+    mainWindow.loadURL(config.url);
 
-    //app.event
-    createWindow();
-
-    const ret = globalShortcut.register('CommandOrControl+`', () => {
+    // 注册热键
+    globalShortcut.register('CommandOrControl+`', () => {
         console.log('Ctrl + ~ is pressed')
     });
-});
-
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
 });
