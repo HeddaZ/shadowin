@@ -1,27 +1,30 @@
-const {app, BrowserWindow, globalShortcut, dialog, shell} = require('electron');
-const config = require('./config.json');
+const { app, BrowserWindow, globalShortcut, shell } = require('electron');
+const helper = require('./helper.js');
 
-// 安装后启动
+// Launch when installing
 if (require('electron-squirrel-startup')) {
     app.quit();
 }
 
-// 公共方法
-const showQuestion = (parent, message, detail) => {
-    return dialog.showMessageBoxSync(parent, {
-        title: config.appName + ' V' + config.appVersion,
-        message: message,
-        detail: detail,
-        type: 'question',
-        buttons: ['确定', '取消'],
-        defaultId: 0,
-        cancelId: 1
-    });
-}
-
+let mainWindow;
 app.on('ready', () => {
-    // 初始化
-    const mainWindow = new BrowserWindow({
+    // Initialize
+    mainWindow = createWindow(helper.config);
+
+    // Events
+    app.on('window-all-closed', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+            mainWindow = createWindow(helper.config);
+        }
+    });
+
+    // Hotkeys
+    globalShortcut.register('CommandOrControl+0', exit);
+    globalShortcut.register('CommandOrControl+`', showHide);
+});
+
+const createWindow = config => {
+    const window = new BrowserWindow({
         minimizable: false,
         maximizable: false,
         closable: false,
@@ -38,24 +41,17 @@ app.on('ready', () => {
             textAreasAreResizable: false
         }
     });
-    mainWindow.webContents.on('new-window', (event, url) => {
+    window.webContents.on('new-window', (event, url) => {
         event.preventDefault();
         shell.openExternal(url);
     });
-    mainWindow.loadURL(config.url);
-
-    // 注册事件
-    app.on('window-all-closed', () => {
+    window.loadURL(config.url);
+};
+const exit = () => {
+    if (helper.showQuestion(mainWindow, '确定要退出程序吗？', '(尊重开源 尊重分享 谢谢使用)')) {
         app.exit();
-    });
-    app.on('before-quit', (event) => {
-        if (showQuestion(mainWindow, '确定要退出程序吗？', '(尊重开源 尊重分享 谢谢使用)') == 1) {
-            event.preventDefault();
-        }
-    });
-
-    // 注册热键
-    globalShortcut.register('CommandOrControl+`', () => {
-        app.quit();
-    });
-});
+    }
+}
+const showHide = () => {
+    mainWindow.hide();
+}

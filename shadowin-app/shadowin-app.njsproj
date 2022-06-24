@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="helper.js" />
     <Content Include="images\app.ico" />
     <Content Include="images\loading.gif" />
     <Content Include="package.json" />
