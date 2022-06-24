@@ -12,7 +12,7 @@
     "macOS"
   ],
   "scripts": {
-    "start": "electron-forge start",
+    "start": "electron-forge start -i",
     "package": "electron-forge package",
     "make": "electron-forge make"
   },

@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { dialog } = require('electron');
+const {dialog, BrowserWindow, shell} = require('electron');
 
 (() => {
     class Helper {
@@ -8,6 +8,7 @@ const { dialog } = require('electron');
         _encoding = 'utf8';
 
         config;
+        window;
         log = console.log;
 
         constructor() {
@@ -20,6 +21,7 @@ const { dialog } = require('electron');
                 ...packageJson.config.shadowin, // Default config
                 ...configJson // User config
             };
+            this.window = null;
         };
 
         _readJson(file, encoding) {
@@ -31,12 +33,12 @@ const { dialog } = require('electron');
                     encoding: encoding
                 });
                 return JSON.parse(content);
-            }
-            catch (error) {
+            } catch (error) {
                 this.log(error.message);
                 return {};
             }
         };
+
         _writeJson(file, data, encoding) {
             if (!encoding) {
                 encoding = this._encoding;
@@ -47,10 +49,34 @@ const { dialog } = require('electron');
                     encoding: encoding,
                     flag: 'w'
                 });
-            }
-            catch (error) {
+            } catch (error) {
                 this.log(error.message);
             }
+        };
+
+        createWindow() {
+            this.window = new BrowserWindow({
+                minimizable: false,
+                maximizable: false,
+                closable: false,
+                alwaysOnTop: this.config.windowOnTop,
+                fullscreenable: false,
+                skipTaskbar: true,
+                title: this.config.appName,
+                frame: false,
+                width: this.config.windowWidth,
+                height: this.config.windowHeight,
+                opacity: this.config.windowOpacity,
+                webPreferences: {
+                    zoomFactor: this.config.windowZoom,
+                    textAreasAreResizable: false
+                }
+            });
+            this.window.webContents.on('new-window', (event, url) => {
+                event.preventDefault();
+                shell.openExternal(url);
+            });
+            this.window.loadURL(this.config.url);
         };
 
         showQuestion(window, message, detail) {
@@ -59,7 +85,7 @@ const { dialog } = require('electron');
                 message: message,
                 detail: detail,
                 type: 'question',
-                buttons: ['??', '??'],
+                buttons: ['确定', '取消'],
                 defaultId: 0,
                 cancelId: 1
             }) == 0;
