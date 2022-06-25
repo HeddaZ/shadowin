@@ -48,10 +48,16 @@
     "shadowin": {
       "url": "http://localhost:63342/shadowin/stock/index.html?_ijt=ospiksqfo2jr5f0j68vqerqk4r&_ij_reload=RELOAD_ON_SAVE",
       "windowOnTop": true,
-      "windowWidth": 1000,
-      "windowHeight": 400,
       "windowZoom": 1.0,
-      "windowOpacity": 0.6
+      "windowOpacity": 0.7,
+      "windowSize": {
+        "width": 1100,
+        "height": 300
+      },
+      "windowPosition": {
+        "x": 0,
+        "y": 0
+      }
     }
   }
 }

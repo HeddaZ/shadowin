@@ -1,5 +1,5 @@
 const fs = require('fs');
-const {dialog, BrowserWindow, shell} = require('electron');
+const {BrowserWindow, dialog, shell} = require('electron');
 
 (() => {
     class Helper {
@@ -22,6 +22,29 @@ const {dialog, BrowserWindow, shell} = require('electron');
                 ...configJson // User config
             };
             this.window = null;
+        };
+
+        showQuestion(window, message, detail) {
+            return dialog.showMessageBoxSync(window, {
+                title: this.config.appName + ' V' + this.config.appVersion,
+                message: message,
+                detail: detail,
+                type: 'question',
+                buttons: ['确定', '取消'],
+                defaultId: 0,
+                cancelId: 1
+            }) === 0;
+        };
+
+        showWarning(window, message, detail) {
+            dialog.showMessageBoxSync(window, {
+                title: this.config.appName + ' V' + this.config.appVersion,
+                message: message,
+                detail: detail,
+                type: 'warning',
+                buttons: ['确定'],
+                defaultId: 0
+            });
         };
 
         _readJson(file, encoding) {
@@ -79,17 +102,35 @@ const {dialog, BrowserWindow, shell} = require('electron');
             this.window.loadURL(this.config.url);
         };
 
-        showQuestion(window, message, detail) {
-            return dialog.showMessageBoxSync(window, {
-                title: this.config.appName + ' V' + this.config.appVersion,
-                message: message,
-                detail: detail,
-                type: 'question',
-                buttons: ['确定', '取消'],
-                defaultId: 0,
-                cancelId: 1
-            }) == 0;
+        inbounds(bounds, position) {
+            let x, y;
+            if (Array.isArray(position)) {
+                x = position[0];
+                y = position[1];
+            } else {
+                x = position.x;
+                y = position.y;
+            }
+            return x >= bounds.x
+                && y >= bounds.y
+                && x <= bounds.x + bounds.width
+                && y <= bounds.y + bounds.height;
         };
+
+        positionInbounds(bounds, size) {
+            let width, height;
+            if (Array.isArray(size)) {
+                width = size[0];
+                height = size[1];
+            } else {
+                width = size.width;
+                height = size.height;
+            }
+            return {
+                x: bounds.x + Math.max(bounds.width - width, 0),
+                y: bounds.y + Math.max(bounds.height - height, 0)
+            }
+        }
     }
 
     module.exports = new Helper();
