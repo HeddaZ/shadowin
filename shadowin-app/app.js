@@ -23,10 +23,10 @@ app.on('ready', () => {
     // Hotkeys
     globalShortcut.register('Control+`', showHide);
     globalShortcut.register('Control+\\', exit);
-    globalShortcut.register('Control+Up', fadeIn);
-    globalShortcut.register('Control+Down', fadeOut);
-    globalShortcut.register('Control+Left', dockLeft);
-    globalShortcut.register('Control+Right', dockRight);
+    globalShortcut.register('Control+]', fadeIn);
+    globalShortcut.register('Control+[', fadeOut);
+    globalShortcut.register('Control+,', dockLeft);
+    globalShortcut.register('Control+.', dockRight);
 });
 
 const showHide = () => {
