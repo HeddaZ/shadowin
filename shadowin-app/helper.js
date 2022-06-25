@@ -87,9 +87,6 @@ const {BrowserWindow, dialog, shell} = require('electron');
                 skipTaskbar: true,
                 title: this.config.appName,
                 frame: false,
-                width: this.config.windowWidth,
-                height: this.config.windowHeight,
-                opacity: this.config.windowOpacity,
                 webPreferences: {
                     zoomFactor: this.config.windowZoom,
                     textAreasAreResizable: false
@@ -99,6 +96,10 @@ const {BrowserWindow, dialog, shell} = require('electron');
                 event.preventDefault();
                 shell.openExternal(url);
             });
+
+            this.window.setOpacity(this.config.windowOpacity);
+            this.window.setSize(this.config.windowSize.width, this.config.windowSize.height);
+            this.window.setPosition(this.config.windowPosition.x, this.config.windowPosition.y);
             this.window.loadURL(this.config.url);
         };
 
