@@ -3,53 +3,14 @@ const {BrowserWindow, dialog, shell} = require('electron');
 
 (() => {
     class Helper {
-        _packageFile = './package.json';
-        _configFile = './config.json';
-        _encoding = 'utf8';
+        static packageFile = './package.json';
+        static configFile = './config.json';
+        static encoding = 'utf8';
+        static saveDelayTime = 10000;
 
-        config;
-        window;
-        log = console.log;
-
-        constructor() {
-            const packageJson = this._readJson(this._packageFile);
-            const configJson = this._readJson(this._configFile);
-            this.config = {
-                appName: packageJson.name,
-                appVersion: packageJson.version,
-                appDescription: packageJson.description,
-                ...packageJson.config.shadowin, // Default config
-                ...configJson // User config
-            };
-            this.window = null;
-        };
-
-        showQuestion(window, message, detail) {
-            return dialog.showMessageBoxSync(window, {
-                title: this.config.appName + ' V' + this.config.appVersion,
-                message: message,
-                detail: detail,
-                type: 'question',
-                buttons: ['确定', '取消'],
-                defaultId: 0,
-                cancelId: 1
-            }) === 0;
-        };
-
-        showWarning(window, message, detail) {
-            dialog.showMessageBoxSync(window, {
-                title: this.config.appName + ' V' + this.config.appVersion,
-                message: message,
-                detail: detail,
-                type: 'warning',
-                buttons: ['确定'],
-                defaultId: 0
-            });
-        };
-
-        _readJson(file, encoding) {
+        static readJson(file, encoding) {
             if (!encoding) {
-                encoding = this._encoding;
+                encoding = Helper.encoding;
             }
             try {
                 const content = fs.readFileSync(file, {
@@ -57,14 +18,14 @@ const {BrowserWindow, dialog, shell} = require('electron');
                 });
                 return JSON.parse(content);
             } catch (error) {
-                this.log(error.message);
+                console.log(error.message);
                 return {};
             }
         };
 
-        _writeJson(file, data, encoding) {
+        static writeJson(file, data, encoding) {
             if (!encoding) {
-                encoding = this._encoding;
+                encoding = Helper.encoding;
             }
             try {
                 const content = JSON.stringify(data);
@@ -73,8 +34,25 @@ const {BrowserWindow, dialog, shell} = require('electron');
                     flag: 'w'
                 });
             } catch (error) {
-                this.log(error.message);
+                console.log(error.message);
             }
+        };
+
+        _saveDelayer;
+        config;
+        window;
+
+        constructor() {
+            const packageJson = Helper.readJson(Helper.packageFile);
+            const configJson = Helper.readJson(Helper.configFile);
+            this.config = {
+                appName: packageJson.name,
+                appVersion: packageJson.version,
+                appDescription: packageJson.description,
+                ...packageJson.config.shadowin, // Default config
+                ...configJson // User config
+            };
+            this.window = null;
         };
 
         createWindow() {
@@ -92,15 +70,47 @@ const {BrowserWindow, dialog, shell} = require('electron');
                     textAreasAreResizable: false
                 }
             });
-            this.window.webContents.on('new-window', (event, url) => {
-                event.preventDefault();
-                shell.openExternal(url);
-            });
-
             this.window.setOpacity(this.config.windowOpacity);
             this.window.setSize(this.config.windowSize.width, this.config.windowSize.height);
             this.window.setPosition(this.config.windowPosition.x, this.config.windowPosition.y);
             this.window.loadURL(this.config.url);
+
+            const _this = this;
+            this.window.webContents.on('new-window', (event, url) => {
+                event.preventDefault();
+                shell.openExternal(url);
+            });
+            this.window.on('resized', () => {
+                const size = _this.window.getSize();
+                _this.config.windowSize.width = size[0];
+                _this.config.windowSize.height = size[1];
+                _this.saveConfig();
+            });
+            this.window.on('moved', () => {
+                const position = _this.window.getPosition();
+                _this.config.windowPosition.x = position[0];
+                _this.config.windowPosition.y = position[1];
+                _this.saveConfig();
+            });
+        };
+
+        saveConfig() {
+            if (this._saveDelayer) {
+                clearTimeout(this._saveDelayer);
+            }
+            this._saveDelayer = setTimeout(Helper.writeJson, Helper.saveDelayTime, Helper.configFile, this.config);
+        };
+
+        showQuestion(window, message, detail) {
+            return dialog.showMessageBoxSync(window, {
+                title: this.config.appName + ' V' + this.config.appVersion,
+                message: message,
+                detail: detail,
+                type: 'question',
+                buttons: ['确定', '取消'],
+                defaultId: 0,
+                cancelId: 1
+            }) === 0;
         };
 
         inbounds(bounds, position) {

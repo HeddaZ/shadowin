@@ -44,12 +44,20 @@ const exit = () => {
 const fadeIn = () => {
     let opacity = helper.window.getOpacity();
     opacity += opacityChange;
-    helper.window.setOpacity(Math.min(opacity, opacityMax));
+    opacity = Math.min(opacity, opacityMax);
+    helper.window.setOpacity(opacity);
+
+    helper.config.windowOpacity = opacity;
+    helper.saveConfig();
 }
 const fadeOut = () => {
     let opacity = helper.window.getOpacity();
     opacity -= opacityChange;
-    helper.window.setOpacity(Math.max(opacity, opacityMin));
+    opacity = Math.max(opacity, opacityMin);
+    helper.window.setOpacity(opacity);
+
+    helper.config.windowOpacity = opacity;
+    helper.saveConfig();
 }
 const dockLeft = () => {
     let position = helper.window.getPosition();
@@ -71,6 +79,9 @@ const dockLeft = () => {
     }
     position = helper.positionInbounds(targetDisplay.workArea, helper.window.getSize());
     helper.window.setPosition(position.x, position.y);
+
+    helper.config.windowPosition = position;
+    helper.saveConfig();
 }
 const dockRight = () => {
     let position = helper.window.getPosition();
@@ -92,4 +103,7 @@ const dockRight = () => {
     }
     position = helper.positionInbounds(targetDisplay.workArea, helper.window.getSize());
     helper.window.setPosition(position.x, position.y);
+
+    helper.config.windowPosition = position;
+    helper.saveConfig();
 }
