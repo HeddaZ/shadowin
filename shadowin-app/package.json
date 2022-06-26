@@ -2,7 +2,7 @@
   "name": "Shadowin",
   "productName": "Shadowin",
   "version": "4.0.0",
-  "description": "Shadowin 影窗浏览器 (Windows / macOS)",
+  "description": "Shadowin 影窗浏览器",
   "author": "HeddaZ",
   "main": "app.js",
   "license": "Apache-2.0",

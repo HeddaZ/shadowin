@@ -158,3 +158,46 @@ iframe.about {
 .notice a {
     color: #0165ff;
 }
+
+.download-header {
+    background-image: url("images/bg.png");
+    background-repeat: repeat;
+}
+
+.download-footer {
+    background-image: url("images/bg.png");
+    background-repeat: repeat;
+    padding: 3px;
+}
+
+.download-footer a {
+    color: #333;
+}
+
+.download-footer .glyphicon {
+    font-size: 12px;
+}
+
+.row-spacer-sm {
+    padding: 10px 0px;
+}
+
+.row-spacer-md {
+    padding: 20px 0px;
+}
+
+.row-spacer-lg {
+    padding: 30px 0px;
+}
+
+.mr-sm {
+    margin-right: 5px;
+}
+
+.mr-md {
+    margin-right: 10px;
+}
+
+.mr-lg {
+    margin-right: 20px;
+}

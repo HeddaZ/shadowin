@@ -117,7 +117,7 @@
                 {symbol: 'sh600000', type: 'shGP-A', name: '浦发银行'},
                 {symbol: 'sz000002', type: 'szGP-A', name: '万科A'},
                 {symbol: 'hk00700', type: 'hkGP', name: '腾讯控股'},
-                {symbol: 'usMSFT', type: 'usGP', name: '微软'}
+                {symbol: 'usAAPL', type: 'usGP', name: '苹果'}
             ]
         },
         getUserSettings = function () {

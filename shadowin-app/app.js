@@ -13,7 +13,9 @@ if (!lock) {
     app.quit();
 }
 
-app.setActivationPolicy('accessory');
+if (typeof app.setActivationPolicy === 'function') {
+    app.setActivationPolicy('accessory');
+}
 app.on('ready', () => {
     // Initialize
     appHelper.createWindow();

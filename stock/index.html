@@ -1,85 +1,88 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta charset="utf-8"/>
     <title>ShadowStock 影子证券</title>
-    <meta name="description" content="简洁精悍的上班族隐蔽看股工具，链接腾讯财经实时数据源，支持自选股、实时价格刷新、持仓盈亏统计，更支持单元格高亮着色；加上《Shadowin 影窗浏览器》提供的半透明窗体和老板键特性，更是神不知鬼不觉" />
-    <link href="favicon.ico" rel="shortcut icon" />
-    <link href="content/bootstrap.css" rel="stylesheet" />
-    <link href="content/bootstrap-theme.css" rel="stylesheet" />
-    <link href="content/jquery-ui.css" rel="stylesheet" />
-    <link href="content/site.css" rel="stylesheet" />
+    <meta name="description"
+          content="简洁精悍的上班族隐蔽看股工具，链接腾讯财经实时数据源，支持自选股、实时价格刷新、持仓盈亏统计，更支持单元格高亮着色；加上《Shadowin 影窗浏览器》提供的半透明窗体和老板键特性，更是神不知鬼不觉。"/>
+    <link href="favicon.ico" rel="shortcut icon"/>
+    <link href="content/bootstrap.css" rel="stylesheet"/>
+    <link href="content/bootstrap-theme.css" rel="stylesheet"/>
+    <link href="content/jquery-ui.css" rel="stylesheet"/>
+    <link href="content/site.css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row show-grid">
-            <div class="col-xs-5 mode-simplified">
-                <div class="input-group">
+<div class="container-fluid">
+    <div class="row show-grid">
+        <div class="col-xs-5 mode-simplified">
+            <div class="input-group">
                     <span id="logo" class="input-group-addon" title="ShadowStock 影子证券">
-                        <img src="logo.png" alt="ShadowStock" />
+                        <img src="images/logo.png" alt="ShadowStock"/>
                     </span>
-                    <input id="suggestionText" type="text" class="form-control" placeholder="代码 / 名称 / 拼音">
-                </div>
-            </div>
-            <div class="col-xs-2">
-                <div class="btn-group">
-                    <button id="settingsButton" type="button" class="mode-black btn btn-info" title="设置">设置</button>
-                    <button id="settingsMenu" type="button" class="dropdown-toggle mode-black btn btn-info" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a id="impexpButton" href="#">导入/导出</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a id="aboutButton" href="#">关于</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-xs-5 text-right notice">
-                <img src="http://images.iiwho.com/warning.png" />
-                <a href="https://github.com/HeddaZ/Shadowin/issues/43" target="_blank">常见问题</a>
+                <input id="suggestionText" type="text" class="form-control" placeholder="代码 / 名称 / 拼音">
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div id="alertPanel" class="alert alert-danger">请稍候 ...</div>
+        <div class="col-xs-2">
+            <div class="btn-group">
+                <button id="settingsButton" type="button" class="mode-black btn btn-info" title="设置">设置</button>
+                <button id="settingsMenu" type="button" class="dropdown-toggle mode-black btn btn-info"
+                        data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a id="impexpButton" href="#">导入/导出</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a id="aboutButton" href="#">关于</a></li>
+                </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <table id="stockTable" class="table table-bordered table-condensed table-hover"></table>
-            </div>
-        </div>
-
-        <script src="scripts/jquery-1.10.2.js"></script>
-        <script src="scripts/jquery-ui.js"></script>
-        <script src="scripts/jquery.cookie.js"></script>
-        <script src="scripts/bootstrap.js"></script>
-        <script src="scripts/respond.js"></script>
-        <script src="scripts/shadowstock.js"></script>
-        <script type="text/javascript">
-            $(function () {
-                ShadowStock.init();
-                ShadowStock.attachElements({
-                    stockTable: $('#stockTable'),
-                    suggestionText: $('#suggestionText'),
-                    alertPanel: $('#alertPanel'),
-                    settingsButton: $('#settingsButton'),
-                    impexpButton: $('#impexpButton'),
-                    aboutButton: $('#aboutButton')
-                });
-                ShadowStock.start();
-            });
-        </script>
-
-        <div class="row ad">
-            <div class="col-xs-2">
-            </div>
-            <div class="col-xs-10 text-right">
-                <a href="https://beian.miit.gov.cn" target="_blank">苏ICP备08004088号</a>
-                <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js?id=JbsafDdYagq2wvSQ&ck=JbsafDdYagq2wvSQ"></script>
-            </div>
+        <div class="col-xs-5 text-right notice">
+            <img src="http://images.iiwho.com/warning.png"/>
+            <a href="https://github.com/HeddaZ/Shadowin/issues/43" target="_blank">常见问题</a>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="alertPanel" class="alert alert-danger">请稍候 ...</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table id="stockTable" class="table table-bordered table-condensed table-hover"></table>
+        </div>
+    </div>
+
+    <script src="scripts/jquery-1.10.2.js"></script>
+    <script src="scripts/jquery-ui.js"></script>
+    <script src="scripts/jquery.cookie.js"></script>
+    <script src="scripts/bootstrap.js"></script>
+    <script src="scripts/respond.js"></script>
+    <script src="scripts/shadowstock.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            ShadowStock.init();
+            ShadowStock.attachElements({
+                stockTable: $('#stockTable'),
+                suggestionText: $('#suggestionText'),
+                alertPanel: $('#alertPanel'),
+                settingsButton: $('#settingsButton'),
+                impexpButton: $('#impexpButton'),
+                aboutButton: $('#aboutButton')
+            });
+            ShadowStock.start();
+        });
+    </script>
+
+    <div class="row ad">
+        <div class="col-xs-2">
+        </div>
+        <div class="col-xs-10 text-right">
+            <a href="https://beian.miit.gov.cn" target="_blank">苏ICP备08004088号</a>
+            <script charset="UTF-8" id="LA_COLLECT"
+                    src="//sdk.51.la/js-sdk-pro.min.js?id=JbsafDdYagq2wvSQ&ck=JbsafDdYagq2wvSQ"></script>
+        </div>
+    </div>
+</div>
 </body>
 </html>
