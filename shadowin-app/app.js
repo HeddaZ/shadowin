@@ -48,7 +48,7 @@ const showHide = () => {
     }
 }
 const exit = () => {
-    if (appHelper.showQuestion(appHelper.window, '确定要退出程序吗？', '(尊重开源 尊重分享 谢谢使用)')) {
+    if (appHelper.showQuestion(appHelper.window, '确定要退出程序吗？', '(尊重开源 尊重分享 谢谢使用)\nQQ: 9812152')) {
         app.exit();
     }
 }
