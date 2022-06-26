@@ -1,11 +1,12 @@
 const fs = require('fs');
+const path = require("path");
 const log = require('electron-log');
 const {BrowserWindow, dialog, shell} = require('electron');
 
 (() => {
     class AppHelper {
-        static packageFile = './package.json';
-        static configFile = './config.json';
+        static packageFile = path.join(__dirname, 'package.json');
+        static configFile = path.join(__dirname, 'config.json');
         static encoding = 'utf8';
         static saveDelay = 10000;
         static blankUrl = 'about:blank';
@@ -51,8 +52,6 @@ const {BrowserWindow, dialog, shell} = require('electron');
         constructor() {
             const packageData = AppHelper.readJson(AppHelper.packageFile);
             const configData = AppHelper.readJson(AppHelper.configFile);
-            log.debug(packageData);
-            log.debug(configData);
 
             this.config = {
                 appName: packageData.name,
@@ -178,7 +177,6 @@ const {BrowserWindow, dialog, shell} = require('electron');
         logWarn(message) {
             log.warn(message);
         };
-
     }
 
     module.exports = new AppHelper();
