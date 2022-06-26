@@ -1,5 +1,5 @@
 const {app, BrowserWindow, globalShortcut, screen} = require('electron');
-const helper = require('./helper.js');
+const appHelper = require('./app-helper.js');
 const opacityChange = 0.2;
 const opacityMin = 0.1;
 const opacityMax = 0.9;
@@ -11,12 +11,12 @@ if (require('electron-squirrel-startup')) {
 
 app.on('ready', () => {
     // Initialize
-    helper.createWindow();
+    appHelper.createWindow();
 
     // Events
     app.on('window-all-closed', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
-            helper.createWindow();
+            appHelper.createWindow();
         }
     });
 
@@ -27,44 +27,47 @@ app.on('ready', () => {
     globalShortcut.register('Control+[', fadeOut);
     globalShortcut.register('Control+,', dockLeft);
     globalShortcut.register('Control+.', dockRight);
+    globalShortcut.register('Control+F12', openDevTools);
 });
 
 const showHide = () => {
-    if (helper.window.isVisible()) {
-        helper.window.hide();
+    if (appHelper.window.isVisible()) {
+        appHelper.window.hide();
+        appHelper.hideContents();
     } else {
-        helper.window.show();
+        appHelper.showContents();
+        appHelper.window.show();
     }
 }
 const exit = () => {
-    if (helper.showQuestion(helper.window, '确定要退出程序吗？', '(尊重开源 尊重分享 谢谢使用)')) {
+    if (appHelper.showQuestion(appHelper.window, '确定要退出程序吗？', '(尊重开源 尊重分享 谢谢使用)')) {
         app.exit();
     }
 }
 const fadeIn = () => {
-    let opacity = helper.window.getOpacity();
+    let opacity = appHelper.window.getOpacity();
     opacity += opacityChange;
     opacity = Math.min(opacity, opacityMax);
-    helper.window.setOpacity(opacity);
+    appHelper.window.setOpacity(opacity);
 
-    helper.config.windowOpacity = opacity;
-    helper.saveConfig();
+    appHelper.config.windowOpacity = opacity;
+    appHelper.saveConfig();
 }
 const fadeOut = () => {
-    let opacity = helper.window.getOpacity();
+    let opacity = appHelper.window.getOpacity();
     opacity -= opacityChange;
     opacity = Math.max(opacity, opacityMin);
-    helper.window.setOpacity(opacity);
+    appHelper.window.setOpacity(opacity);
 
-    helper.config.windowOpacity = opacity;
-    helper.saveConfig();
+    appHelper.config.windowOpacity = opacity;
+    appHelper.saveConfig();
 }
 const dockLeft = () => {
-    let position = helper.window.getPosition();
+    let position = appHelper.window.getPosition();
     let currentDisplay, targetDisplay;
     const displays = screen.getAllDisplays();
     for (let i = 0; i < displays.length; i++) {
-        if (helper.inbounds(displays[i].bounds, position)) {
+        if (appHelper.inbounds(displays[i].bounds, position)) {
             currentDisplay = displays[i];
             targetDisplay = displays[i > 0 ? i - 1 : displays.length - 1];
             break;
@@ -77,18 +80,18 @@ const dockLeft = () => {
     if (currentDisplay.scaleFactor !== targetDisplay.scaleFactor) {
         targetDisplay = currentDisplay; // Won't change display when scaleFactor is different.
     }
-    position = helper.positionInbounds(targetDisplay.workArea, helper.window.getSize());
-    helper.window.setPosition(position.x, position.y);
+    position = appHelper.positionInbounds(targetDisplay.workArea, appHelper.window.getSize());
+    appHelper.window.setPosition(position.x, position.y);
 
-    helper.config.windowPosition = position;
-    helper.saveConfig();
+    appHelper.config.windowPosition = position;
+    appHelper.saveConfig();
 }
 const dockRight = () => {
-    let position = helper.window.getPosition();
+    let position = appHelper.window.getPosition();
     let currentDisplay, targetDisplay;
     const displays = screen.getAllDisplays();
     for (let i = 0; i < displays.length; i++) {
-        if (helper.inbounds(displays[i].bounds, position)) {
+        if (appHelper.inbounds(displays[i].bounds, position)) {
             currentDisplay = displays[i];
             targetDisplay = displays[i < displays.length - 1 ? i + 1 : 0];
             break;
@@ -101,9 +104,12 @@ const dockRight = () => {
     if (currentDisplay.scaleFactor !== targetDisplay.scaleFactor) {
         targetDisplay = currentDisplay; // Won't change display when scaleFactor is different.
     }
-    position = helper.positionInbounds(targetDisplay.workArea, helper.window.getSize());
-    helper.window.setPosition(position.x, position.y);
+    position = appHelper.positionInbounds(targetDisplay.workArea, appHelper.window.getSize());
+    appHelper.window.setPosition(position.x, position.y);
 
-    helper.config.windowPosition = position;
-    helper.saveConfig();
+    appHelper.config.windowPosition = position;
+    appHelper.saveConfig();
+}
+const openDevTools = () => {
+    appHelper.window.webContents.openDevTools();
 }

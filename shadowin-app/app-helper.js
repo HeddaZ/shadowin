@@ -2,15 +2,16 @@ const fs = require('fs');
 const {BrowserWindow, dialog, shell} = require('electron');
 
 (() => {
-    class Helper {
+    class AppHelper {
         static packageFile = './package.json';
         static configFile = './config.json';
         static encoding = 'utf8';
-        static saveDelayTime = 10000;
+        static saveDelay = 10000;
+        static blankUrl = 'about:blank';
 
         static readJson(file, encoding) {
             if (!encoding) {
-                encoding = Helper.encoding;
+                encoding = AppHelper.encoding;
             }
             try {
                 const content = fs.readFileSync(file, {
@@ -25,7 +26,7 @@ const {BrowserWindow, dialog, shell} = require('electron');
 
         static writeJson(file, data, encoding) {
             if (!encoding) {
-                encoding = Helper.encoding;
+                encoding = AppHelper.encoding;
             }
             try {
                 const content = JSON.stringify(data);
@@ -38,42 +39,46 @@ const {BrowserWindow, dialog, shell} = require('electron');
             }
         };
 
-        _saveDelayer;
         config;
         window;
+        saveDelayer;
 
         constructor() {
-            const packageJson = Helper.readJson(Helper.packageFile);
-            const configJson = Helper.readJson(Helper.configFile);
+            const packageData = AppHelper.readJson(AppHelper.packageFile);
+            const configData = AppHelper.readJson(AppHelper.configFile);
             this.config = {
-                appName: packageJson.name,
-                appVersion: packageJson.version,
-                appDescription: packageJson.description,
-                ...packageJson.config.shadowin, // Default config
-                ...configJson // User config
+                appName: packageData.name,
+                appVersion: packageData.version,
+                appDescription: packageData.description,
+                ...packageData.config.shadowin, // App config
+                ...configData // User config
             };
+
             this.window = null;
+            this.saveDelayer = null;
         };
 
         createWindow() {
+            const config = this.config;
             this.window = new BrowserWindow({
                 minimizable: false,
                 maximizable: false,
                 closable: false,
-                alwaysOnTop: this.config.windowOnTop,
+                alwaysOnTop: config.windowOnTop,
                 fullscreenable: false,
                 skipTaskbar: true,
-                title: this.config.appName,
+                title: config.appName,
                 frame: false,
                 webPreferences: {
-                    zoomFactor: this.config.windowZoom,
+                    devTools: true,
+                    zoomFactor: config.windowZoom,
                     textAreasAreResizable: false
                 }
             });
-            this.window.setOpacity(this.config.windowOpacity);
-            this.window.setSize(this.config.windowSize.width, this.config.windowSize.height);
-            this.window.setPosition(this.config.windowPosition.x, this.config.windowPosition.y);
-            this.window.loadURL(this.config.url);
+            this.window.setOpacity(config.windowOpacity);
+            this.window.setSize(config.windowSize.width, config.windowSize.height);
+            this.window.setPosition(config.windowPosition.x, config.windowPosition.y);
+            this.showContents(true);
 
             const _this = this;
             this.window.webContents.on('new-window', (event, url) => {
@@ -94,11 +99,22 @@ const {BrowserWindow, dialog, shell} = require('electron');
             });
         };
 
+        showContents(ignoreCache) {
+            const option = ignoreCache
+                ? {extraHeaders: 'pragma: no-cache\n'}
+                : null;
+            this.window.loadURL(this.config.url, option);
+        };
+
+        hideContents() {
+            this.window.loadURL(AppHelper.blankUrl);
+        };
+
         saveConfig() {
-            if (this._saveDelayer) {
-                clearTimeout(this._saveDelayer);
+            if (this.saveDelayer) {
+                clearTimeout(this.saveDelayer);
             }
-            this._saveDelayer = setTimeout(Helper.writeJson, Helper.saveDelayTime, Helper.configFile, this.config);
+            this.saveDelayer = setTimeout(AppHelper.writeJson, AppHelper.saveDelay, AppHelper.configFile, this.config);
         };
 
         showQuestion(window, message, detail) {
@@ -144,5 +160,5 @@ const {BrowserWindow, dialog, shell} = require('electron');
         }
     }
 
-    module.exports = new Helper();
+    module.exports = new AppHelper();
 })();
