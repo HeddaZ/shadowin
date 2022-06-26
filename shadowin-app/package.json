@@ -2,7 +2,7 @@
   "name": "Shadowin",
   "productName": "Shadowin",
   "version": "4.0.0",
-  "description": "Shadowin for Multiplatform",
+  "description": "Shadowin 影窗浏览器 (Windows / macOS)",
   "author": "HeddaZ",
   "main": "app.js",
   "license": "Apache-2.0",
@@ -23,13 +23,20 @@
     "electron": "^11.5.0"
   },
   "dependencies": {
+    "electron-log": "^4.4.8",
     "electron-squirrel-startup": "^1.0.0"
   },
   "config": {
     "forge": {
       "packagerConfig": {
         "icon": "./images/app",
-        "appCopyright": "Copyright (C) 2022 HEDDAZ"
+        "appCopyright": "Copyright (C) 2022 HEDDAZ",
+        "ignore": [
+          "/config.json",
+          "/.git*",
+          "/*.iml",
+          "/*.njsproj"
+        ]
       },
       "makers": [
         {
@@ -48,7 +55,7 @@
     "shadowin": {
       "url": "http://stock.plusii.com",
       "windowOnTop": true,
-      "windowZoom": 1.0,
+      "windowZoom": 1,
       "windowOpacity": 0.7,
       "windowSize": {
         "width": 1100,

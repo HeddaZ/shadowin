@@ -9,7 +9,7 @@ if (require('electron-squirrel-startup')) {
 // Single instance
 const lock = app.requestSingleInstanceLock();
 if (!lock) {
-    console.log('Another instance is running.');
+    appHelper.logWarn('Another instance is running.');
     app.quit();
 }
 
@@ -21,6 +21,7 @@ app.on('ready', () => {
     // Events
     app.on('window-all-closed', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
+            appHelper.logWarn('Recreate new window as all window have been closed.');
             appHelper.createWindow();
         }
     });

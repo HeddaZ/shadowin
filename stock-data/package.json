@@ -17,6 +17,7 @@
   "dependencies": {
     "axios": "^0.26.0",
     "koa": "^2.13.4",
+    "koa-favicon": "^2.1.0",
     "koa-router": "^10.1.1",
     "moment": "^2.29.1",
     "node-cache": "^5.1.2"

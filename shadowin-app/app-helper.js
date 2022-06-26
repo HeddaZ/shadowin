@@ -1,10 +1,12 @@
 const fs = require('fs');
+const path = require("path");
+const log = require('electron-log');
 const {BrowserWindow, dialog, shell} = require('electron');
 
 (() => {
     class AppHelper {
-        static packageFile = './package.json';
-        static configFile = './config.json';
+        static packageFile = path.join(__dirname, 'package.json');
+        static configFile = path.join(__dirname, 'config.json');
         static encoding = 'utf8';
         static saveDelay = 10000;
         static blankUrl = 'about:blank';
@@ -19,7 +21,7 @@ const {BrowserWindow, dialog, shell} = require('electron');
                 });
                 return JSON.parse(content);
             } catch (error) {
-                console.log(error.message);
+                log.error(error);
                 return {};
             }
         };
@@ -35,7 +37,7 @@ const {BrowserWindow, dialog, shell} = require('electron');
                     flag: 'w'
                 });
             } catch (error) {
-                console.log(error.message);
+                log.error(error);
             }
         };
 
@@ -50,6 +52,7 @@ const {BrowserWindow, dialog, shell} = require('electron');
         constructor() {
             const packageData = AppHelper.readJson(AppHelper.packageFile);
             const configData = AppHelper.readJson(AppHelper.configFile);
+
             this.config = {
                 appName: packageData.name,
                 appVersion: packageData.version,
@@ -121,18 +124,6 @@ const {BrowserWindow, dialog, shell} = require('electron');
             this.saveDelayer = setTimeout(AppHelper.writeJson, AppHelper.saveDelay, AppHelper.configFile, this.config);
         };
 
-        showQuestion(window, message, detail) {
-            return dialog.showMessageBoxSync(window, {
-                title: this.config.appName + ' V' + this.config.appVersion,
-                message: message,
-                detail: detail,
-                type: 'question',
-                buttons: ['确定', '取消'],
-                defaultId: 0,
-                cancelId: 1
-            }) === 0;
-        };
-
         inbounds(bounds, position) {
             let x, y;
             if (Array.isArray(position)) {
@@ -161,7 +152,31 @@ const {BrowserWindow, dialog, shell} = require('electron');
                 x: bounds.x + Math.max(bounds.width - width, 0),
                 y: bounds.y + Math.max(bounds.height - height, 0)
             }
-        }
+        };
+
+        showQuestion(window, message, detail) {
+            return dialog.showMessageBoxSync(window, {
+                title: this.config.appName + ' V' + this.config.appVersion,
+                message: message,
+                detail: detail,
+                type: 'question',
+                buttons: ['确定', '取消'],
+                defaultId: 0,
+                cancelId: 1
+            }) === 0;
+        };
+
+        logInfo(message) {
+            log.info(message);
+        };
+
+        logError(message) {
+            log.error(message);
+        };
+
+        logWarn(message) {
+            log.warn(message);
+        };
     }
 
     module.exports = new AppHelper();
