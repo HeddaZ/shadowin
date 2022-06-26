@@ -1,4 +1,4 @@
-const helper = require('../helper.js');
+const appHelper = require('../app-helper.js');
 const util = require('util');
 const moment = require('moment');
 const cache = require('../cache.js'); /* symbol: {data, writeTime, readTime, priority} */
@@ -12,7 +12,7 @@ const cache = require('../cache.js'); /* symbol: {data, writeTime, readTime, pri
             const cacheData = cache.get(config.dataRefreshPriority, batchLimit);
             const allSymbols = Object.keys(cacheData);
             if (allSymbols.length > 0) {
-                helper.log('DataRefreshService - Started: total=%s, batchSize=%s, batchCount=%s/%s',
+                appHelper.log('DataRefreshService - Started: total=%s, batchSize=%s, batchCount=%s/%s',
                     allSymbols.length,
                     config.dataRefreshBatchSize,
                     Math.ceil(allSymbols.length / config.dataRefreshBatchSize),
@@ -25,10 +25,10 @@ const cache = require('../cache.js'); /* symbol: {data, writeTime, readTime, pri
 
                     // Resolve current batch
                     if (i % config.dataRefreshBatchSize === 0 || i === allSymbols.length) {
-                        helper.log('DataRefreshService - Batch %s: %s', i, symbols);
-                        const url = util.format(config.dataUrl, symbols, helper.ticks());
-                        const referer = config.dataReferers[helper.random(config.dataReferers.length - 1)];
-                        const data = await helper.httpGet(url, referer);
+                        appHelper.log('DataRefreshService - Batch %s: %s', i, symbols);
+                        const url = util.format(config.dataUrl, symbols, appHelper.ticks());
+                        const referer = config.dataReferers[appHelper.random(config.dataReferers.length - 1)];
+                        const data = await appHelper.httpGet(url, referer);
                         if (data && !dataInvalidRegExp.test(data)) {
                             const now = moment();
                             const dataItems = data.split(dataSeparatorRegExp);
@@ -42,7 +42,7 @@ const cache = require('../cache.js'); /* symbol: {data, writeTime, readTime, pri
                                     key = dataItem;
                                 } else {
                                     value = dataItem;
-                                    helper.log('DataRefreshService - Batch OK: %s = %s', key, value);
+                                    appHelper.log('DataRefreshService - Batch OK: %s = %s', key, value);
 
                                     cache.set(key, {
                                         data: value,
@@ -62,7 +62,7 @@ const cache = require('../cache.js'); /* symbol: {data, writeTime, readTime, pri
                 }
             }
         } catch (error) {
-            helper.log('DataRefreshService - %s', error.toString());
+            appHelper.log('DataRefreshService - %s', error.toString());
         } finally {
             setTimeout(run, config.dataRefreshInterval, config);
         }

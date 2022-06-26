@@ -20,7 +20,7 @@
     <Content Include="package.json" />
     <Content Include="app.js" />
     <Content Include="cache.js" />
-    <Content Include="helper.js" />
+    <Content Include="app-helper.js" />
     <Content Include="controllers\data.js" />
     <Content Include="controllers\index.js" />
     <Content Include="controllers\suggest.js" />

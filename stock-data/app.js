@@ -1,4 +1,4 @@
-const helper = require('./helper.js');
+const appHelper = require('./app-helper.js');
 const util = require('util');
 const dataRefresh = require('./services/data-refresh.js');
 const Koa = require('koa');
@@ -8,7 +8,7 @@ const config = require('./config.json');
 // Service - DataRefresh
 const serviceInfo = util.format('%s %s - DataRefreshService', config.appDescription, config.appVersion);
 dataRefresh(config);
-helper.log(serviceInfo);
+appHelper.log(serviceInfo);
 
 // --------------------------------------------------
 // API - Initialize
@@ -24,5 +24,5 @@ const controllers = require('./controllers');
 api.use(controllers.routes()).use(controllers.allowedMethods());
 // API - Launch
 api.listen(config.port, config.host, () => {
-    helper.log(apiInfo);
+    appHelper.log(apiInfo);
 });

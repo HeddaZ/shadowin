@@ -1,4 +1,4 @@
-const helper = require('./helper.js');
+const appHelper = require('./app-helper.js');
 const NodeCache = require('node-cache');
 
 (() => {
@@ -11,11 +11,11 @@ const NodeCache = require('node-cache');
         };
 
         get(arg, limit) {
-            if (helper.isInteger(arg)) {
+            if (appHelper.isInteger(arg)) {
                 return this._getByPriority(arg, limit);
-            } else if (helper.isArray(arg)) {
+            } else if (appHelper.isArray(arg)) {
                 return this._cache.mget(arg);
-            } else if (helper.isString(arg)) {
+            } else if (appHelper.isString(arg)) {
                 const result = {};
                 result[arg] = this._cache.get(arg);
                 return result;
@@ -29,7 +29,7 @@ const NodeCache = require('node-cache');
         };
 
         _getByPriority(priority, limit) {
-            const maxCount = helper.isInteger(limit) ? limit : 0;
+            const maxCount = appHelper.isInteger(limit) ? limit : 0;
             const keys = this._cache.keys();
 
             const result = {};

@@ -1,4 +1,4 @@
-const helper = require('../helper.js');
+const appHelper = require('../app-helper.js');
 const util = require('util');
 const moment = require('moment');
 const Router = require('koa-router');
@@ -6,8 +6,8 @@ const router = new Router({prefix: '/data'});
 const cache = require('../cache.js'); /* symbol: {data, writeTime, readTime, priority} */
 
 router.get('/', async (ctx, next) => {
-    helper.log('DataApi - Request: %s %s', ctx.ip, ctx.url);
-    helper.log('DataApi - Headers: %s %s', helper.truncate(ctx.headers['referer'], 30), ctx.headers['user-agent']);
+    appHelper.log('DataApi - Request: %s %s', ctx.ip, ctx.url);
+    appHelper.log('DataApi - Headers: %s %s', appHelper.truncate(ctx.headers['referer'], 30), ctx.headers['user-agent']);
     if (!ctx.query.s) {
         ctx.status = 400;
         ctx.body = ctx.status + ": Invalid symbol. (e.g. s=sh000001,sh600000)";
@@ -50,7 +50,7 @@ router.get('/', async (ctx, next) => {
             body += util.format('%s%s="%s";\n', config.responseVariablePrefix, symbol, data);
         }
     } catch (error) {
-        helper.log('DataApi - ' + error.toString());
+        appHelper.log('DataApi - ' + error.toString());
     }
 
     // Response

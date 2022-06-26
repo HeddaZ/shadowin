@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 (() => {
-    class Helper {
+    class AppHelper {
         log = console.log;
 
         ticks() {
@@ -37,7 +37,7 @@ const axios = require('axios');
 
         async httpGet(url, referer) {
             try {
-                this.log('Helper.HttpGet: ' + referer + ' --> ' + url);
+                this.log('AppHelper.HttpGet: ' + referer + ' --> ' + url);
                 const response = await axios.get(url, {
                     headers: {
                         'Accept': '*/*',
@@ -55,14 +55,14 @@ const axios = require('axios');
                         'Sec-Fetch-Site': 'cross-site'
                     }
                 });
-                this.log('Helper.HttpGet: ' + response.statusText);
+                this.log('AppHelper.HttpGet: ' + response.statusText);
                 return response.data;
             } catch (error) {
-                this.log('Helper.HttpGet: ' + error.toString());
+                this.log('AppHelper.HttpGet: ' + error.toString());
                 return null;
             }
         };
     }
 
-    module.exports = new Helper();
+    module.exports = new AppHelper();
 })();
