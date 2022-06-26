@@ -9,7 +9,7 @@ if (require('electron-squirrel-startup')) {
 // Single instance
 const lock = app.requestSingleInstanceLock();
 if (!lock) {
-    console.log('Another instance is running.');
+    appHelper.logWarn('Another instance is running.');
     app.quit();
 }
 
