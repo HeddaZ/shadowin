@@ -1,11 +1,15 @@
 const {app, BrowserWindow, globalShortcut, screen} = require('electron');
 const appHelper = require('./app-helper.js');
-const opacityChange = 0.2;
-const opacityMin = 0.1;
-const opacityMax = 0.9;
 
 // Launch when installing
 if (require('electron-squirrel-startup')) {
+    app.quit();
+}
+
+// Single instance
+const lock = app.requestSingleInstanceLock();
+if (!lock) {
+    console.log('Another instance is running.');
     app.quit();
 }
 
@@ -46,8 +50,8 @@ const exit = () => {
 }
 const fadeIn = () => {
     let opacity = appHelper.window.getOpacity();
-    opacity += opacityChange;
-    opacity = Math.min(opacity, opacityMax);
+    opacity += appHelper.opacityChange;
+    opacity = Math.min(opacity, appHelper.opacityMax);
     appHelper.window.setOpacity(opacity);
 
     appHelper.config.windowOpacity = opacity;
@@ -55,8 +59,8 @@ const fadeIn = () => {
 }
 const fadeOut = () => {
     let opacity = appHelper.window.getOpacity();
-    opacity -= opacityChange;
-    opacity = Math.max(opacity, opacityMin);
+    opacity -= appHelper.opacityChange;
+    opacity = Math.max(opacity, appHelper.opacityMin);
     appHelper.window.setOpacity(opacity);
 
     appHelper.config.windowOpacity = opacity;

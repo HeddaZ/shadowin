@@ -39,6 +39,10 @@ const {BrowserWindow, dialog, shell} = require('electron');
             }
         };
 
+        opacityChange = 0.2;
+        opacityMin = 0.1;
+        opacityMax = 0.9;
+
         config;
         window;
         saveDelayer;
