@@ -51,8 +51,8 @@ input, button {
 }
 
 #logo {
-    font-weight: bold;
     /* Electron Drag Region */
+    cursor: move;
     -webkit-app-region: drag;
     -webkit-user-select: none;
 }
