@@ -8,7 +8,7 @@ const {BrowserWindow, dialog, shell} = require('electron');
         static packageFile = path.join(__dirname, 'package.json');
         static configFile = path.join(__dirname, 'config.json');
         static encoding = 'utf8';
-        static saveDelay = 10000;
+        static saveDelay = 5000;
         static blankUrl = 'about:blank';
 
         static readJson(file, encoding) {
