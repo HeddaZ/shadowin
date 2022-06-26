@@ -13,6 +13,7 @@ if (!lock) {
     app.quit();
 }
 
+app.setActivationPolicy('accessory');
 app.on('ready', () => {
     // Initialize
     appHelper.createWindow();
