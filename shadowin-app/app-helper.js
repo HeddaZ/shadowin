@@ -1,12 +1,12 @@
 const fs = require('fs');
 const path = require("path");
 const log = require('electron-log');
-const {BrowserWindow, dialog, shell} = require('electron');
+const {app, BrowserWindow, dialog, shell} = require('electron');
 
 (() => {
     class AppHelper {
-        static packageFile = path.join(__dirname, 'package.json');
-        static configFile = path.join(__dirname, 'config.json');
+        static packageFile = 'package.json';
+        static configFile = 'config.json';
         static encoding = 'utf8';
         static saveDelay = 5000;
         static blankUrl = 'about:blank';
@@ -50,8 +50,8 @@ const {BrowserWindow, dialog, shell} = require('electron');
         saveDelayer;
 
         constructor() {
-            const packageData = AppHelper.readJson(AppHelper.packageFile);
-            const configData = AppHelper.readJson(AppHelper.configFile);
+            const packageData = AppHelper.readJson(path.join(this.getAppPath(), AppHelper.packageFile));
+            const configData = AppHelper.readJson(path.join(this.getUserPath(), AppHelper.configFile));
 
             this.config = {
                 appName: packageData.name,
@@ -121,7 +121,9 @@ const {BrowserWindow, dialog, shell} = require('electron');
             if (this.saveDelayer) {
                 clearTimeout(this.saveDelayer);
             }
-            this.saveDelayer = setTimeout(AppHelper.writeJson, AppHelper.saveDelay, AppHelper.configFile, this.config);
+            this.saveDelayer = setTimeout(AppHelper.writeJson, AppHelper.saveDelay,
+                path.join(this.getUserPath(), AppHelper.configFile),
+                this.config);
         };
 
         inbounds(bounds, position) {
@@ -164,6 +166,14 @@ const {BrowserWindow, dialog, shell} = require('electron');
                 defaultId: 0,
                 cancelId: 1
             }) === 0;
+        };
+
+        getAppPath() {
+            return app.getAppPath();
+        };
+
+        getUserPath() {
+            return app.getPath('userData');
         };
 
         logInfo(message) {

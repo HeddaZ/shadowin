@@ -167,11 +167,11 @@ iframe.about {
 .download-footer {
     background-image: url("images/bg.png");
     background-repeat: repeat;
-    padding: 3px;
+    padding: 6px;
 }
 
-.download-footer a {
-    color: #333;
+.download-footer, .download-footer a {
+    color: #555;
 }
 
 .download-footer .glyphicon {

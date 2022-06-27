@@ -1,5 +1,5 @@
-const {app, BrowserWindow, globalShortcut, screen} = require('electron');
 const appHelper = require('./app-helper.js');
+const {app, BrowserWindow, globalShortcut, screen} = require('electron');
 
 // Launch when installing
 if (require('electron-squirrel-startup')) {
@@ -23,7 +23,7 @@ app.on('ready', () => {
     // Events
     app.on('window-all-closed', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
-            appHelper.logWarn('Recreate new window as all window have been closed.');
+            appHelper.logWarn('Recreate new cause all windows have been closed.');
             appHelper.createWindow();
         }
     });
