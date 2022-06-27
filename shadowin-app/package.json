@@ -37,7 +37,11 @@
           "/.git*",
           "/*.iml",
           "/*.njsproj"
-        ]
+        ],
+        "win32metadata": {
+          "CompanyName": "Shadowin",
+          "FileDescription": "Shadowin 影窗浏览器"
+        }
       },
       "makers": [
         {
