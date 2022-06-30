@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require("path");
 const log = require('electron-log');
-const {app, BrowserWindow, dialog, shell} = require('electron');
+const {app, BrowserWindow, dialog, shell, screen} = require('electron');
 
 (() => {
     class AppHelper {
@@ -126,7 +126,29 @@ const {app, BrowserWindow, dialog, shell} = require('electron');
                 this.config);
         };
 
-        inbounds(bounds, position) {
+        _getPositions(width, height) {
+            const positions = [];
+            const displays = screen.getAllDisplays();
+            for (let i = 0; i < displays.length; i++) {
+                const display = displays[i];
+                // Left of display
+                positions.push({
+                    x: display.workArea.x,
+                    y: display.workArea.y + display.workArea.height - height
+                });
+                // Right of display
+                positions.push({
+                    x: display.workArea.x + display.workArea.width - width,
+                    y: display.workArea.y + display.workArea.height - height
+                });
+            }
+            positions.sort((p1, p2) => {
+                return p1.x - p2.x
+            });
+            return positions;
+        };
+
+        findLeftPosition(position, size) {
             let x, y;
             if (Array.isArray(position)) {
                 x = position[0];
@@ -135,13 +157,6 @@ const {app, BrowserWindow, dialog, shell} = require('electron');
                 x = position.x;
                 y = position.y;
             }
-            return x >= bounds.x
-                && y >= bounds.y
-                && x <= bounds.x + bounds.width
-                && y <= bounds.y + bounds.height;
-        };
-
-        positionInbounds(bounds, size) {
             let width, height;
             if (Array.isArray(size)) {
                 width = size[0];
@@ -150,10 +165,73 @@ const {app, BrowserWindow, dialog, shell} = require('electron');
                 width = size.width;
                 height = size.height;
             }
-            return {
-                x: bounds.x + Math.max(bounds.width - width, 0),
-                y: bounds.y + Math.max(bounds.height - height, 0)
+
+            const positions = this._getPositions(width, height);
+            for (let middle = 0; middle < positions.length; middle++) {
+                let left = middle - 1;
+                if (left < 0) {
+                    left = positions.length - 1;
+                }
+                let right = middle + 1;
+                if (right > positions.length - 1) {
+                    right = 0;
+                }
+
+                const leftPosition = positions[left];
+                const middlePosition = positions[middle];
+                const rightPosition = positions[right];
+                if (x === middlePosition.x) {
+                    return leftPosition;
+                } else if (x === rightPosition.x) {
+                    return middlePosition;
+                } else if (x > middlePosition.x && (x < rightPosition.x || rightPosition.x < middlePosition.x)) {
+                    return middlePosition;
+                }
             }
+            return {x: x, y: y};
+        };
+
+        findRightPosition(position, size) {
+            let x, y;
+            if (Array.isArray(position)) {
+                x = position[0];
+                y = position[1];
+            } else {
+                x = position.x;
+                y = position.y;
+            }
+            let width, height;
+            if (Array.isArray(size)) {
+                width = size[0];
+                height = size[1];
+            } else {
+                width = size.width;
+                height = size.height;
+            }
+
+            const positions = this._getPositions(width, height);
+            for (let left = 0; left < positions.length; left++) {
+                let middle = left + 1;
+                if (middle > positions.length - 1) {
+                    middle = 0;
+                }
+                let right = middle + 1;
+                if (right > positions.length - 1) {
+                    right = 0;
+                }
+
+                const leftPosition = positions[left];
+                const middlePosition = positions[middle];
+                const rightPosition = positions[right];
+                if (x === middlePosition.x) {
+                    return rightPosition;
+                } else if (x === leftPosition.x) {
+                    return middlePosition;
+                } else if (x < middlePosition.x && (x > leftPosition.x || leftPosition.x > middlePosition.x)) {
+                    return middlePosition;
+                }
+            }
+            return {x: x, y: y};
         };
 
         showQuestion(window, message, detail) {

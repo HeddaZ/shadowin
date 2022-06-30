@@ -1,6 +1,6 @@
 {
   "appName": "shadow-stock-data",
-  "appVersion": "4.0.0",
+  "appVersion": "4.0.1",
   "appDescription": "Data API of ShadowStock",
   "host": "localhost",
   "port": 3000,

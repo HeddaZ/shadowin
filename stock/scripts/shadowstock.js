@@ -2,7 +2,7 @@
     var _shadowStock = {},
         _appId = 'ShadowStock_QQ',
         _appName = 'ShadowStock',
-        _appVersion = '4.0.0',
+        _appVersion = '4.0.1',
         _appUrl = 'https://github.com/heddaz/shadowin',
 
         /******************** 配置 ********************/

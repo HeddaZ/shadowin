@@ -1,5 +1,5 @@
 const appHelper = require('./app-helper.js');
-const {app, BrowserWindow, globalShortcut, screen} = require('electron');
+const {app, BrowserWindow, globalShortcut} = require('electron');
 
 // Launch when installing
 if (require('electron-squirrel-startup')) {
@@ -72,23 +72,7 @@ const fadeOut = () => {
 }
 const dockLeft = () => {
     let position = appHelper.window.getPosition();
-    let currentDisplay, targetDisplay;
-    const displays = screen.getAllDisplays();
-    for (let i = 0; i < displays.length; i++) {
-        if (appHelper.inbounds(displays[i].bounds, position)) {
-            currentDisplay = displays[i];
-            targetDisplay = displays[i > 0 ? i - 1 : displays.length - 1];
-            break;
-        }
-    }
-    if (!currentDisplay || !targetDisplay) {
-        currentDisplay = targetDisplay = screen.getPrimaryDisplay();
-    }
-
-    if (currentDisplay.scaleFactor !== targetDisplay.scaleFactor) {
-        targetDisplay = currentDisplay; // Won't change display when scaleFactor is different.
-    }
-    position = appHelper.positionInbounds(targetDisplay.workArea, appHelper.window.getSize());
+    position = appHelper.findLeftPosition(position, appHelper.window.getSize());
     appHelper.window.setPosition(position.x, position.y);
 
     appHelper.config.windowPosition = position;
@@ -96,23 +80,7 @@ const dockLeft = () => {
 }
 const dockRight = () => {
     let position = appHelper.window.getPosition();
-    let currentDisplay, targetDisplay;
-    const displays = screen.getAllDisplays();
-    for (let i = 0; i < displays.length; i++) {
-        if (appHelper.inbounds(displays[i].bounds, position)) {
-            currentDisplay = displays[i];
-            targetDisplay = displays[i < displays.length - 1 ? i + 1 : 0];
-            break;
-        }
-    }
-    if (!currentDisplay || !targetDisplay) {
-        currentDisplay = targetDisplay = screen.getPrimaryDisplay();
-    }
-
-    if (currentDisplay.scaleFactor !== targetDisplay.scaleFactor) {
-        targetDisplay = currentDisplay; // Won't change display when scaleFactor is different.
-    }
-    position = appHelper.positionInbounds(targetDisplay.workArea, appHelper.window.getSize());
+    position = appHelper.findRightPosition(position, appHelper.window.getSize());
     appHelper.window.setPosition(position.x, position.y);
 
     appHelper.config.windowPosition = position;
