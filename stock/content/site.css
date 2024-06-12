@@ -150,13 +150,13 @@ iframe.about {
 }
 
 .notice {
-    color: #d34838;
-    font-weight: 600;
+    color: #999999;
     display: none;
 }
 
 .notice a {
-    color: #0165ff;
+    color: #208BEE;
+    font-weight: 600;
 }
 
 .download-header {
