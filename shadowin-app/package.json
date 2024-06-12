@@ -31,7 +31,7 @@
     "forge": {
       "packagerConfig": {
         "icon": "./images/app",
-        "appCopyright": "Copyright (C) 2022 HEDDAZ",
+        "appCopyright": "Copyright (C) 2024 HEDDAZ",
         "asar": true,
         "ignore": [
           "/.git*",
@@ -47,7 +47,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "copyright": "Copyright (C) 2022 HEDDAZ",
+            "copyright": "Copyright (C) 2024 HEDDAZ",
             "loadingGif": "./images/loading.gif",
             "setupIcon": "./images/app.ico",
             "iconUrl": "http://stock.plusii.com/shadowin.ico"
