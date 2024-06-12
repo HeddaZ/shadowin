@@ -54,7 +54,7 @@ ShadowStock 影子证券 —— 上班看股、个性盯盘神器
   
   
 (开发不易，金额随意)  
-![微信扫码捐赠](https://images.plusii.com/donate-wechat.jpg)
+![微信扫码捐赠](https://static.plusii.com/images/donate-wechat.jpg)
 
 
 [Electron]: https://www.electronjs.org
