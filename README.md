@@ -59,7 +59,7 @@ ShadowStock 影子证券 —— 上班看股、个性盯盘神器
 
 [Electron]: https://www.electronjs.org
 [.NET]: https://www.microsoft.com/zh-cn/download/details.aspx?id=17718
-[下载地址]: http://stock.plusii.com/shadowin.html
+[下载地址]: http://stock.plusii.com/download.html
 [预编译包]: https://github.com/heddaz/shadowin/releases
 [常见问题]: https://github.com/heddaz/shadowin/issues/43
 [在此留爪]: https://github.com/heddaz/shadowin/issues
