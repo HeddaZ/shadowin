@@ -48,7 +48,7 @@ ShadowStock 影子证券 —— 上班看股、个性盯盘神器
 -------
 * Shadowin 用户设置由程序自动管理，窗体外观（位置、尺寸、透明度）变更后，5秒后将被自动记录。  
 * ShadowStock 用户设置保存在本地`Cookie`中，通过`导入/导出`功能可以实现存档和转移；清除浏览器数据可能导致设置丢失。  
-* ShadowStock 默认数据源 http://stock-data.plusii.com/ 是经过包装的腾讯数据源 https://web.sqt.gtimg.cn/utf8/ 自建方案请使用腾讯数据源，降低本服务器压力。  
+* ShadowStock 默认数据源 http://stock-api.plusii.com/ 是经过包装的腾讯数据源 https://web.sqt.gtimg.cn/utf8/ 自建方案请使用腾讯数据源，降低本服务器压力。  
 * 自 2022.02.25 起，影子证券已启用自研的`数据源中间件`，本项目不再强依赖第三方数据源的规范和性能。  
 * 其它问题和建议，欢迎 [在此留爪] 或 [QQ9812152]。  
   
