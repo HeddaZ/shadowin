@@ -104,10 +104,10 @@ dist
 .tern-port
 
 # Others
+.DS_Store
 .idea/
 .vs/
 bin/
 obj/
 out/
 *.user
-package-lock.json
