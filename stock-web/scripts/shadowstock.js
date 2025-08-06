@@ -14,8 +14,8 @@
             cookieExpires: 365,
             minRefreshInterval: 5000,
             maxWatchingStockCount: 25,
-            suggestionUrl: 'http://stock-api.plusii.com/suggest/?k={0}',
-            stockUrl: 'http://stock-api.plusii.com/data/?s={0}&t={1}',
+            suggestionUrl: '/api/suggest/?k={0}',
+            stockUrl: '/api/data/?s={0}&t={1}',
             // suggestionUrl: 'https://proxy.finance.qq.com/smartboxgtimg/s3/?q={0}&v=2&t=all',
             // stockUrl: 'https://web.sqt.gtimg.cn/utf8/?q={0}&r={1}&offset=2,4,5,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,34,35,37,38,39,40',
             stockColumns: '名称,最新价,昨收,今开,买①,买①量,买②,买②量,买③,买③量,买④,买④量,买⑤,买⑤量,卖①,卖①量,卖②,卖②量,卖③,卖③量,卖④,卖④量,卖⑤,卖⑤量,!日期时间,最高,最低,成交量,成交额(万),换手率,市盈率'.split(itemSeparator),
@@ -391,11 +391,13 @@
                 getClass: getClassAsNone,
                 getText: function (data) {
                     if (this._text == undefined) {
-                        this._text = _formatString(
-                            ' <a title="新闻" href="https://gu.qq.com/{0}/gp/news" target="_blank">新</a>'
+                        this._text = _formatString(''
                             + ' <a title="成交" href="https://gu.qq.com/{0}/gp/detail" target="_blank">细</a>'
+                            + ' <a title="新闻" href="https://gu.qq.com/{0}/gp/news" target="_blank">闻</a>'
+                            + ' <a title="事件" href="https://stockpage.10jqka.com.cn/{1}/event/#remind" target="_blank">事</a>'
+                            + ' <a title="财务" href="https://stockpage.10jqka.com.cn/{1}/finance/#finance" target="_blank">财</a>'
                             + ' <a title="评论" href="https://guba.sina.com.cn/?s=bar&name={0}" target="_blank">评</a>'
-                            + ' <a title="分红" href="http://stockpage.10jqka.com.cn/{1}/bonus/#bonuslist" target="_blank">红</a>'
+                            + ' <a title="分红" href="https://stockpage.10jqka.com.cn/{1}/bonus/#bonuslist" target="_blank">红</a>'
                             + ' <a title="曲线" href="TI.htm?{0}" target="_blank">线</a>',
                             this.siblings[_appSettings.symbolColumnId].getText(data),
                             this.siblings[_appSettings.shortSymbolColumnId].getText(data),

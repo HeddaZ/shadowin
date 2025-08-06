@@ -15,7 +15,7 @@ appHelper.log(serviceInfo);
 // API - Initialize
 const api = new Koa({proxy: true});
 api.use(favicon(__dirname + '/favicon.ico'));
-const apiInfo = util.format('%s %s @ http://%s:%s', config.appDescription, config.appVersion, config.host, config.port);
+const apiInfo = util.format('%s %s @ %s:%s', config.appDescription, config.appVersion, config.host, config.port);
 api.use(async (ctx, next) => {
     ctx.state.info = apiInfo;
     ctx.config = config;

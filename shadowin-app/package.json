@@ -50,7 +50,7 @@
             "copyright": "Copyright (C) 2024 HEDDAZ",
             "loadingGif": "./images/loading.gif",
             "setupIcon": "./images/app.ico",
-            "iconUrl": "http://stock.plusii.com/shadowin.ico"
+            "iconUrl": "https://stock.plusii.com/shadowin.ico"
           }
         },
         {
@@ -59,7 +59,7 @@
       ]
     },
     "shadowin": {
-      "url": "http://stock.plusii.com",
+      "url": "https://stock.plusii.com",
       "windowOnTop": true,
       "windowZoom": 1,
       "windowOpacity": 0.7,
